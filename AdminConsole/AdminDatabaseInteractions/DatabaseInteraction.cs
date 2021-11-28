@@ -53,11 +53,35 @@ namespace AdminDatabaseInteraction
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
                 Console.WriteLine("Major: {0}", documentDictionary["Major_Name"]);
                 Console.WriteLine("First Offered: {0}", documentDictionary["First_Offered"]);
-                Console.WriteLine("Common Employers: {0}", documentDictionary["Employers"]);
+
+                List<object> temp = new List<object>();
+                temp = documentDictionary["Employers"] as List<object>;
+
+                Console.WriteLine("Common Employers: {0}", temp[0]);
                 Console.WriteLine("Expected Credit Hours: {0}", documentDictionary["Expected_Cred_Hours"]);
                 Console.WriteLine("Description: {0}", documentDictionary["Description"]);
 
             }
+        }
+
+        private static async Task<MajorList> StoreMajorData(string project)
+        {
+            FirestoreDb db = FirestoreDb.Create(project);
+            CollectionReference userRef = db.Collection("Majors");
+            QuerySnapshot snapshot = await userRef.GetSnapshotAsync();
+            MajorList majorList = new MajorList();
+            foreach(DocumentSnapshot document in snapshot.Documents)
+            {
+                Dictionary<string, object> documentDictionary = document.ToDictionary();
+                MajorData temp = new MajorData();
+                temp.MajorName = documentDictionary["Major_Name"].ToString();
+                temp.FirstOffered = int.Parse(documentDictionary["First_Offered"].ToString());
+                temp.Employers = documentDictionary["Employers"] as List<string>;
+                temp.ExpectedCredHours = int.Parse(documentDictionary["Expected_Cred_Hours"].ToString());
+                temp.Description = documentDictionary["Description"].ToString();
+                majorList.AddMajorToList(temp);
+            }
+            return null;
         }
 
         static void Main()
@@ -65,9 +89,9 @@ namespace AdminDatabaseInteraction
             MajorData CSET = new MajorData();
             CSET.MajorName = "Software Engineering Technology";
             CSET.FirstOffered = 1970;
-            string[] employers = new string[4];
-            employers[0] = "Microsoft";
-            employers[1] = "Amazon";
+            List<string> employers = new List<string>();
+            employers.Add("Microsoft");
+            employers.Add("Amazon");
             CSET.Employers = employers;
             CSET.ExpectedCredHours = 500;
             CSET.Description = "Descp goes here";
