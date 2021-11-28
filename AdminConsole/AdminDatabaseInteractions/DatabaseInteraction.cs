@@ -54,10 +54,9 @@ namespace AdminDatabaseInteraction
                 Console.WriteLine("Major: {0}", documentDictionary["Major_Name"]);
                 Console.WriteLine("First Offered: {0}", documentDictionary["First_Offered"]);
 
-                List<object> temp = new List<object>();
-                temp = documentDictionary["Employers"] as List<object>;
+                List<object> temp = documentDictionary["Employers"] as List<object>;
 
-                Console.WriteLine("Common Employers: {0}", temp[0]);
+                Console.WriteLine("Common Employers: {0}", EmployersToCSV(temp));
                 Console.WriteLine("Expected Credit Hours: {0}", documentDictionary["Expected_Cred_Hours"]);
                 Console.WriteLine("Description: {0}", documentDictionary["Description"]);
 
@@ -84,6 +83,23 @@ namespace AdminDatabaseInteraction
             return null;
         }
 
+        static string EmployersToCSV(List<object> list)
+        {
+            string employers = null;
+            foreach (object obj in list)
+            {
+                if(employers == null)
+                {
+                    employers = obj.ToString();
+                }
+                else
+                {
+                    employers += ", " + obj.ToString();
+                }
+            }
+            return employers;
+        }
+
         static void Main()
         {
             MajorData CSET = new MajorData();
@@ -92,13 +108,13 @@ namespace AdminDatabaseInteraction
             List<string> employers = new List<string>();
             employers.Add("Microsoft");
             employers.Add("Amazon");
-            CSET.Employers = employers;
+            CSET.Employers = employers as List<string>;
             CSET.ExpectedCredHours = 500;
             CSET.Description = "Descp goes here";
 
-            InitializeProject("x-circle-327618");
-            AddMajorData("x-circle-327618", CSET).Wait();
-            RetrieveMajorData("x-circle-327618").Wait();
+            //InitializeProject("x-circle-327618");
+            //AddMajorData("x-circle-327618", CSET).Wait();
+            //RetrieveMajorData("x-circle-327618").Wait();
         }
     }
 }
