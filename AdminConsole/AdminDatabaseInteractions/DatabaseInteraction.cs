@@ -78,9 +78,9 @@ namespace AdminDatabaseInteraction
                 temp.Employers = documentDictionary["Employers"] as List<string>;
                 temp.ExpectedCredHours = int.Parse(documentDictionary["Expected_Cred_Hours"].ToString());
                 temp.Description = documentDictionary["Description"].ToString();
-                majorList.AddMajorToList(temp);
+                majorList.AddMajor(temp);
             }
-            return null;
+            return majorList;
         }
 
         static string EmployersToCSV(List<object> list)
@@ -102,6 +102,7 @@ namespace AdminDatabaseInteraction
 
         static void Main()
         {
+            MajorList majorList = new MajorList();
             MajorData CSET = new MajorData();
             CSET.MajorName = "Software Engineering Technology";
             CSET.FirstOffered = 1970;
@@ -111,6 +112,29 @@ namespace AdminDatabaseInteraction
             CSET.Employers = employers as List<string>;
             CSET.ExpectedCredHours = 500;
             CSET.Description = "Descp goes here";
+            
+            MajorData CET = new MajorData();
+            CET.MajorName = "Computer Engineering Technology";
+            CET.FirstOffered = 1960;
+            List<string> CETemployers = new List<string>();
+            CETemployers.Add("Microsoft");
+            CETemployers.Add("Sony");
+            CET.Employers = employers as List<string>;
+            CET.ExpectedCredHours = 470;
+            CET.Description = "Descp goes here for CET";
+            
+            MajorData CST = new MajorData();
+            CST.MajorName = "Computer Science Technology";
+            CST.FirstOffered = 1950;
+            List<string> CSTemployers = new List<string>();
+            CSTemployers.Add("Microsoft");
+            CSTemployers.Add("Apply");
+            CST.Employers = employers as List<string>;
+            CST.ExpectedCredHours = 475;
+            CST.Description = "Descp goes here for CST";
+
+
+            
 
             //InitializeProject("x-circle-327618");
             //AddMajorData("x-circle-327618", CSET).Wait();
