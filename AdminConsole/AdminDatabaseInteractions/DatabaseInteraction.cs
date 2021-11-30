@@ -29,13 +29,13 @@ namespace AdminDatabaseInteraction
         private static async Task AddMajorData(string project, MajorData majorData)
         {
             FirestoreDb db = FirestoreDb.Create(project);
-            DocumentReference docRef = db.Collection("Majors").Document(majorData.MajorName);
+            DocumentReference docRef = db.Collection("Majors").Document(majorData.MajorCategory).Collection("MajorsList").Document(majorData.MajorName);
             Dictionary<string, object> user = new Dictionary<string, object>
             {
                 {"Major_Name", majorData.MajorName },
-                {"First_Offered", majorData.FirstOffered },
-                {"Employers", majorData.Employers },
-                {"Expected_Cred_Hours", majorData.ExpectedCredHours },
+                {"Major_Category", majorData.MajorCategory },
+                {"Professors", majorData.Professors },
+                {"Classes", majorData.Classes },
                 {"Description", majorData.Description }
             };
 
@@ -43,23 +43,25 @@ namespace AdminDatabaseInteraction
 
         }
 
-        private static async Task RetrieveMajorData(string project)
+        private static async Task RetrieveMajorData(string project, string[] categories)
         {
             FirestoreDb db = FirestoreDb.Create(project);
-            CollectionReference userRef = db.Collection("Majors");
-            QuerySnapshot snapshot = await userRef.GetSnapshotAsync();
-            foreach (DocumentSnapshot document in snapshot.Documents)
+            foreach (string category in categories)
             {
-                Dictionary<string, object> documentDictionary = document.ToDictionary();
-                Console.WriteLine("Major: {0}", documentDictionary["Major_Name"]);
-                Console.WriteLine("First Offered: {0}", documentDictionary["First_Offered"]);
+                CollectionReference userRef = db.Collection("Majors").Document(category).Collection("MajorsList");
+                QuerySnapshot snapshot = await userRef.GetSnapshotAsync();
+                foreach (DocumentSnapshot document in snapshot.Documents)
+                {
+                    Dictionary<string, object> documentDictionary = document.ToDictionary();
+                    Console.WriteLine("Major: {0}", documentDictionary["Major_Name"]);
+                    Console.WriteLine("Major_Category: {0}", documentDictionary["Major_Category"]);
 
-                List<object> temp = documentDictionary["Employers"] as List<object>;
 
-                Console.WriteLine("Common Employers: {0}", EmployersToCSV(temp));
-                Console.WriteLine("Expected Credit Hours: {0}", documentDictionary["Expected_Cred_Hours"]);
-                Console.WriteLine("Description: {0}", documentDictionary["Description"]);
+                    Console.WriteLine("Professors: {0}", EmployersToCSV(documentDictionary["Professors"] as List<object>));
+                    Console.WriteLine("Classes: {0}", EmployersToCSV(documentDictionary["Classes"] as List<object>));
+                    Console.WriteLine("Description: {0}", documentDictionary["Description"]);
 
+                }
             }
         }
 
@@ -74,9 +76,9 @@ namespace AdminDatabaseInteraction
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
                 MajorData temp = new MajorData();
                 temp.MajorName = documentDictionary["Major_Name"].ToString();
-                temp.FirstOffered = int.Parse(documentDictionary["First_Offered"].ToString());
-                temp.Employers = documentDictionary["Employers"] as List<string>;
-                temp.ExpectedCredHours = int.Parse(documentDictionary["Expected_Cred_Hours"].ToString());
+                temp.MajorCategory = documentDictionary["Major_Category"].ToString();
+                temp.Professors = documentDictionary["Employers"] as List<string>;
+                temp.Classes = documentDictionary["Classes"] as List<string>;
                 temp.Description = documentDictionary["Description"].ToString();
                 majorList.AddMajor(temp);
             }
@@ -105,40 +107,41 @@ namespace AdminDatabaseInteraction
             MajorList majorList = new MajorList();
             MajorData CSET = new MajorData();
             CSET.MajorName = "Software Engineering Technology";
-            CSET.FirstOffered = 1970;
+            CSET.MajorCategory = "CSET";
             List<string> employers = new List<string>();
-            employers.Add("Microsoft");
-            employers.Add("Amazon");
-            CSET.Employers = employers as List<string>;
-            CSET.ExpectedCredHours = 500;
+            employers.Add("Todd");
+            employers.Add("Tory");
+
+            List<string> classes = new List<string>();
+            classes.Add("GUI");
+            classes.Add("Object Oreinted Programming");
+
+            CSET.Professors = employers as List<string>;
+            CSET.Classes = classes;
             CSET.Description = "Descp goes here";
-            
-            MajorData CET = new MajorData();
-            CET.MajorName = "Computer Engineering Technology";
-            CET.FirstOffered = 1960;
-            List<string> CETemployers = new List<string>();
-            CETemployers.Add("Microsoft");
-            CETemployers.Add("Sony");
-            CET.Employers = employers as List<string>;
-            CET.ExpectedCredHours = 470;
-            CET.Description = "Descp goes here for CET";
-            
-            MajorData CST = new MajorData();
-            CST.MajorName = "Computer Science Technology";
-            CST.FirstOffered = 1950;
-            List<string> CSTemployers = new List<string>();
-            CSTemployers.Add("Microsoft");
-            CSTemployers.Add("Apply");
-            CST.Employers = employers as List<string>;
-            CST.ExpectedCredHours = 475;
-            CST.Description = "Descp goes here for CST";
+
+            MajorData AppMath = new MajorData();
+            AppMath.MajorName = "Applied Mathmatics";
+            AppMath.MajorCategory = "Mathematics";
+            List<string> Mathemployers = new List<string>();
+            Mathemployers.Add("Tiernan");
+            Mathemployers.Add("Kenneth");
+
+            List<string> Mathclasses = new List<string>();
+            Mathclasses.Add("Discrete Mathmatics");
+            Mathclasses.Add("Liner Algebra");
+
+            AppMath.Professors = Mathemployers as List<string>;
+            AppMath.Classes = Mathclasses;
+            AppMath.Description = "Math Descp goes here";
+            majorList.AddMajor(AppMath);
+            majorList.AddMajor(CSET);
 
 
-            
-
-            //InitializeProject("x-circle-327618");
-            //AddMajorData("x-circle-327618", CSET).Wait();
-            //RetrieveMajorData("x-circle-327618").Wait();
+            InitializeProject("x-circle-327618");
+            AddMajorData("x-circle-327618", CSET).Wait();
+            AddMajorData("x-circle-327618", AppMath).Wait();
+            RetrieveMajorData("x-circle-327618", majorList.GetAllCategories()).Wait();
         }
     }
 }

@@ -7,9 +7,9 @@ namespace AdminDatabaseInteraction
     public class MajorData
     {
         public string MajorName { get; set; }
-        public int FirstOffered { get; set; }
-        public List<string> Employers { get; set; }
-        public int ExpectedCredHours { get; set; }
+        public List<string> Classes { get; set; }
+        public List<string> Professors { get; set; }
+        public string MajorCategory { get; set; }
         public string Description { get; set; }
 
     }

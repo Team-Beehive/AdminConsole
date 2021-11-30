@@ -82,6 +82,31 @@ namespace AdminDatabaseInteraction
 
             }
         }
+
+        public string[] GetAllCategories()
+        {
+            try
+            {
+                LinkedList<string> categoresLL = new LinkedList<string>();
+                foreach (MajorData majorData in m_majorDataList)
+                {
+                    if (!categoresLL.Contains(majorData.MajorCategory))
+                    {
+                        categoresLL.AddLast(majorData.MajorCategory);
+                    }
+                }
+
+                string[] categoriesString = new string[categoresLL.Count];
+                categoresLL.CopyTo(categoriesString, 0);
+
+                return categoriesString;
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
         
 
 
