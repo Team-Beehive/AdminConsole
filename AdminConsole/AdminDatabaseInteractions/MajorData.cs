@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AdminDatabaseInteraction
+namespace AdminDatabaseInteractions
 {
     public class MajorData
     {
         public string MajorName { get; set; }
+        public string type { get; set; }
         public List<string> Classes { get; set; }
         public List<string> Professors { get; set; }
-        public string MajorCategory { get; set; }
-        public string Description { get; set; }
+        public List<string> campuses { get; set; }
+        public string about { get; set; }
 
     }
 }
