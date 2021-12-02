@@ -6,7 +6,37 @@
         xmlns:local="clr-namespace:AdminConsole"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <!--Grid is 2 rows and 3 collums | Row 1: tool bar, Row 2: Stuff | Col 1: Page select, Col 2: preview, Col 3: properties-->
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Background="DarkBlue">
+            <TextBlock Text="Headder" Foreground="White"/>
+            <Button Width="60" HorizontalAlignment="Left" Click="ButtonPressExport">
+                <TextBlock Text="Upload"/>
+            </Button>
+        </StackPanel>
+        <StackPanel x:Name="PageSelect" Grid.Row="1" Grid.Column="0" Background="Gray">
+            <TextBlock Text="Page Select"/>
+            <!--<Button Click="ButtonPressPage">
+                <TextBlock Text="Major Page"/>
+            </Button>-->
+        </StackPanel>
+        <StackPanel x:Name="Preview" Grid.Row="1" Grid.Column="1" Background="White">
+            <TextBlock Text="Page Preview"/>
+            <!--Maybe use a form to load the page-->
+        </StackPanel>
+        <StackPanel x:Name="Properties" Grid.Row="1" Grid.Column="2" Background="DarkGray">
+            <TextBlock Text="Page properties"/>
+            <!--Use a form to load a form for properties-->
+
+        </StackPanel>
     </Grid>
 </Window>
