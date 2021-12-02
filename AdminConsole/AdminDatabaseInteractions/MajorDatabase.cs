@@ -15,15 +15,44 @@ namespace AdminDatabaseInteractions
         Author: Tucker Nulty
         
         Funtions:
-          -
-          -
-          -
+            -InitlaizeProject(string project)
+                -Not used currently but could be used to clean code in the future
+            -db_EditMajorName(string project, MajorData major, string oldName)
+                -Used for changing the name of a degree, requires an string with a degree that currently exists
+            -db_EditMajorData(string project, MajorData major)
+                -Used to update a document stored in the Degrees collection or create it if it does not exitst
+            -db_DeleteMajorData(string project, MajorData major)
+                -Deletes a document with a matching id to the string stored in major.MajorName
+            -PrintDocumentSnap(DocumentSnapshot documentSnapshot)
+                -DEBUG ONLY
+                -Prints a single DocumentSnapshot to the console
+            -db_StoreMajorData(string project)
+                -Retrives all documents stored in the degrees collection and puts them in a Linked List
+            -GetMajorData(string project)
+                -Public facing fucntion used to call db_StoreMajorData
+                -Returns a LinkedList<DocumentSnapshot>
+            -EditMajorData(string project, MajorData major)
+                -Public facing function used to call db_EditMajorData
+            -DeleteMajorData(string project, MajorData major)
+                -Public facing function used to call db_EditMajorData
+            -EditMajorName(string project, MajorData major, string oldName)
+                -Public facing function used to call db_EditMajorName
+
+
         */
 
 
         private static void InitializeProject(string project)
         {
             FirestoreDb db = FirestoreDb.Create(project);
+        }
+
+        private static async Task db_EditMajorName(string project, MajorData major, string oldName)
+        {
+            FirestoreDb db = FirestoreDb.Create(project);
+            DocumentReference docRefDelete = db.Collection("pages").Document("Majors").Collection("Degrees").Document(oldName);
+            db_EditMajorData(project, major).Wait();
+            await docRefDelete.DeleteAsync();
         }
 
         private static async Task db_EditMajorData(string project, MajorData major)
@@ -38,40 +67,14 @@ namespace AdminDatabaseInteractions
             };
             await docRef.SetAsync(majorDict);
         }
-
-        /*private static async Task RetrieveMajorData(string project, string[] categories)
+        
+        private static async Task db_DeleteMajorData(string project, MajorData major)
         {
             FirestoreDb db = FirestoreDb.Create(project);
-            foreach (string category in categories)
-            {
-                CollectionReference userRef = db.Collection("Majors").Document(category).Collection("MajorsList");
-                QuerySnapshot snapshot = await userRef.GetSnapshotAsync();
-                foreach (DocumentSnapshot document in snapshot.Documents)
-                {
-                    Dictionary<string, object> documentDictionary = document.ToDictionary();
-                    Console.WriteLine("Major: {0}", documentDictionary["Major_Name"]);
-                    Console.WriteLine("Major_Category: {0}", documentDictionary["Major_Category"]);
-
-
-                    Console.WriteLine("Professors: {0}", EmployersToCSV(documentDictionary["Professors"] as List<object>));
-                    Console.WriteLine("Classes: {0}", EmployersToCSV(documentDictionary["Classes"] as List<object>));
-                    Console.WriteLine("Description: {0}", documentDictionary["Description"]);
-
-                }
-            }
-        } */
-
-        public void ShToMD(DocumentSnapshot documentSnapshot)
-        {
-            Dictionary<string, object> documentDictionary = documentSnapshot.ToDictionary();
-            Console.WriteLine("Major: {0}", documentSnapshot.Id);
-            Console.WriteLine("Major_Category: {0}", EmployersToCSV(documentDictionary["type"] as List<object>));
-
-
-            Console.WriteLine("Campus: {0}", EmployersToCSV(documentDictionary["campuses"] as List<object>));
-            //Console.WriteLine("Classes: {0}", EmployersToCSV(documentDictionary["Classes"] as List<object>));
-            Console.WriteLine("about: {0}", EmployersToCSV(documentDictionary["about"] as List<object>));
+            DocumentReference docRef = db.Collection("pages").Document("Majors").Collection("Degrees").Document(major.MajorName);
+            await docRef.DeleteAsync();
         }
+
 
         private static async Task<LinkedList<DocumentSnapshot>> db_StoreMajorData(string project)
         {
@@ -98,6 +101,15 @@ namespace AdminDatabaseInteractions
             db_EditMajorData(project, major).Wait();
         }
 
+        public void DeleteMajorData(string project, MajorData major)
+        {
+            db_DeleteMajorData(project, major).Wait();
+        }
+        public void EditMajorName(string project, MajorData major, string oldName)
+        {
+            db_EditMajorName(project, major, oldName).Wait();
+        }
+
         static string EmployersToCSV(List<object> list)
         {
             string employers = null;
@@ -115,6 +127,17 @@ namespace AdminDatabaseInteractions
             return employers;
         }
 
+        public void PrintDocumentSnap(DocumentSnapshot documentSnapshot)
+        {
+            Dictionary<string, object> documentDictionary = documentSnapshot.ToDictionary();
+            Console.WriteLine("Major: {0}", documentSnapshot.Id);
+            Console.WriteLine("Major_Category: {0}", EmployersToCSV(documentDictionary["type"] as List<object>));
+
+
+            Console.WriteLine("Campus: {0}", EmployersToCSV(documentDictionary["campuses"] as List<object>));
+            //Console.WriteLine("Classes: {0}", EmployersToCSV(documentDictionary["Classes"] as List<object>));
+            Console.WriteLine("about: {0}", EmployersToCSV(documentDictionary["about"] as List<object>));
+        }
     }
 }
 
