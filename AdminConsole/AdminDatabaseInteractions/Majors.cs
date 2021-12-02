@@ -29,7 +29,7 @@ namespace AdminDatabaseInteractions
     public class Majors
     {
         LinkedList<DocumentSnapshot> m_dataBaseRefs = new LinkedList<DocumentSnapshot>();
-        public string project = "OIT-Kiosk";
+        public string project = "oit-kiosk";
         private MajorDatabase majorDatabase = new MajorDatabase();
         public Majors()
         {  
@@ -46,6 +46,14 @@ namespace AdminDatabaseInteractions
             m_dataBaseRefs = majorDatabase.GetMajorData(project);
         }
 
+        public void printMajors()
+        {
+            foreach(DocumentSnapshot document in m_dataBaseRefs)
+            {
+                majorDatabase.ShToMD(document);
+            }    
+
+        }
         
 
 

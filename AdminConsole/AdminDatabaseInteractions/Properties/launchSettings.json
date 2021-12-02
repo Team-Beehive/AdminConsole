@@ -3,7 +3,7 @@
     "BigQueryCSharp": {
       "commandName": "Project",
       "environmentVariables": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "C:\\Users\\Tucker\\Documents\\oit-kiosk-9e22155a0c66.JSON"
+        "GOOGLE_APPLICATION_CREDENTIALS": "F:\\CSTCode\\JP\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.JSON"
       }
     }
   }

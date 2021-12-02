@@ -61,6 +61,18 @@ namespace AdminDatabaseInteractions
             }
         } */
 
+        public void ShToMD(DocumentSnapshot documentSnapshot)
+        {
+            Dictionary<string, object> documentDictionary = documentSnapshot.ToDictionary();
+            Console.WriteLine("Major: {0}", documentSnapshot.Id);
+            Console.WriteLine("Major_Category: {0}", EmployersToCSV(documentDictionary["type"] as List<object>));
+
+
+            Console.WriteLine("Campus: {0}", EmployersToCSV(documentDictionary["campuses"] as List<object>));
+            //Console.WriteLine("Classes: {0}", EmployersToCSV(documentDictionary["Classes"] as List<object>));
+            Console.WriteLine("about: {0}", EmployersToCSV(documentDictionary["about"] as List<object>));
+        }
+
         private static async Task<LinkedList<DocumentSnapshot>> db_StoreMajorData(string project)
         {
             FirestoreDb db = FirestoreDb.Create(project);
@@ -76,6 +88,7 @@ namespace AdminDatabaseInteractions
 
         public LinkedList<DocumentSnapshot> GetMajorData(string project)
         {
+            db_StoreMajorData(project).Wait();
             LinkedList<DocumentSnapshot> documentSnapshots = db_StoreMajorData(project).Result;
             return documentSnapshots;
         }
