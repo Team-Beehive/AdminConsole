@@ -81,19 +81,23 @@ namespace AdminDatabaseFramework
             FirestoreDb db = FirestoreDb.Create(project);
             CollectionReference userRef = db.Collection("pages").Document("Majors").Collection("Degrees");
             QuerySnapshot snapshot = await userRef.GetSnapshotAsync();
+
             LinkedList<DocumentSnapshot> tempDocs = new LinkedList<DocumentSnapshot>();
             foreach (DocumentSnapshot document in snapshot.Documents)
             {
                 tempDocs.AddLast(document);
             }
-            return await Task.FromResult(tempDocs);
+            return tempDocs;
+            
         }
 
         public LinkedList<DocumentSnapshot> GetMajorData(string project)
         {
-            db_StoreMajorData(project).Wait();
-            LinkedList<DocumentSnapshot> documentSnapshots = db_StoreMajorData(project).Result;
+            Task<LinkedList<DocumentSnapshot>> task = db_StoreMajorData(project);
+            Task<LinkedList<DocumentSnapshot>>.Run( () => task);
+            LinkedList<DocumentSnapshot> documentSnapshots = task.Result;
             return documentSnapshots;
+
         }
 
         public void EditMajorData(string project, MajorData major)

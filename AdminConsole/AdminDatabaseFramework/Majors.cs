@@ -51,7 +51,7 @@ namespace AdminDatabaseFramework
         private MajorDatabase majorDatabase = new MajorDatabase();
         public Majors()
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Users\\nulty\\Documents\\JrProject\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.JSON");
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "F:\\CSTCode\\JP\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
             m_dataBaseRefs = majorDatabase.GetMajorData(project);
         }
 

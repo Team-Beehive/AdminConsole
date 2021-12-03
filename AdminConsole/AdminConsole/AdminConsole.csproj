@@ -173,6 +173,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AdminDatabaseFramework\AdminDatabaseFramework.csproj">
+      <Project>{fef3442c-d48a-4cac-b41c-ba58b63635e8}</Project>
+      <Name>AdminDatabaseFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Grpc.Core.2.38.1\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.2.38.1\build\net45\Grpc.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
