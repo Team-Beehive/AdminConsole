@@ -5,7 +5,7 @@ using Google.Cloud.Firestore;
 using System.Threading.Tasks;
 
 
-namespace AdminDatabaseInteractions
+namespace AdminDatabaseFramework
 {
     /*--------------
         Class: MajorList
@@ -50,7 +50,8 @@ namespace AdminDatabaseInteractions
         public string project = "oit-kiosk";
         private MajorDatabase majorDatabase = new MajorDatabase();
         public Majors()
-        {  
+        {
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Users\\nulty\\Documents\\JrProject\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.JSON");
             m_dataBaseRefs = majorDatabase.GetMajorData(project);
         }
 

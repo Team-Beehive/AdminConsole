@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AdminDatabaseInteractions
+namespace AdminDatabaseFramework
 {
     class program
     {
@@ -21,10 +21,10 @@ namespace AdminDatabaseInteractions
             majorData.about = aboutL;
             majorData.type = TypeL;
             majorData.campuses = campusesL;
-            majors.DeleteMajor(majorData);
+            //majors.DeleteMajor(majorData);
             //majors.EditMajor(majorData);
             //majors.EditMajor(majorData, "Test Major");
-            //majors.printMajors();
+            majors.printMajors();
         }
     }
 }
