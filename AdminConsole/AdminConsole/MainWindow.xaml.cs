@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using AdminDatabaseInteractions;
 
 namespace AdminConsole
 {
@@ -20,6 +21,13 @@ namespace AdminConsole
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
+
+    /*
+     * Author: Destiny (Destin) Dahlgren
+     * Purpose: This is the logic for the UI of the admin program
+     */
+
+
 
     /*TODO: Use a dictionary to keep track of the relationship between items and "active" variables
      *          title text -> m_active title
@@ -59,8 +67,20 @@ namespace AdminConsole
             //Temp add the properties panel, later impliment a way that this gets called/changed based on active element
             AddProperties();
             //Query database for editable pages
+            test();
             //Add buttons
             AddButtons(m_majors);
+        }
+
+        private void test()
+        {
+            Majors major = new Majors();
+            LinkedList<MajorData> temp = major.GetMajors();
+            foreach (MajorData m in temp)
+            {
+                Debug.WriteLine(m.MajorName);
+            }
+        
         }
 
         private void AddButtons(List<string> majors)
