@@ -2,6 +2,7 @@
 using Google.Cloud.Firestore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace AdminDatabaseFramework
 {
@@ -80,12 +81,14 @@ namespace AdminDatabaseFramework
         {
             FirestoreDb db = FirestoreDb.Create(project);
             CollectionReference userRef = db.Collection("pages").Document("Majors").Collection("Degrees");
+            Debug.WriteLine("Before query");
             QuerySnapshot snapshot = await userRef.GetSnapshotAsync();
 
             LinkedList<DocumentSnapshot> tempDocs = new LinkedList<DocumentSnapshot>();
             foreach (DocumentSnapshot document in snapshot.Documents)
             {
                 tempDocs.AddLast(document);
+                //Debug.WriteLine("Help");
             }
             return tempDocs;
             
@@ -93,9 +96,8 @@ namespace AdminDatabaseFramework
 
         public LinkedList<DocumentSnapshot> GetMajorData(string project)
         {
-            Task<LinkedList<DocumentSnapshot>> task = db_StoreMajorData(project);
-            Task<LinkedList<DocumentSnapshot>>.Run( () => task);
-            LinkedList<DocumentSnapshot> documentSnapshots = task.Result;
+            
+            LinkedList<DocumentSnapshot> documentSnapshots = Task<LinkedList<DocumentSnapshot>>.Run(() => db_StoreMajorData(project)).Result;
             return documentSnapshots;
 
         }
