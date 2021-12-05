@@ -28,8 +28,8 @@ namespace AdminDatabaseFramework
 
             majors.GetMajors();
 
-            //Majors testMajor = new Majors();
-            //testMajor.GetMajors();
+            Majors testMajor = new Majors();
+            testMajor.GetMajors();
         }
     }
 }

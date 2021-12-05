@@ -51,7 +51,7 @@ namespace AdminDatabaseFramework
         private MajorDatabase majorDatabase = new MajorDatabase();
         public Majors()
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Dev\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Users\\nulty\\Documents\\JrProject\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
             m_dataBaseRefs = majorDatabase.GetMajorData(project);
         }
 
@@ -80,7 +80,7 @@ namespace AdminDatabaseFramework
             LinkedList<MajorData> datas = new LinkedList<MajorData>();
             foreach(DocumentSnapshot document in m_dataBaseRefs)
             {
-                Dictionary<string, object> documentDictionary = new Dictionary<string, object>();
+                Dictionary<string, object> documentDictionary = document.ToDictionary();
                 MajorData tempMajor = new MajorData();
                 tempMajor.MajorName = document.Id;
                 tempMajor.about = documentDictionary["about"] as List<string>;
