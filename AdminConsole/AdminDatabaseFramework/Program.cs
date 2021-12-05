@@ -24,12 +24,12 @@ namespace AdminDatabaseFramework
             //majors.DeleteMajor(majorData);
             //majors.EditMajor(majorData);
             //majors.EditMajor(majorData, "Test Major");
-            majors.printMajors();
+            //majors.printMajors();
 
-            majors.GetMajors();
-
-            Majors testMajor = new Majors();
-            testMajor.GetMajors();
+            //majors.GetMajors();
+            majors.GetCategories();
+            //Majors testMajor = new Majors();
+            //testMajor.GetMajors();
         }
     }
 }

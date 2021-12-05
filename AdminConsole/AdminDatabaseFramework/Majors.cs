@@ -51,8 +51,8 @@ namespace AdminDatabaseFramework
         private MajorDatabase majorDatabase = new MajorDatabase();
         public Majors()
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Users\\nulty\\Documents\\JrProject\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
-            m_dataBaseRefs = majorDatabase.GetMajorData(project);
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "F:\\CSTCode\\JP\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
+            //m_dataBaseRefs = majorDatabase.GetMajorData(project);
         }
 
         public void EditMajor(MajorData major)
@@ -89,6 +89,22 @@ namespace AdminDatabaseFramework
                 datas.AddLast(tempMajor);
             }
             return datas;
+        }
+
+        public LinkedList<MajorCategories> GetCategories()
+        {
+            DocumentSnapshot documentSnapshot = majorDatabase.StoreMajorCategories(project);
+            LinkedList<MajorCategories> majorCategories = new LinkedList<MajorCategories>();
+
+            List<Dictionary<string, object>> categoryList = documentSnapshot.GetValue<List<Dictionary<string, object>>>("Categories");
+            foreach (Dictionary<string, object> category in categoryList)
+            {
+                MajorCategories majorCat = new MajorCategories();
+                majorCat.categoryTitle = category["categoryTitle"].ToString();
+                majorCat.relatedDegrees = category["relatedDegrees"] as List<object>;
+                majorCategories.AddLast(majorCat);
+            }
+            return majorCategories;
         }
         public void printMajors()
         {
