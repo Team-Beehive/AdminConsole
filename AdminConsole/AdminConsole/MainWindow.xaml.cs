@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+//using AdminDatabaseFramework;
 using AdminDatabaseFramework;
 
 namespace AdminConsole
@@ -75,11 +76,11 @@ namespace AdminConsole
         private void test()
         {
             Majors major = new Majors();
-            LinkedList<MajorData> temp = major.GetMajors();
+            /*LinkedList<MajorData> temp = major.GetMajors();
             foreach (MajorData m in temp)
             {
                 Debug.WriteLine(m.MajorName);
-            }
+            }*/
         
         }
 

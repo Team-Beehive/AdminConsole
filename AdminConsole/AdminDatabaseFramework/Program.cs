@@ -25,6 +25,11 @@ namespace AdminDatabaseFramework
             //majors.EditMajor(majorData);
             //majors.EditMajor(majorData, "Test Major");
             majors.printMajors();
+
+            majors.GetMajors();
+
+            //Majors testMajor = new Majors();
+            //testMajor.GetMajors();
         }
     }
 }
