@@ -94,6 +94,20 @@ namespace AdminDatabaseFramework
             
         }
 
+        private static async Task<DocumentSnapshot> db_StoreMajorCategories(string project)
+        {
+            FirestoreDb db = FirestoreDb.Create(project);
+            DocumentReference userRef = db.Collection("pages").Document("Majors");
+            DocumentSnapshot snapshot = await userRef.GetSnapshotAsync();
+
+            return snapshot;
+
+        }
+
+        public DocumentSnapshot StoreMajorCategories(string project)
+        {
+            return Task<DocumentSnapshot>.Run( () => db_StoreMajorCategories(project)).Result;
+        }
         public LinkedList<DocumentSnapshot> GetMajorData(string project)
         {
             
