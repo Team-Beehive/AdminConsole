@@ -51,22 +51,24 @@ namespace AdminConsole
         string m_activeType;
         string m_activeDesc;
 
+        MajorData m_activeData;
         Majors m_major = new Majors();
         LinkedList<MajorData> m_majorList;
+
 
         //Temp variables to hold place for database
         //editable variables
         List<string> m_titles = new List<string> { "Tech", "Bio", "Math" };
         List<string> m_type = new List<string> { "BS", "BS", "BS" };
         List<string> m_desc = new List<string> { "Tech degree", "Bio degree", "math degree" };
-        int m_target = 0;
+        
 
 
         public MainWindow()
         {
             InitializeComponent();
             //Temp add the properties panel, later impliment a way that this gets called/changed based on active element
-            AddProperties();
+            //AddProperties();
             //Query database for editable pages
             //test();
             GetData();
@@ -78,17 +80,6 @@ namespace AdminConsole
         private void GetData()
         {
             m_majorList = m_major.GetMajors();
-        }
-
-        private void test()
-        {
-            Majors major = new Majors();
-            LinkedList<MajorData> temp = major.GetMajors();
-            foreach (MajorData m in temp)
-            {
-                Debug.WriteLine(m.MajorName);
-            }
-        
         }
 
         //private void AddButtons(List<string> majors)
@@ -170,7 +161,7 @@ namespace AdminConsole
             //Currently it can only change what text is there
             Grid grid = new Grid();
             TextBox tb = new TextBox();
-            tb.Height = 40;
+            tb.Height = 80;
             tb.TextWrapping = TextWrapping.Wrap;
             tb.TextChanged += TextChangedTest;
             //tb.Name = "TextBoxProperties";
@@ -186,12 +177,12 @@ namespace AdminConsole
         private void QueryPageData(string page)
         {
             //Replace all of this for a query
-            MajorData temp = null;
+            //MajorData temp = null;
             foreach (MajorData m in m_majorList)
             {
                 if (cleanString(m.MajorName) == page)
                 {
-                    temp = m;
+                    m_activeData = m;
                     break;
                 }
             }
@@ -200,22 +191,22 @@ namespace AdminConsole
 
             try
             {
-                m_activeTitle = temp.MajorName;
-                if (temp.about == null)
+                m_activeTitle = m_activeData.MajorName;
+                if (m_activeData.about == null)
                 {
                     //new?
                 }
                 else 
                 {
-                    m_activeDesc = temp.about[0];
+                    m_activeDesc = m_activeData.about[0];
                 }
-                if (temp.type == null)
+                if (m_activeData.type == null)
                 {
                     //new?
                 }
                 else
                 {
-                    m_activeType = temp.type[0];
+                    m_activeType = m_activeData.type[0];
                 }
 
             }
@@ -234,11 +225,12 @@ namespace AdminConsole
         }
 
         //Update the information locally
-        private void VolitileSave()
+        private void VolitileSave(string page)
         {
-            //m_titles[m_target] = m_activeTitle;
-            //m_type[m_target] = m_activeType;
-            //m_desc[m_target] = m_activeDesc;
+            m_activeData.type[0] = m_activeType;
+            m_activeData.about[0] = m_activeDesc;
+            m_major.UpdateLocal();
+
         }
 
         //Select a specific page to preview
@@ -247,15 +239,19 @@ namespace AdminConsole
             FrameworkElement page = sender as FrameworkElement;
             if (m_lastSelected != page.Name)
             {
+                AddProperties();
                 if (m_lastSelected != "n")
                 {
-                    VolitileSave();
+                    VolitileSave(page.Name);
                     Preview.Children.RemoveAt(1);
+                    //clear text in properties
+                    if (Properties.Children.Count > 1)
+                    {
+                        Properties.Children.RemoveAt(1);
+                    }
                 }
 
                 m_lastSelected = page.Name;
-                //Query the selected page for its info
-                //Debug.WriteLine(page.Name);
                 QueryPageData(page.Name);
                 ShowPreview();
             }
@@ -269,6 +265,7 @@ namespace AdminConsole
             TextBlock temp = sender as TextBlock;
             if (temp != null)
             {
+                //AddProperties();
                 m_properties.Text = temp.Text;
             }
         }
@@ -328,6 +325,7 @@ namespace AdminConsole
             desc.Text = m_activeDesc;
             desc.Name = "desc";
             desc.MouseDown += ButtonPressSelected;
+            desc.TextWrapping = TextWrapping.Wrap;
             Grid.SetRow(desc, 2);
 
             grid.Children.Add(title);
