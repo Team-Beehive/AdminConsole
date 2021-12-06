@@ -52,7 +52,7 @@ namespace AdminDatabaseFramework
         public Majors()
         {
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "F:\\CSTCode\\JP\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
-            //m_dataBaseRefs = majorDatabase.GetMajorData(project);
+            m_dataBaseRefs = majorDatabase.GetMajorData(project);
         }
 
         public void EditMajor(MajorData major)
@@ -83,9 +83,9 @@ namespace AdminDatabaseFramework
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
                 MajorData tempMajor = new MajorData();
                 tempMajor.MajorName = document.Id;
-                tempMajor.about = documentDictionary["about"] as List<string>;
-                tempMajor.campuses = documentDictionary["campuses"] as List<string>;
-                tempMajor.type = documentDictionary["type"] as List<string>;
+                tempMajor.about = ObjToStr(documentDictionary["about"] as List<object>);
+                tempMajor.campuses = ObjToStr(documentDictionary["campuses"] as List<object>);
+                tempMajor.type = ObjToStr(documentDictionary["type"] as List<object>);
                 datas.AddLast(tempMajor);
             }
             return datas;
@@ -113,6 +113,18 @@ namespace AdminDatabaseFramework
                 majorDatabase.PrintDocumentSnap(document);
             }    
 
+        }
+
+        private List<string> ObjToStr(List<object> objList)
+        {
+            List<string> tempList = new List<string>(objList.Count);
+
+            foreach(object obj in objList)
+            {
+                tempList.Add(obj.ToString());
+            }
+
+            return tempList;
         }
         
 
