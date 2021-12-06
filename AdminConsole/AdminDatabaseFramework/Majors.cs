@@ -58,6 +58,17 @@ namespace AdminDatabaseFramework
         public void EditMajor(MajorData major)
         {
             majorDatabase.EditMajorData(project, major);
+
+            if (major.MajorName != major.OldName)
+            {
+                string temp = major.OldName;
+                major.OldName = major.MajorName;
+                majorDatabase.EditMajorName(project, major, temp);
+            }
+            else
+            {
+                majorDatabase.EditMajorData(project, major);
+            }
         }
 
         public void EditMajor(MajorData major, string oldName)
@@ -83,6 +94,7 @@ namespace AdminDatabaseFramework
                 Dictionary<string, object> documentDictionary = document.ToDictionary();
                 MajorData tempMajor = new MajorData();
                 tempMajor.MajorName = document.Id;
+                tempMajor.OldName = document.Id;
                 tempMajor.about = ObjToStr(documentDictionary["about"] as List<object>);
                 tempMajor.campuses = ObjToStr(documentDictionary["campuses"] as List<object>);
                 tempMajor.type = ObjToStr(documentDictionary["type"] as List<object>);
