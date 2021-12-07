@@ -118,16 +118,16 @@ namespace AdminDatabaseFramework
 
         public void EditMajorData(string project, MajorData major)
         {
-            db_EditMajorData(project, major).Wait();
+            Task<LinkedList<DocumentSnapshot>>.Run(() => db_EditMajorData(project, major)).Wait();
         }
 
         public void DeleteMajorData(string project, MajorData major)
         {
-            db_DeleteMajorData(project, major).Wait();
+            Task<LinkedList<DocumentSnapshot>>.Run(() => db_DeleteMajorData(project, major)).Wait();
         }
         public void EditMajorName(string project, MajorData major, string oldName)
         {
-            db_EditMajorName(project, major, oldName).Wait();
+            Task<LinkedList<DocumentSnapshot>>.Run(() => db_EditMajorName(project, major, oldName)).Wait();
         }
 
         static string EmployersToCSV(List<object> list)
