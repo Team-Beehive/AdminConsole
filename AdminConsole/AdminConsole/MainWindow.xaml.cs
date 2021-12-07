@@ -189,26 +189,43 @@ namespace AdminConsole
 
             //Debug.WriteLine("You pressed: " + temp.MajorName);
 
-            try
-            {
-                m_activeTitle = m_activeData.MajorName;
-                //if (m_activeData.about != null)
-                //{
-                    m_activeDesc = m_activeData.about[0];
-                //}
-                //if (m_activeData.type != null)
-                //{
-                    m_activeType = m_activeData.type[0];
-                //}
-                //m_activeClasses = m_activeData.Classes[0];
-                //m_activeProfessors = m_activeData.Professors[0];
-                //m_activeCampus = m_activeData.campuses[0];
+            //try
+            //{
+            bool AddedToNull = false;
 
-            }
-            catch (Exception e)
+            m_activeTitle = m_activeData.MajorName;
+            //if (m_activeData.about != null)
+            //{
+                m_activeDesc = m_activeData.about[0];
+            //}
+            //if (m_activeData.type != null)
+            //{
+                m_activeType = m_activeData.type[0];
+            //}
+            //m_activeProfessors = m_activeData.Professors[0];
+            m_activeCampus = m_activeData.campuses[0];
+
+            if (m_activeData.Classes != null)
             {
-                Debug.WriteLine(e);
+                m_activeClasses = m_activeData.Classes[0];
             }
+            else
+            {
+                m_activeData.Classes = new List<string>() { "No Classes" };
+                m_activeClasses = m_activeData.Classes[0];
+                AddedToNull = true;
+            }
+
+            if (AddedToNull)
+            {
+                VolitileSave();
+            }
+
+            //}
+            //catch (Exception e)
+            //{
+            //    Debug.WriteLine(e);
+            //}
 
 
         }
@@ -216,9 +233,10 @@ namespace AdminConsole
         //Upload the updated information to the database
         private void ButtonPressExport(object sender, EventArgs e)
         {
+            tb_status.Text = "";
             VolitileSave();
             UploadData();
-            tb_status.Text = "";
+            tb_status.Text = "Database Updated";
         }
 
         //Update the information locally
@@ -226,6 +244,7 @@ namespace AdminConsole
         {
             m_activeData.type[0] = m_activeType;
             m_activeData.about[0] = m_activeDesc;
+            m_activeData.Classes[0] = m_activeClasses;
             if (m_hasChanged)
             {
                 m_major.UpdateLocal();
@@ -264,7 +283,7 @@ namespace AdminConsole
 
         private void UploadData()
         {
-            tb_status.Text = "Uploading...";
+            //tb_status.Text = "Uploading...";
             foreach (MajorData m in m_changedList)
             {
                 m_major.EditMajor(m);
@@ -329,9 +348,15 @@ namespace AdminConsole
             RowDefinition r1 = new RowDefinition();
             RowDefinition r2 = new RowDefinition();
             RowDefinition r3 = new RowDefinition();
+            RowDefinition r4 = new RowDefinition();
+            RowDefinition r5 = new RowDefinition();
+            RowDefinition r6 = new RowDefinition();
             grid.RowDefinitions.Add(r1);
             grid.RowDefinitions.Add(r2);
             grid.RowDefinitions.Add(r3);
+            grid.RowDefinitions.Add(r4);
+            grid.RowDefinitions.Add(r5);
+            grid.RowDefinitions.Add(r6);
 
             TextBlock title = new TextBlock();
             title.Text = m_activeTitle;
@@ -345,24 +370,24 @@ namespace AdminConsole
             classes.MouseDown += ButtonPressSelected;
             Grid.SetRow(classes, 1);
 
-            TextBlock prof = new TextBlock();
-            prof.Text = m_activeProfessors;
-            prof.Name = "prof";
-            prof.MouseDown += ButtonPressSelected;
-            Grid.SetRow(prof, 2);
+            //TextBlock prof = new TextBlock();
+            //prof.Text = m_activeProfessors;
+            //prof.Name = "prof";
+            //prof.MouseDown += ButtonPressSelected;
+            //Grid.SetRow(prof, 2);
 
             TextBlock camp = new TextBlock();
             camp.Text = m_activeCampus;
             camp.Name = "camp";
             camp.MouseDown += ButtonPressSelected;
-            Grid.SetRow(camp, 3);
+            Grid.SetRow(camp, 2);
 
             TextBlock type = new TextBlock();
             type.Text = m_activeType;
             type.Name = "type";
             type.MouseDown += ButtonPressSelected;
             //Grid.SetRow(type, 4);
-            Grid.SetRow(type, 1);
+            Grid.SetRow(type, 3);
 
             TextBlock desc = new TextBlock();
             desc.Text = m_activeDesc;
@@ -370,12 +395,12 @@ namespace AdminConsole
             desc.MouseDown += ButtonPressSelected;
             desc.TextWrapping = TextWrapping.Wrap;
             //Grid.SetRow(desc, 5);
-            Grid.SetRow(desc, 2);
+            Grid.SetRow(desc, 4);
 
             grid.Children.Add(title);
-            //grid.Children.Add(classes);
+            grid.Children.Add(classes);
             //grid.Children.Add(prof);
-            //grid.Children.Add(camp);
+            grid.Children.Add(camp);
             grid.Children.Add(type);
             grid.Children.Add(desc);
 
