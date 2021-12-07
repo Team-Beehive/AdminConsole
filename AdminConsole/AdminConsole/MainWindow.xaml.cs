@@ -48,21 +48,18 @@ namespace AdminConsole
         TextBox m_properties;
         string m_lastSelected = "n";
         string m_activeTitle;
+        string m_activeClasses;
+        string m_activeProfessors;
+        string m_activeCampus;
         string m_activeType;
         string m_activeDesc;
+        bool m_hasChanged = false;
 
+        List<MajorData> m_changedList = new List<MajorData>();
         MajorData m_activeData;
         Majors m_major = new Majors();
         LinkedList<MajorData> m_majorList;
-
-
-        //Temp variables to hold place for database
-        //editable variables
-        List<string> m_titles = new List<string> { "Tech", "Bio", "Math" };
-        List<string> m_type = new List<string> { "BS", "BS", "BS" };
-        List<string> m_desc = new List<string> { "Tech degree", "Bio degree", "math degree" };
         
-
 
         public MainWindow()
         {
@@ -75,7 +72,10 @@ namespace AdminConsole
             //Add buttons
             //AddButtons(m_majors);
             AddButtons(m_majorList);
+            tb_status.Text = "";
         }
+
+
 
         private void GetData()
         {
@@ -192,22 +192,17 @@ namespace AdminConsole
             try
             {
                 m_activeTitle = m_activeData.MajorName;
-                if (m_activeData.about == null)
-                {
-                    //new?
-                }
-                else 
-                {
+                //if (m_activeData.about != null)
+                //{
                     m_activeDesc = m_activeData.about[0];
-                }
-                if (m_activeData.type == null)
-                {
-                    //new?
-                }
-                else
-                {
+                //}
+                //if (m_activeData.type != null)
+                //{
                     m_activeType = m_activeData.type[0];
-                }
+                //}
+                //m_activeClasses = m_activeData.Classes[0];
+                //m_activeProfessors = m_activeData.Professors[0];
+                //m_activeCampus = m_activeData.campuses[0];
 
             }
             catch (Exception e)
@@ -221,15 +216,25 @@ namespace AdminConsole
         //Upload the updated information to the database
         private void ButtonPressExport(object sender, EventArgs e)
         {
-            Debug.WriteLine("Export not implimented");
+            VolitileSave();
+            UploadData();
+            tb_status.Text = "";
         }
 
         //Update the information locally
-        private void VolitileSave(string page)
+        private void VolitileSave()
         {
             m_activeData.type[0] = m_activeType;
             m_activeData.about[0] = m_activeDesc;
-            m_major.UpdateLocal();
+            if (m_hasChanged)
+            {
+                m_major.UpdateLocal();
+                if (!m_changedList.Contains(m_activeData))
+                {
+                    m_changedList.Add(m_activeData);
+                }
+                m_hasChanged = false;
+            }
 
         }
 
@@ -242,7 +247,7 @@ namespace AdminConsole
                 AddProperties();
                 if (m_lastSelected != "n")
                 {
-                    VolitileSave(page.Name);
+                    VolitileSave();
                     Preview.Children.RemoveAt(1);
                     //clear text in properties
                     if (Properties.Children.Count > 1)
@@ -254,6 +259,15 @@ namespace AdminConsole
                 m_lastSelected = page.Name;
                 QueryPageData(page.Name);
                 ShowPreview();
+            }
+        }
+
+        private void UploadData()
+        {
+            tb_status.Text = "Uploading...";
+            foreach (MajorData m in m_changedList)
+            {
+                m_major.EditMajor(m);
             }
         }
 
@@ -276,19 +290,29 @@ namespace AdminConsole
             TextBlock temp = m_activeElement as TextBlock;
             TextBox tb = sender as TextBox;
 
+            m_hasChanged = true;
 
             if (temp != null)
             {
                 switch (temp.Name)
                 {
                     case "title":
-                        //m_activeTitle = tb.Text;      //Title is weird and requires more logic to allow change
+                        m_activeTitle = tb.Text;
                         break;
                     case "type":
                         m_activeType = tb.Text;
                         break;
                     case "desc":
                         m_activeDesc = tb.Text;
+                        break;
+                    case "classes":
+                        m_activeClasses = tb.Text;
+                        break;
+                    case "prof":
+                        m_activeProfessors = tb.Text;
+                        break;
+                    case "camp":
+                        m_activeCampus = tb.Text;
                         break;
                 }
                 temp.Text = tb.Text;
@@ -315,10 +339,29 @@ namespace AdminConsole
             title.MouseDown += ButtonPressSelected;
             Grid.SetRow(title, 0);
 
+            TextBlock classes = new TextBlock();
+            classes.Text = m_activeClasses;
+            classes.Name = "classes";
+            classes.MouseDown += ButtonPressSelected;
+            Grid.SetRow(classes, 1);
+
+            TextBlock prof = new TextBlock();
+            prof.Text = m_activeProfessors;
+            prof.Name = "prof";
+            prof.MouseDown += ButtonPressSelected;
+            Grid.SetRow(prof, 2);
+
+            TextBlock camp = new TextBlock();
+            camp.Text = m_activeCampus;
+            camp.Name = "camp";
+            camp.MouseDown += ButtonPressSelected;
+            Grid.SetRow(camp, 3);
+
             TextBlock type = new TextBlock();
             type.Text = m_activeType;
             type.Name = "type";
             type.MouseDown += ButtonPressSelected;
+            //Grid.SetRow(type, 4);
             Grid.SetRow(type, 1);
 
             TextBlock desc = new TextBlock();
@@ -326,9 +369,13 @@ namespace AdminConsole
             desc.Name = "desc";
             desc.MouseDown += ButtonPressSelected;
             desc.TextWrapping = TextWrapping.Wrap;
+            //Grid.SetRow(desc, 5);
             Grid.SetRow(desc, 2);
 
             grid.Children.Add(title);
+            //grid.Children.Add(classes);
+            //grid.Children.Add(prof);
+            //grid.Children.Add(camp);
             grid.Children.Add(type);
             grid.Children.Add(desc);
 

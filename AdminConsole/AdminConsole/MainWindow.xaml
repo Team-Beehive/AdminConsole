@@ -23,6 +23,7 @@
             <Button Width="60" HorizontalAlignment="Left" Click="ButtonPressExport">
                 <TextBlock Text="Upload"/>
             </Button>
+            <TextBlock x:Name="tb_status" Text="Status Indicator" Foreground="White"/>
         </StackPanel>
         <StackPanel x:Name="PageSelect" Grid.Row="1" Grid.Column="0" Background="Gray">
             <TextBlock Text="Page Select"/>
