@@ -398,7 +398,7 @@ namespace AdminConsole
             Grid.SetRow(desc, 4);
 
             grid.Children.Add(title);
-            grid.Children.Add(classes);
+            //grid.Children.Add(classes);
             //grid.Children.Add(prof);
             grid.Children.Add(camp);
             grid.Children.Add(type);
