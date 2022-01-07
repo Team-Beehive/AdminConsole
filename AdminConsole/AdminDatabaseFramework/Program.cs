@@ -9,7 +9,8 @@ namespace AdminDatabaseFramework
         public static void Main()
         {
             Majors majors = new Majors();
-            MajorData majorData = new MajorData();
+            majors.GetCategories();
+            /*MajorData majorData = new MajorData();
             majorData.MajorName = "Testing Major";
             List<string> aboutL = new List<string>(2);
             aboutL.Add("The best major at OIT");            
@@ -29,7 +30,7 @@ namespace AdminDatabaseFramework
             majors.GetMajors();
             //majors.GetCategories();
             //Majors testMajor = new Majors();
-            //testMajor.GetMajors();
+            //testMajor.GetMajors();*/
         }
     }
 }

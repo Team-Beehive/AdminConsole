@@ -94,8 +94,18 @@ namespace AdminDatabaseFramework
             
         }
 
-        private static async Task<DocumentSnapshot> db_StoreMajorCategories(string project)
+        private static async Task db_EditMajorCatagoryTitle (string project, int CatagoryPos, string newTitle)
         {
+            FirestoreDb db = FirestoreDb.Create(project);
+            DocumentReference docRef = db.Collection("pages").Document("Majors");
+            List<object> tags = new List<object>();
+            foreach(object j in docRef.)
+            {
+                tags.Add(j);
+            }
+        }
+        private static async Task<DocumentSnapshot> db_StoreMajorCategories(string project)
+        { 
             FirestoreDb db = FirestoreDb.Create(project);
             DocumentReference userRef = db.Collection("pages").Document("Majors");
             DocumentSnapshot snapshot = await userRef.GetSnapshotAsync();
@@ -109,11 +119,9 @@ namespace AdminDatabaseFramework
             return Task<DocumentSnapshot>.Run( () => db_StoreMajorCategories(project)).Result;
         }
         public LinkedList<DocumentSnapshot> GetMajorData(string project)
-        {
-            
+        {         
             LinkedList<DocumentSnapshot> documentSnapshots = Task<LinkedList<DocumentSnapshot>>.Run(() => db_StoreMajorData(project)).Result;
             return documentSnapshots;
-
         }
 
         public void EditMajorData(string project, MajorData major)
@@ -128,6 +136,11 @@ namespace AdminDatabaseFramework
         public void EditMajorName(string project, MajorData major, string oldName)
         {
             Task<LinkedList<DocumentSnapshot>>.Run(() => db_EditMajorName(project, major, oldName)).Wait();
+        }
+
+        public void EditCategoryTitle(int catagoryPosition, string newTitle)
+        {
+
         }
 
         static string EmployersToCSV(List<object> list)
