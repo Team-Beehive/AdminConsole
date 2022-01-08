@@ -94,15 +94,24 @@ namespace AdminDatabaseFramework
             
         }
 
-        private static async Task db_EditMajorCatagoryTitle (string project, int CatagoryPos, string newTitle)
+        private static async Task db_EditMajorCatagoryTitle (string project, string oldTitle, string newTitle)
         {
             FirestoreDb db = FirestoreDb.Create(project);
             DocumentReference docRef = db.Collection("pages").Document("Majors");
-            List<object> tags = new List<object>();
-            foreach(object j in docRef.)
+            DocumentSnapshot document = await docRef.GetSnapshotAsync();
+            List<Dictionary<string, object>> categoryList = document.GetValue<List<Dictionary<string, object>>>("Categories");
+
+            categoryList.ForEach(category => { if (category["categoryTitle"].ToString() == oldTitle) { category["categoryTitle"] = newTitle; } });
+
+            Dictionary<string, object> categories = new Dictionary<string, object>()
             {
-                tags.Add(j);
-            }
+                {"Catagories", categoryList}
+            };
+
+
+
+            await docRef.UpdateAsync(categories);
+
         }
         private static async Task<DocumentSnapshot> db_StoreMajorCategories(string project)
         { 
@@ -138,9 +147,9 @@ namespace AdminDatabaseFramework
             Task<LinkedList<DocumentSnapshot>>.Run(() => db_EditMajorName(project, major, oldName)).Wait();
         }
 
-        public void EditCategoryTitle(int catagoryPosition, string newTitle)
+        public void EditCategoryTitle(string project, string oldTitle, string newTitle)
         {
-
+            Task<LinkedList<DocumentSnapshot>>.Run(() => db_EditMajorCatagoryTitle(project, oldTitle, newTitle)).Wait();
         }
 
         static string EmployersToCSV(List<object> list)
