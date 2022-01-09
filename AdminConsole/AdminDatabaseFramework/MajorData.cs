@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Google.Cloud.Firestore;
 
 namespace AdminDatabaseFramework
 {
@@ -13,6 +14,8 @@ namespace AdminDatabaseFramework
         public List<string> Professors { get; set; }
         public List<string> campuses { get; set; }
         public List<string> about { get; set; }
+
+        public DocumentReference DocumentReferenceSelf { get; set; } 
 
     }
 }

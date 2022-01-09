@@ -10,8 +10,11 @@ namespace AdminDatabaseFramework
         {
             Majors majors = new Majors();
             majors.GetCategories();
+            LinkedList<MajorData> majorData = majors.GetMajors();
+            MajorData minorData = majorData.Last.Value;
 
-            majors.EditMajorCatagoryTitle("BioHealth Science", "Biological Sciences");
+            majors.AddMajorToCat("Biological Sciences", minorData);
+            //majors.EditMajorCatagoryTitle("BioHealth Science", "Biological Sciences");
             /*MajorData majorData = new MajorData();
             majorData.MajorName = "Testing Major";
             List<string> aboutL = new List<string>(2);

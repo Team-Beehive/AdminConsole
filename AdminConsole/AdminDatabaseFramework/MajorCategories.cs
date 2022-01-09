@@ -10,6 +10,7 @@ namespace AdminDatabaseFramework
     public class MajorCategories
     {
         public string categoryTitle { get; set; }
+        public string oldTitle { get; set; }
         public List<Object> relatedDegrees { get; set; }
     }
 }

@@ -34,6 +34,11 @@ namespace AdminDatabaseFramework
                 -Updates a major that requires a name change
             -DeleteMajor(MajorData major)
                 -Deletes a major that exists in the database
+            -EditMajorCatagoryTitle(string oldName, string newName)
+                -Changes a Catagory's title requires the old name
+            -AddMajorToCat(string CatName, MajorData major)
+                -Adds a major to a catagory
+                -This can only be ran if the major exists in the database, highly reccommended to run updateLocal before this 
             -UpdateLocal()
                 -Updates the m_dataBaseRefs
                 -Reccomended to call after each update
@@ -81,9 +86,14 @@ namespace AdminDatabaseFramework
             majorDatabase.DeleteMajorData(project, major);
         }
 
-        public void EditMajorCatagoryTitle(string oldName, string newName)
+        public void EditMajorCatagoryTitle(MajorCategories majorCategories)
         {
-            majorDatabase.EditCategoryTitle(project, oldName, newName);
+            majorDatabase.EditCategoryTitle(project, majorCategories.oldTitle, majorCategories.categoryTitle);
+        }
+
+        public void AddMajorToCat(string CatName, MajorData major)
+        {
+            majorDatabase.AddMajorToCat(project, CatName, major);
         }
 
         public void UpdateLocal()
@@ -103,6 +113,7 @@ namespace AdminDatabaseFramework
                 tempMajor.about = ObjToStr(documentDictionary["about"] as List<object>);
                 tempMajor.campuses = ObjToStr(documentDictionary["campuses"] as List<object>);
                 tempMajor.type = ObjToStr(documentDictionary["type"] as List<object>);
+                tempMajor.DocumentReferenceSelf = document.Reference;
                 datas.AddLast(tempMajor);
             }
             return datas;
@@ -119,6 +130,7 @@ namespace AdminDatabaseFramework
                 MajorCategories majorCat = new MajorCategories();
                 majorCat.categoryTitle = category["categoryTitle"].ToString();
                 majorCat.relatedDegrees = category["relatedDegrees"] as List<object>;
+                majorCat.oldTitle = majorCat.categoryTitle;
                 majorCategories.AddLast(majorCat);
             }
             return majorCategories;

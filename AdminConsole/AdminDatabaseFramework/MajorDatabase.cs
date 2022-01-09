@@ -24,6 +24,10 @@ namespace AdminDatabaseFramework
                 -Used to update a document stored in the Degrees collection or create it if it does not exitst
             -db_DeleteMajorData(string project, MajorData major)
                 -Deletes a document with a matching id to the string stored in major.MajorName
+            -db_EditMajorCatagoryTitle(string project, string oldTitle, string newTitle)
+                -Uses the old title of a Category to update it to the new title
+            -db_AddMajorToCat(string project, string catName, MajorData majorData)
+                -Searches out a Category and adds the passes majorData to it
             -PrintDocumentSnap(DocumentSnapshot documentSnapshot)
                 -DEBUG ONLY
                 -Prints a single DocumentSnapshot to the console
@@ -38,6 +42,8 @@ namespace AdminDatabaseFramework
                 -Public facing function used to call db_EditMajorData
             -EditMajorName(string project, MajorData major, string oldName)
                 -Public facing function used to call db_EditMajorName
+
+
 
 
         */
@@ -94,7 +100,7 @@ namespace AdminDatabaseFramework
             
         }
 
-        private static async Task db_EditMajorCatagoryTitle (string project, string oldTitle, string newTitle)
+        private static async Task db_EditMajorCatagoryTitle(string project, string oldTitle, string newTitle)
         {
             FirestoreDb db = FirestoreDb.Create(project);
             DocumentReference docRef = db.Collection("pages").Document("Majors");
@@ -110,6 +116,29 @@ namespace AdminDatabaseFramework
 
 
 
+            await docRef.UpdateAsync(categories);
+
+        }
+
+        private static async Task db_AddMajorToCat(string project, string catName, MajorData majorData)
+        {
+            FirestoreDb database = FirestoreDb.Create(project);
+            DocumentReference docRef = database.Collection("pages").Document("Majors");
+            DocumentSnapshot document = await docRef.GetSnapshotAsync();
+
+            List<Dictionary<string, object>> categoryList = document.GetValue<List<Dictionary<string, object>>>("Categories");
+            foreach (Dictionary<string, object> category in categoryList)
+            {
+                if(category["categoryTitle"].ToString() == catName)
+                {
+                    (category["relatedDegrees"] as List<object>).Add(majorData.DocumentReferenceSelf);
+                }
+            }
+
+            Dictionary<string, object> categories = new Dictionary<string, object>()
+            {
+                {"Catagories", categoryList}
+            };
             await docRef.UpdateAsync(categories);
 
         }
@@ -133,6 +162,8 @@ namespace AdminDatabaseFramework
             return documentSnapshots;
         }
 
+
+
         public void EditMajorData(string project, MajorData major)
         {
             Task<LinkedList<DocumentSnapshot>>.Run(() => db_EditMajorData(project, major)).Wait();
@@ -149,7 +180,11 @@ namespace AdminDatabaseFramework
 
         public void EditCategoryTitle(string project, string oldTitle, string newTitle)
         {
-            Task<LinkedList<DocumentSnapshot>>.Run(() => db_EditMajorCatagoryTitle(project, oldTitle, newTitle)).Wait();
+            Task.Run(() => db_EditMajorCatagoryTitle(project, oldTitle, newTitle)).Wait();
+        }
+        public void AddMajorToCat(string project, string CatName, MajorData major)
+        {
+            Task.Run(() => db_AddMajorToCat(project, CatName, major)).Wait();
         }
 
         static string EmployersToCSV(List<object> list)
