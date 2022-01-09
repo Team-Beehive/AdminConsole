@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using AdminDatabaseFramework;
+using System.Xaml;
 
 namespace AdminConsole
 {
@@ -41,6 +42,7 @@ namespace AdminConsole
             Utilities.GetData();
             PageSelect.Children.Add(CreateElements.CreateMajorButtons(AppData.s_majorList));
             //PageSelect.Children.Add(CreateElements.CreateSectionButtons());
+            
 
 
             tb_status.Text = "";
