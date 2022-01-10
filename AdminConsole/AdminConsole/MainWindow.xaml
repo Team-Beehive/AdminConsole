@@ -18,12 +18,28 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <!--Tool bar-->
         <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Background="DarkBlue">
-            <TextBlock Text="Headder" Foreground="White"/>
-            <Button Width="60" HorizontalAlignment="Left" Click="ButtonPressExport">
-                <TextBlock Text="Upload"/>
-            </Button>
-            <TextBlock x:Name="tb_status" Text="Status Indicator" Foreground="White"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Row="0" Text="Headder" Foreground="White"/>
+                <Button Grid.Row="1" Width="60" HorizontalAlignment="Left" Click="ButtonPressExport" Content="Upload"/>
+                <TextBlock Grid.Row="2" x:Name="tb_status" Text="Status Indicator" Foreground="White"/>
+
+                <Button Grid.Row="0" Grid.Column="1" Width="80" Content="Majors" HorizontalAlignment="Left" Click="ButtonPressMajors"/>
+                <Button Grid.Row="1" Grid.Column="1" Width="80" Content="Category" HorizontalAlignment="Left" Click="ButtonPressCategory"/>
+            </Grid>
+            
         </StackPanel>
         <StackPanel x:Name="PageSelect" Grid.Row="1" Grid.Column="0" Background="Gray">
             <TextBlock Text="Page Select"/>

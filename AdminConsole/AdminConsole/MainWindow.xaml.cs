@@ -44,6 +44,7 @@ namespace AdminConsole
 
     public partial class MainWindow : Window
     {
+        //NOTE: in the main branch these are removed
         object m_activeElement;
         TextBox m_properties;
         string m_lastSelected = "n";
@@ -59,33 +60,153 @@ namespace AdminConsole
         MajorData m_activeData;
         Majors m_major = new Majors();
         LinkedList<MajorData> m_majorList;
-        
+
+        //New Branch related items
+        LinkedList<MajorCategories> m_catList;
+        MajorCategories m_activeCat;
 
         public MainWindow()
         {
             InitializeComponent();
-            //Temp add the properties panel, later impliment a way that this gets called/changed based on active element
-            //AddProperties();
-            //Query database for editable pages
-            //test();
-            GetData();
-            //Add buttons
-            //AddButtons(m_majors);
-            AddButtons(m_majorList);
+            AppData.s_previewPanel = Preview;
+            AppData.s_propertiesPanel = Properties;
+            AppData.s_listPanel = PageSelect;
+            Utilities.GetData();
             tb_status.Text = "";
         }
 
+        //Functions added to this branch =========================================
 
-
-        private void GetData()
+        private void ButtonPressMajors(object sender, EventArgs e)
         {
-            m_majorList = m_major.GetMajors();
+            //AddButtons(m_majorList);
+            //PageSelect.Children.Add(CreateElements.CreateMajorButtons(AppData.s_majorList));
+            CreateElements.CreateMajorButtons(AppData.s_majorList);
         }
 
+        private void ButtonPressCategory(object sender, EventArgs e)
+        {
+            //AddCatButtons(m_catList);
+            CreateElements.AddCatButtons(AppData.s_catList);
+        }
+
+        /*private void ButtonPressCatProp(object sender, EventArgs e)
+        {
+            Button temp = sender as Button;
+            
+            foreach (MajorCategories m in m_catList)
+            {
+                if (m.categoryTitle == temp.Content.ToString())
+                {
+                    m.oldTitle = m.categoryTitle;
+                    m_activeCat = m;
+                    break;
+                }
+            }
+            AddCatProp();
+            m_properties.Text = temp.Content.ToString();
+        }*/
+
+        private void ButtonPressNewCat(object sender, EventArgs e)
+        {
+            Debug.WriteLine("New Cat!");
+        }
+
+        /*private void ButtonPressUpdateCat(object sender, EventArgs e)
+        {
+            m_major.EditMajorCatagoryTitle(m_activeCat);
+            CreateElements.AddCatButtons(m_catList);
+        }*/
+
+        /*private void TextBoxCatName(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            m_activeCat.categoryTitle = tb.Text;
+            Debug.WriteLine(m_activeCat.categoryTitle);
+        }*/
+
+        /*private void AddCatButtons(LinkedList<MajorCategories> catList)
+        {
+            Debug.WriteLine("Generating buttons");
+            if (PageSelect.Children.Count > 1)
+            {
+                PageSelect.Children.RemoveAt(1);
+            }
+
+            Grid grid = new Grid();
+
+            int btnPos = 0;
+            foreach (MajorCategories cat in catList)
+            {
+                RowDefinition rd = new RowDefinition();
+                grid.RowDefinitions.Add(rd);
+                string cleanName = cleanString(cat.categoryTitle);
+
+                Button btn = new Button();
+                btn.Content = cat.categoryTitle;
+                btn.Name = cleanName;
+                btn.Click += ButtonPressCatProp;
+                Grid.SetRow(btn, btnPos);
+                grid.Children.Add(btn);
+                btnPos++;
+            }
+
+            Button addbtn = new Button();
+            addbtn.Content = "Add new category";
+            addbtn.Name = "AddCat";
+            addbtn.Click += ButtonPressNewCat;
+            Grid.SetRow(addbtn, btnPos);
+            grid.Children.Add(addbtn);
+
+            PageSelect.Children.Add(grid);
+        }*/
+
+        /*private void AddCatProp()
+        {
+            if (Properties.Children.Count > 1)
+            {
+                Properties.Children.RemoveAt(1);
+            }
+
+            Grid grid = new Grid();
+            RowDefinition rd0 = new RowDefinition();
+            RowDefinition rd1 = new RowDefinition();
+            grid.RowDefinitions.Add(rd0);
+            grid.RowDefinitions.Add(rd1);
+            TextBox tb = new TextBox();
+            tb.Height = 80;
+            tb.TextWrapping = TextWrapping.Wrap;
+            tb.TextChanged += TextBoxCatName;
+            m_properties = tb;
+            Grid.SetRow(tb, 0);
+            grid.Children.Add(tb);
+
+            Button btn = new Button();
+            btn.Content = "Update";
+            btn.Click += ButtonPressUpdateCat;
+            Grid.SetRow(btn, 1);
+            grid.Children.Add(btn);
+
+            Properties.Children.Add(grid);
+        }*/
+
+        //Functions changed for this branch =============================================
+        /*private void GetData()
+        {
+            m_majorList = m_major.GetMajors();
+            m_catList = m_major.GetCategories();
+        }*/
+
         //private void AddButtons(List<string> majors)
-        private void AddButtons(LinkedList<MajorData> majors)
+        /*private void AddButtons(LinkedList<MajorData> majors)
         {
             //Add buttons for each page we get from the query
+
+            if (PageSelect.Children.Count > 1)
+            {
+                PageSelect.Children.RemoveAt(1);
+            }
+
 
             //TODO: get a scroll bar for this working
             Grid grid = new Grid();
@@ -114,297 +235,18 @@ namespace AdminConsole
             //PageSelect.Children.Add(grid);
             PageSelect.Children.Add(scroll);
 
-        }
+        }*/
 
-        private string cleanString(string str)
-        {
-            //string clean = String.Concat(str.Where(c => !Char.IsWhiteSpace(c)));
-            //clean = String.Concat(clean.Where(c => !Char.IsSymbol(c)));
-            HashSet<char> set = new HashSet<char>(" !@#$%^&*()_+-=,:;<>");
-            StringBuilder sb = new StringBuilder(str.Length);
-            foreach (char x in str.Where(c => !set.Contains(c)))
-            {
-                sb.Append(x);
-            }
-            
-            
-            return sb.ToString();
-        }
-
-        //This function creates and adds a properties panel to the page
-        private void AddProperties()
-        {
-            //Temp for text editing properties
-            Grid grid = TextProperties();
-            Properties.Children.Add(grid);
-        }
-
-        //Create a preview of the page for clicking and editing
-        private void ShowPreview()
-        {
-            Grid grid = GetPageFormat();
-            Preview.Children.Add(grid);
-        }
-
-        //Select the page to edit
-        private Grid GetPageFormat()
-        {
-            //Select the correct template and get the relivent information
-            //GetDatabaseInfo()
-            Grid grid = MajorsTemplate();
-            return grid;
-        }
-
-        //Properties panel for changing text
-        private Grid TextProperties()
-        {
-            //Currently it can only change what text is there
-            Grid grid = new Grid();
-            TextBox tb = new TextBox();
-            tb.Height = 80;
-            tb.TextWrapping = TextWrapping.Wrap;
-            tb.TextChanged += TextChangedTest;
-            //tb.Name = "TextBoxProperties";
-            m_properties = tb;
-            Grid.SetRow(tb, 0);
-            grid.Children.Add(tb);
-
-            return grid;
-        }
-
-        //Query a specific page and get its data
-        //Later change the perameter to a better way to target the page
-        private void QueryPageData(string page)
-        {
-            //Replace all of this for a query
-            //MajorData temp = null;
-            foreach (MajorData m in m_majorList)
-            {
-                if (cleanString(m.MajorName) == page)
-                {
-                    m_activeData = m;
-                    break;
-                }
-            }
-
-            //Debug.WriteLine("You pressed: " + temp.MajorName);
-
-            //try
-            //{
-            bool AddedToNull = false;
-
-            m_activeTitle = m_activeData.MajorName;
-            //if (m_activeData.about != null)
-            //{
-                m_activeDesc = m_activeData.about[0];
-            //}
-            //if (m_activeData.type != null)
-            //{
-                m_activeType = m_activeData.type[0];
-            //}
-            //m_activeProfessors = m_activeData.Professors[0];
-            m_activeCampus = m_activeData.campuses[0];
-
-            if (m_activeData.Classes != null)
-            {
-                m_activeClasses = m_activeData.Classes[0];
-            }
-            else
-            {
-                m_activeData.Classes = new List<string>() { "No Classes" };
-                m_activeClasses = m_activeData.Classes[0];
-                AddedToNull = true;
-            }
-
-            if (AddedToNull)
-            {
-                VolitileSave();
-            }
-
-            //}
-            //catch (Exception e)
-            //{
-            //    Debug.WriteLine(e);
-            //}
-
-
-        }
 
         //Upload the updated information to the database
         private void ButtonPressExport(object sender, EventArgs e)
         {
             tb_status.Text = "";
-            VolitileSave();
-            UploadData();
+            Utilities.VolitileSave();
+            Utilities.UploadData();
             tb_status.Text = "Database Updated";
         }
 
-        //Update the information locally
-        private void VolitileSave()
-        {
-            m_activeData.type[0] = m_activeType;
-            m_activeData.about[0] = m_activeDesc;
-            m_activeData.Classes[0] = m_activeClasses;
-            if (m_hasChanged)
-            {
-                m_major.UpdateLocal();
-                if (!m_changedList.Contains(m_activeData))
-                {
-                    m_changedList.Add(m_activeData);
-                }
-                m_hasChanged = false;
-            }
 
-        }
-
-        //Select a specific page to preview
-        private void ButtonPressPage(object sender, EventArgs e)
-        {
-            FrameworkElement page = sender as FrameworkElement;
-            if (m_lastSelected != page.Name)
-            {
-                AddProperties();
-                if (m_lastSelected != "n")
-                {
-                    VolitileSave();
-                    Preview.Children.RemoveAt(1);
-                    //clear text in properties
-                    if (Properties.Children.Count > 1)
-                    {
-                        Properties.Children.RemoveAt(1);
-                    }
-                }
-
-                m_lastSelected = page.Name;
-                QueryPageData(page.Name);
-                ShowPreview();
-            }
-        }
-
-        private void UploadData()
-        {
-            //tb_status.Text = "Uploading...";
-            foreach (MajorData m in m_changedList)
-            {
-                m_major.EditMajor(m);
-            }
-        }
-
-        //Select a specific element to edit
-        public void ButtonPressSelected(object sender, EventArgs e)
-        {
-            //Currently it is only set up to select and change text blocks
-            m_activeElement = sender;
-            TextBlock temp = sender as TextBlock;
-            if (temp != null)
-            {
-                //AddProperties();
-                m_properties.Text = temp.Text;
-            }
-        }
-
-        //When the text in the edit box changes this gets called
-        private void TextChangedTest(object sender, TextChangedEventArgs e)
-        {
-            TextBlock temp = m_activeElement as TextBlock;
-            TextBox tb = sender as TextBox;
-
-            m_hasChanged = true;
-
-            if (temp != null)
-            {
-                switch (temp.Name)
-                {
-                    case "title":
-                        m_activeTitle = tb.Text;
-                        break;
-                    case "type":
-                        m_activeType = tb.Text;
-                        break;
-                    case "desc":
-                        m_activeDesc = tb.Text;
-                        break;
-                    case "classes":
-                        m_activeClasses = tb.Text;
-                        break;
-                    case "prof":
-                        m_activeProfessors = tb.Text;
-                        break;
-                    case "camp":
-                        m_activeCampus = tb.Text;
-                        break;
-                }
-                temp.Text = tb.Text;
-            }
-
-        }
-
-        //Temporary template for the majors page
-        private Grid MajorsTemplate()
-        {
-            Grid grid = new Grid();
-
-            //In WPF you absolutly HAVE to create row/collum definitions to work
-            RowDefinition r1 = new RowDefinition();
-            RowDefinition r2 = new RowDefinition();
-            RowDefinition r3 = new RowDefinition();
-            RowDefinition r4 = new RowDefinition();
-            RowDefinition r5 = new RowDefinition();
-            RowDefinition r6 = new RowDefinition();
-            grid.RowDefinitions.Add(r1);
-            grid.RowDefinitions.Add(r2);
-            grid.RowDefinitions.Add(r3);
-            grid.RowDefinitions.Add(r4);
-            grid.RowDefinitions.Add(r5);
-            grid.RowDefinitions.Add(r6);
-
-            TextBlock title = new TextBlock();
-            title.Text = m_activeTitle;
-            title.Name = "title";
-            title.MouseDown += ButtonPressSelected;
-            Grid.SetRow(title, 0);
-
-            TextBlock classes = new TextBlock();
-            classes.Text = m_activeClasses;
-            classes.Name = "classes";
-            classes.MouseDown += ButtonPressSelected;
-            Grid.SetRow(classes, 1);
-
-            //TextBlock prof = new TextBlock();
-            //prof.Text = m_activeProfessors;
-            //prof.Name = "prof";
-            //prof.MouseDown += ButtonPressSelected;
-            //Grid.SetRow(prof, 2);
-
-            TextBlock camp = new TextBlock();
-            camp.Text = m_activeCampus;
-            camp.Name = "camp";
-            camp.MouseDown += ButtonPressSelected;
-            Grid.SetRow(camp, 2);
-
-            TextBlock type = new TextBlock();
-            type.Text = m_activeType;
-            type.Name = "type";
-            type.MouseDown += ButtonPressSelected;
-            //Grid.SetRow(type, 4);
-            Grid.SetRow(type, 3);
-
-            TextBlock desc = new TextBlock();
-            desc.Text = m_activeDesc;
-            desc.Name = "desc";
-            desc.MouseDown += ButtonPressSelected;
-            desc.TextWrapping = TextWrapping.Wrap;
-            //Grid.SetRow(desc, 5);
-            Grid.SetRow(desc, 4);
-
-            grid.Children.Add(title);
-            //grid.Children.Add(classes);
-            //grid.Children.Add(prof);
-            grid.Children.Add(camp);
-            grid.Children.Add(type);
-            grid.Children.Add(desc);
-
-            return grid;
-        }
     }
 }
