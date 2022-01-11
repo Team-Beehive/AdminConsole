@@ -9,6 +9,10 @@ using AdminDatabaseFramework;
 
 namespace AdminConsole
 {
+    /*
+     * Author: Destiny Dahlgren
+     * Purpose: Holds important data that is needed for the rest of the front end to function
+     */
     static class AppData
     {
         public static object s_activeElement;

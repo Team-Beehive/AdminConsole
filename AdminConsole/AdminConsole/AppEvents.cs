@@ -10,10 +10,30 @@ using AdminDatabaseFramework;
 
 namespace AdminConsole
 {
+    /*
+     * Author: Destiny Dahlgren
+     * Purpose: Holds most of the interactive events. Mostly for items that are generated at runtime
+     */
+
+    /*
+     * Functions:
+     * ButtonPressCatProp(object sender, EventArgs e)
+     * - Creates a list of buttons from the given category list
+     * ButtonPressUpdateCat(object sender, EventArgs e)
+     * - Updates the category name locally and remakes the buttons to reflect it
+     * TextBoxCatName(object sender, TextChangedEventArgs e)
+     * - Triggers when the text box changes. Puts the changes into the variables
+     * ButtonPressPage(object sender, EventArgs e)
+     * - When a major is selected it gets the relivent info and displays the preview
+     * ButtonPressPage(object sender, EventArgs e)
+     * - When a page element is selected open its properties panel
+     * - Currently only set for modifying the text it contains
+     * 
+     */
+
     static class AppEvents
     {
-        //Added to this branch
-
+        
         public static void ButtonPressCatProp(object sender, EventArgs e)
         {
             Button temp = sender as Button;
@@ -43,10 +63,6 @@ namespace AdminConsole
             AppData.s_activeCat.categoryTitle = tb.Text;
         }
 
-        //Old stuff
-
-        //Runs when a major button is pressed
-        //Get page info and display a preview
         public static void ButtonPressPage(object sender, EventArgs e)
         {
             FrameworkElement page = sender as FrameworkElement;
@@ -69,8 +85,6 @@ namespace AdminConsole
             }
         }
 
-        //When a page element is selected open the properties panel for that element
-        //Set for modyfying text elements
         public static void ButtonPressSelected(object sender, EventArgs e)
         {
             if (AppData.s_propertiesPanel.Children.Count == 1)

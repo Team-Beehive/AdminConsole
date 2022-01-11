@@ -9,6 +9,25 @@ using AdminDatabaseFramework;
 
 namespace AdminConsole
 {
+    /*
+     * Author: Destiny Dahlgren
+     * Purpose: Background repeated logic that the rest of the front end uses
+     */
+
+    /*
+     * Functions:
+     * cleanString(string str)
+     * - Because element names can only be one word and contain no special character this function removes all spaces and all special characters
+     * QueryPageData(string page)
+     * - Iterates through the major list finding a match for the given major name. Sets the active data variable to the match
+     * VolitileSave()
+     * - Runs UpdateLocal() saving the information so that changes arn't lost when a new page is selected
+     * UploadData()
+     * - Takes the changes made and uploads it onto the database
+     * GetData()
+     * - Gets the important data and sets it to the relivent variables
+     */
+
     static class Utilities
     {
         public static string cleanString(string str)
