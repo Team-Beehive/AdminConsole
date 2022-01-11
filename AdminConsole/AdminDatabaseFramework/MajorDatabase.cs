@@ -107,7 +107,7 @@ namespace AdminDatabaseFramework
             DocumentSnapshot document = await docRef.GetSnapshotAsync();
             List<Dictionary<string, object>> categoryList = document.GetValue<List<Dictionary<string, object>>>("Categories");
 
-            categoryList.ForEach(category => { if (category["categoryTitle"].ToString() == oldTitle) { category["categoryTitle"] = newTitle; } });
+            categoryList.ForEach(category => { if (category["categoryTitle"].ToString() != oldTitle) { category["categoryTitle"] = newTitle; } });
 
             Dictionary<string, object> categories = new Dictionary<string, object>()
             {
