@@ -45,16 +45,19 @@ namespace AdminConsole
             return sb.ToString();
         }
 
-        public static void QueryPageData(string page)
+        //public static void QueryPageData(string page)
+        public static void QueryPageData(MajorData major)
         {
-            foreach (MajorData m in AppData.s_majorList)
+            /*foreach (MajorData m in AppData.s_majorList)
             {
                 if (cleanString(m.MajorName) == page)
                 {
                     AppData.s_activeData = m;
                     break;
                 }
-            }
+            }*/
+
+            AppData.s_activeData = major;
 
             bool AddedToNull = false;
 

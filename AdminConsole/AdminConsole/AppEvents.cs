@@ -36,19 +36,22 @@ namespace AdminConsole
         
         public static void ButtonPressCatProp(object sender, EventArgs e)
         {
-            Button temp = sender as Button;
+            CatButton temp = sender as CatButton;
+            AppData.s_activeCat = temp.category;
 
-            foreach (MajorCategories c in AppData.s_catList)
+            //Button temp = sender as Button;
+
+            /*foreach (MajorCategories c in AppData.s_catList)
             {
                 if (c.categoryTitle == temp.Content.ToString())
                 {
-                    c.oldTitle = c.categoryTitle;
+                    //c.oldTitle = c.categoryTitle;
                     AppData.s_activeCat = c;
                     break;
                 }
-            }
+            }*/
             CreateElements.AddCatProp();
-            AppData.s_properties.Text = temp.Content.ToString();
+            AppData.s_properties.Text = temp.category.categoryTitle;
         }
 
         public static void ButtonPressUpdateCat(object sender, EventArgs e)
@@ -65,7 +68,8 @@ namespace AdminConsole
 
         public static void ButtonPressPage(object sender, EventArgs e)
         {
-            FrameworkElement page = sender as FrameworkElement;
+            //FrameworkElement page = sender as FrameworkElement;
+            MajorButton page = sender as MajorButton;
             if (AppData.s_lastSelected != page.Name)
             {
                 if (AppData.s_lastSelected != "n")
@@ -80,7 +84,10 @@ namespace AdminConsole
 
                 }
                 AppData.s_lastSelected = page.Name;
-                Utilities.QueryPageData(page.Name);
+                //Utilities.QueryPageData(page.Name);
+                Utilities.QueryPageData(page.major);
+                //MajorButton temp = sender as MajorButton;
+                //AppData.s_activeData = page.major;
                 CreateElements.ShowPreview();
             }
         }

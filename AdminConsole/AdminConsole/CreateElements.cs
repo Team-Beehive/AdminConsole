@@ -37,7 +37,9 @@ namespace AdminConsole
                 grid.RowDefinitions.Add(rd);
                 string cleanName = Utilities.cleanString(cat.categoryTitle);
 
-                Button btn = new Button();
+                //Button btn = new Button();
+                CatButton btn = new CatButton();
+                btn.category = cat;
                 btn.Content = cat.categoryTitle;
                 btn.Name = cleanName;
                 btn.Click += AppEvents.ButtonPressCatProp;
@@ -156,7 +158,9 @@ namespace AdminConsole
                 grid.RowDefinitions.Add(rd);
                 string cleanName = Utilities.cleanString(major.MajorName);
 
-                Button btn = new Button();
+                //Button btn = new Button();
+                MajorButton btn = new MajorButton();
+                btn.major = major;
                 btn.Content = major.MajorName;
                 btn.Name = cleanName;
                 btn.Click += AppEvents.ButtonPressPage;
@@ -252,7 +256,7 @@ namespace AdminConsole
             Grid.SetRow(desc, 4);
 
             grid.Children.Add(title);
-            //grid.Children.Add(classes);
+            grid.Children.Add(classes);
             //grid.Children.Add(prof);
             grid.Children.Add(camp);
             grid.Children.Add(type);
