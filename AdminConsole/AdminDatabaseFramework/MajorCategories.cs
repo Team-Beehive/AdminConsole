@@ -12,5 +12,14 @@ namespace AdminDatabaseFramework
         public string categoryTitle { get; set; }
         public string oldTitle { get; set; }
         public List<Object> relatedDegrees { get; set; }
+
+        public Dictionary<string, object> ToDictionary
+        {
+            get { return new Dictionary<string,object>()
+            { 
+                {"categoryTitle", categoryTitle },
+                {"relatedDegrees", relatedDegrees }
+            }; }
+        }
     }
 }

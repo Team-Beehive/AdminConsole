@@ -39,6 +39,13 @@ namespace AdminDatabaseFramework
             -AddMajorToCat(string CatName, MajorData major)
                 -Adds a major to a catagory
                 -This can only be ran if the major exists in the database, highly reccommended to run updateLocal before this 
+            -RemoveMajorFromCat(MajorCategories majorCategories, MajorData major)
+                -Removes the passed MajorData from the passed MajorCategories
+                -Only works if a DocumentReference exists in the MajorData
+            -CreateMajorCategory(string catTitle)
+                -Creates a new Major Category with the title passes
+            - DeleteMajorCategory(MajorCategories majorCategories)
+                -Deletes the MajorCategory passed if found
             -UpdateLocal()
                 -Updates the m_dataBaseRefs
                 -Reccomended to call after each update
@@ -56,7 +63,7 @@ namespace AdminDatabaseFramework
         private MajorDatabase majorDatabase = new MajorDatabase();
         public Majors()
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "F:\\CSTCode\\JP\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Users\\nulty\\Documents\\JrProject\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
             m_dataBaseRefs = majorDatabase.GetMajorData(project);
         }
 
@@ -91,11 +98,25 @@ namespace AdminDatabaseFramework
             majorDatabase.EditCategoryTitle(project, majorCategories.oldTitle, majorCategories.categoryTitle);
         }
 
-        public void AddMajorToCat(string CatName, MajorData major)
+        public void AddMajorToCat(MajorCategories majorCategories, MajorData major)
         {
-            majorDatabase.AddMajorToCat(project, CatName, major);
+            majorDatabase.AddMajorToCat(project, majorCategories.oldTitle, major);
         }
 
+        public void RemoveMajorFromCat(MajorCategories majorCategories, MajorData major)
+        {
+            majorDatabase.RemoveMajorFromCat(project, majorCategories, major);
+        }
+
+        public void CreateMajorCategory(string catTitle)
+        {
+            majorDatabase.CreateMajorCategory(project, catTitle);
+        }
+
+        public void DeleteMajorCategory(MajorCategories majorCategories)
+        {
+            majorDatabase.DeleteMajorCategory(project, majorCategories);
+        }
         public void UpdateLocal()
         {
             m_dataBaseRefs = majorDatabase.GetMajorData(project);
