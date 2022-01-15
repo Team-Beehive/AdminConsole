@@ -124,6 +124,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildingData.cs" />
+    <Compile Include="Buildings.cs" />
     <Compile Include="MajorCategories.cs" />
     <Compile Include="MajorData.cs" />
     <Compile Include="MajorDatabase.cs" />
