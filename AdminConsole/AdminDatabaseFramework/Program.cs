@@ -8,7 +8,7 @@ namespace AdminDatabaseFramework
     {
         public static void Main()
         {
-            Majors majors = new Majors();
+            /*Majors majors = new Majors();
             MajorData majorData = new MajorData();
             majorData.MajorName = "Testing Major";
             List<string> aboutL = new List<string>(2);
@@ -29,7 +29,12 @@ namespace AdminDatabaseFramework
             majors.GetMajors();
             //majors.GetCategories();
             //Majors testMajor = new Majors();
-            //testMajor.GetMajors();
+            //testMajor.GetMajors();*/
+
+            Buildings buildingData = new Buildings();
+
+            buildingData.GetBuildings();
+
         }
     }
 }
