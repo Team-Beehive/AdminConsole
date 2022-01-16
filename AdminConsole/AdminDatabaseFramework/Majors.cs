@@ -95,9 +95,9 @@ namespace AdminDatabaseFramework
                 MajorData tempMajor = new MajorData();
                 tempMajor.MajorName = document.Id;
                 tempMajor.OldName = document.Id;
-                tempMajor.about = ObjToStr(documentDictionary["about"] as List<object>);
-                tempMajor.campuses = ObjToStr(documentDictionary["campuses"] as List<object>);
-                tempMajor.type = ObjToStr(documentDictionary["type"] as List<object>);
+                tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
+                tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
+                tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
                 datas.AddLast(tempMajor);
             }
             return datas;
@@ -126,20 +126,5 @@ namespace AdminDatabaseFramework
             }    
 
         }
-
-        private List<string> ObjToStr(List<object> objList)
-        {
-            List<string> tempList = new List<string>(objList.Count);
-
-            foreach(object obj in objList)
-            {
-                tempList.Add(obj.ToString());
-            }
-
-            return tempList;
-        }
-        
-
-
     }
 }

@@ -30,17 +30,17 @@ namespace AdminDatabaseFramework
 
         public void CreateBuilding(BuildingData building)
         {
-
+            Task.Run(() => db_CreateBuilding(building)).Wait();
         }
 
         public void RemoveBuilding(BuildingData building)
         {
-
+           Task.Run(() => db_RemoveBuilding(building)).Wait();
         }
 
         public void UpdateBuilding(BuildingData building)
         {
-
+            Task.Run(() => db_UpdateBuilding(building)).Wait();
         }
 
         private async Task<LinkedList<BuildingData>> db_GetBuildingListAsync()
@@ -53,23 +53,50 @@ namespace AdminDatabaseFramework
             {
                 BuildingData temp = new BuildingData();
                 Dictionary<string, object> properties = document.ToDictionary();
-                
-                
-                buildings.AddLast(temp.stringsToBuildingData(document.Id.ToString(), ObjToStr(properties["majors"] as List<object>), properties["name_info"].ToString(), ObjToStr(properties["professors"] as List<object>), properties["year"].ToString()));
+
+                buildings.AddLast(temp.stringsToBuildingData(document.Id.ToString(), ObjectFunctions.ObjToStr(properties["majors"] as List<object>), properties["name_info"].ToString(),ObjectFunctions.ObjToStr(properties["professors"] as List<object>), ObjectFunctions.ObjToStr(properties["professors"] as List<object>), properties["year"].ToString(), document.Reference, document.Id.ToString()));
             }
             return buildings;
         }
 
-        private List<string> ObjToStr(List<object> objList)
+        private async Task db_CreateBuilding(BuildingData buildingData)
         {
-            List<string> tempList = new List<string>(objList.Count);
-
-            foreach (object obj in objList)
+            if(buildingData.BuildingName != null)
             {
-                tempList.Add(obj.ToString());
+                DocumentReference buildingRef = firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName);
+                await buildingRef.SetAsync(buildingData.ToDictionary());
             }
-
-            return tempList;
+            else
+            {
+                throw new Exception("BuildingName not set, cannot create document");
+            }
         }
+
+        private async Task db_RemoveBuilding(BuildingData buildingData)
+        {
+            if(buildingData.BuildingName != null)
+            {
+                await firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).DeleteAsync();
+            }
+            else
+            {
+                throw new Exception("BuildingName not set, cannot delete document");
+            }
+        }
+
+        private async Task db_UpdateBuilding(BuildingData buildingData)
+        {
+            if (buildingData.BuildingName != buildingData.oldName)
+            {
+                DocumentReference buildingRef = firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.oldName);
+                await buildingRef.DeleteAsync();
+                Task.Run(async () => await db_CreateBuilding(buildingData)).Wait();
+            }
+            else if (buildingData.BuildingName == buildingData.oldName)
+            {
+                await firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).UpdateAsync(buildingData.ToDictionary());
+            }
+        }
+       
     }
 }

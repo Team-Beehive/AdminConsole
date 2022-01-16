@@ -33,8 +33,13 @@ namespace AdminDatabaseFramework
 
             Buildings buildingData = new Buildings();
 
-            buildingData.GetBuildings();
+            BuildingData building = new BuildingData();
+            building.BuildingName = "Cornett Hall 2: World Warrior";
+            building.oldName = "Cornett Hall 2: World Warrior";
+            building.BuildingConstructionYear = "1999";
 
+            //buildingData.UpdateBuilding(building);
+            buildingData.RemoveBuilding(building);
         }
     }
 }
