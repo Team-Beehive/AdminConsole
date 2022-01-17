@@ -138,6 +138,9 @@
     <Compile Include="MajorPreviewControl.xaml.cs">
       <DependentUpon>MajorPreviewControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NewCatProp.xaml.cs">
+      <DependentUpon>NewCatProp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -155,6 +158,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MajorPreviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewCatProp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

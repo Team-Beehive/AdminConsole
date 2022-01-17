@@ -51,7 +51,7 @@ namespace AdminConsole
             Button btnAdd = new Button();
             btnAdd.Content = "Add category";
             btnAdd.Name = "addCat";
-            //btnAdd.Click += ButtonPressNewCat;
+            btnAdd.Click += AppEvents.ButtonPressNewCat;
             Grid.SetRow(btnAdd, btnPos);
             grid.Children.Add(btnAdd);
 

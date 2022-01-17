@@ -33,6 +33,14 @@ namespace AdminConsole
 
     static class AppEvents
     {
+        public static void ButtonPressNewCat(object sender, EventArgs e)
+        {
+            if (AppData.s_propertiesPanel.Children.Count > 1)
+            {
+                AppData.s_propertiesPanel.Children.RemoveAt(1);
+            }
+            AppData.s_propertiesPanel.Children.Add(new NewCatProp());
+        }
         
         public static void ButtonPressCatProp(object sender, EventArgs e)
         {
