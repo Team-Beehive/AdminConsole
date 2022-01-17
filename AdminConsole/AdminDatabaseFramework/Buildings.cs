@@ -7,6 +7,38 @@ using Google.Cloud.Firestore;
 
 namespace AdminDatabaseFramework
 {
+    /*--------------
+        Class: Buildings
+        Purpose: Used to update and read information about buildings from fire store
+        Date Created: 1/16/22
+        Author: Tucker Nulty
+
+        Ctors:
+            -()
+                -Sets Enviornmental Variable
+                -Creates a database reference
+
+        Local Variables:
+            -public LinkedList<BuildingData> BuildingList
+                -Used to store the buildings from the database
+            -public string project
+                -Stores the project id used to connect to firestore
+            -private FirestoreDb firestoreDb
+                -An instance of firestore used to interact with the database
+            
+        
+        Funtions:
+            -void updateLocalBuildings()
+                -Updates the local list of buildings by calling db_GetBuildingListAsync()
+            -LinkedList<BuildingData> GetBuildings()
+                -returns BuildingList
+            -void CreateBuilding(BuildingData building)
+                -Creates/Overrides a building in the database by calling db_CreateBuilding(building)
+            -void RemoveBuilding(BuildingData building)
+                -Removes passed building if it exists by calling db_DeleteBuilding(building)
+            -void UpdateBuilding(BuildingData building)
+                -Updates passed building and/or changes name of building
+        */
     public class Buildings
     {
         public LinkedList<BuildingData> BuildingList { get; set; }
