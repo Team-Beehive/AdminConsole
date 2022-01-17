@@ -19,6 +19,29 @@ namespace AdminConsole
 
     static class CreateElements
     {
+        public static Grid CreateBuildingButtons()
+        {
+            Grid grid = new Grid();
+            
+            int btnPos = 0;
+            foreach (BuildingData building in AppData.s_buildingList)
+            {
+                RowDefinition rd = new RowDefinition();
+                grid.RowDefinitions.Add(rd);
+                string cleanName = Utilities.cleanString(building.BuildingName);
+
+                BuildingButton btn = new BuildingButton();
+                btn.Content = building.BuildingName;
+                btn.Name = cleanName;
+                btn.Click += AppEvents.ButtonPressBuildingSelect;
+                btn.data = building;
+                Grid.SetRow(btn, btnPos);
+                grid.Children.Add(btn);
+                btnPos++;
+            }
+            return grid;
+        }
+
         //Create a set of navigation buttons
         public static Grid CreateSectionButtons()
         {

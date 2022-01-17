@@ -88,6 +88,7 @@ namespace AdminConsole
         public static void GetData()
         {
             AppData.s_majorList = AppData.s_major.GetMajors();
+            AppData.s_buildingList = AppData.s_building.GetBuildings();
         }
         
     }
