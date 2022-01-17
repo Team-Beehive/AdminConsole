@@ -13,8 +13,11 @@ namespace AdminDatabaseFramework
             LinkedList<MajorData> majorData = majors.GetMajors();
             MajorData minorData = majorData.Last.Value;
             MajorCategories majorCategories = new MajorCategories();
-            majorCategories.oldTitle = "Biological Sciences";
+            majorCategories.oldTitle = "BioHealth";
             majorCategories.categoryTitle = "BioHealth";
+
+            //majors.CreateMajorCategory("BioHealth");
+            majors.DeleteMajorCategory(majorCategories);
 
             //majors.AddMajorToCat("Biological Sciences", minorData);
             //majors.EditMajorCatagoryTitle(majorCategories);

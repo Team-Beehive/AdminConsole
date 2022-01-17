@@ -47,13 +47,6 @@ namespace AdminDatabaseFramework
 
 
         */
-
-
-        private static void InitializeProject(string project)
-        {
-            FirestoreDb db = FirestoreDb.Create(project);
-        }
-
         private static async Task db_EditMajorName(string project, MajorData major, string oldName)
         {
             FirestoreDb db = FirestoreDb.Create(project);
@@ -142,6 +135,60 @@ namespace AdminDatabaseFramework
             await docRef.UpdateAsync(categories);
 
         }
+
+        private static async Task db_RemoveMajorFromCat(string project, MajorCategories majorCategories, MajorData major)
+        {
+            FirestoreDb database = FirestoreDb.Create(project);
+            DocumentReference docRef = database.Collection("pages").Document("Majors");
+            DocumentSnapshot document = await docRef.GetSnapshotAsync();
+
+            List<Dictionary<string, object>> categoryList = document.GetValue<List<Dictionary<string, object>>>("Categories");
+            foreach (Dictionary<string, object> category in categoryList)
+            {
+                if (category["categoryTitle"].ToString() == majorCategories.categoryTitle)
+                {
+                    (category["relatedDegrees"] as List<object>).Remove(major.DocumentReferenceSelf);
+                }
+            }
+
+            await docRef.UpdateAsync(dictListToDict(categoryList, "Categories"));
+
+        }
+
+        private static async Task<MajorCategories> db_CreateMajorCategory(string project, string catTitle)
+        {
+            FirestoreDb database = FirestoreDb.Create(project);
+            DocumentReference docRef = database.Collection("pages").Document("Majors");
+            DocumentSnapshot document = await docRef.GetSnapshotAsync();
+            MajorCategories majorCategories = new MajorCategories();
+            majorCategories.oldTitle = catTitle;
+            majorCategories.categoryTitle = catTitle;
+
+            List<Dictionary<string, object>> categoryList = document.GetValue<List<Dictionary<string, object>>>("Categories");
+            categoryList.Add(majorCategories.ToDictionary);
+
+            await docRef.UpdateAsync(dictListToDict(categoryList, "Categories"));
+            return majorCategories;
+        }
+
+        private static async Task db_DeleteMajorCategory(string project, MajorCategories majorCategories)
+        {
+            FirestoreDb database = FirestoreDb.Create(project);
+            DocumentReference docRef = database.Collection("pages").Document("Majors");
+            DocumentSnapshot document = await docRef.GetSnapshotAsync();
+
+            List<Dictionary<string, object>> categoryList = document.GetValue<List<Dictionary<string, object>>>("Categories");
+            foreach (Dictionary<string, object> category in categoryList)
+            {
+                if (category["categoryTitle"].ToString() == majorCategories.categoryTitle)
+                {
+                    categoryList.Remove(category);
+                    break;
+                }
+            }
+            await docRef.UpdateAsync(dictListToDict(categoryList, "Categories"));
+        }
+    
         private static async Task<DocumentSnapshot> db_StoreMajorCategories(string project)
         { 
             FirestoreDb db = FirestoreDb.Create(project);
@@ -187,6 +234,20 @@ namespace AdminDatabaseFramework
             Task.Run(() => db_AddMajorToCat(project, CatName, major)).Wait();
         }
 
+        public void RemoveMajorFromCat(string project, MajorCategories majorCategories, MajorData major)
+        {
+            Task.Run(() => db_RemoveMajorFromCat(project, majorCategories, major)).Wait();
+        }
+
+        public MajorCategories CreateMajorCategory(string project, string catTitle)
+        {
+            return Task<MajorCategories>.Run(() => db_CreateMajorCategory(project, catTitle)).Result;
+        }
+
+        public void DeleteMajorCategory(string project, MajorCategories majorCategories)
+        {
+            Task.Run(()=> db_DeleteMajorCategory(project, majorCategories)).Wait();
+        }
         static string EmployersToCSV(List<object> list)
         {
             string employers = null;
@@ -215,6 +276,16 @@ namespace AdminDatabaseFramework
             //Console.WriteLine("Classes: {0}", EmployersToCSV(documentDictionary["Classes"] as List<object>));
             Console.WriteLine("about: {0}", EmployersToCSV(documentDictionary["about"] as List<object>));
         }
+
+        private static Dictionary<string, object> dictListToDict(List<Dictionary<string, object>> list, string listName)
+        {
+            Dictionary<string, object> categories = new Dictionary<string, object>()
+            {
+                {listName, list}
+            };
+            return categories;
+        }
+
     }
 }
 
