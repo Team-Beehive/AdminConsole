@@ -269,8 +269,10 @@ namespace AdminConsole
         public static void ShowPreview()
         {
             //TODO: add logic to select the proper preview
-            Grid grid = MajorsTemplate();
-            AppData.s_previewPanel.Children.Add(grid);
+            //Grid grid = MajorsTemplate();
+            //AppData.s_previewPanel.Children.Add(grid);
+            UserControl test = new MajorPreviewControl();
+            AppData.s_previewPanel.Children.Add(test);
         }
     }
 }

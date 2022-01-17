@@ -38,6 +38,7 @@ namespace AdminConsole
             AppData.s_listPanel = PageSelect;
             Utilities.GetData();
             tb_status.Text = "";
+
         }
 
         private void ButtonPressMajors(object sender, EventArgs e)

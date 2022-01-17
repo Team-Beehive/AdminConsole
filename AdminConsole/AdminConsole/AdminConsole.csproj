@@ -135,6 +135,9 @@
     </ApplicationDefinition>
     <Compile Include="CatButton.cs" />
     <Compile Include="MajorButton.cs" />
+    <Compile Include="MajorPreviewControl.xaml.cs">
+      <DependentUpon>MajorPreviewControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -151,6 +154,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MajorPreviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
