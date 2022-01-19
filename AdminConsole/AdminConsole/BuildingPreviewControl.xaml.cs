@@ -26,6 +26,16 @@ namespace AdminConsole
             BindElements();
         }
 
+        private void ElementSelect(object sender, EventArgs e)
+        {
+            if (AppData.s_propertiesPanel.Children.Count > 1)
+            {
+                AppData.s_propertiesPanel.Children.RemoveAt(1);
+            }
+            TextBlock temp = sender as TextBlock;
+            AppData.s_propertiesPanel.Children.Add(new BuildingPropertiesControl(temp.Name));
+        }
+
         private void BindElements()
         {
             Binding b_name = new Binding("BuildingName");
@@ -34,11 +44,11 @@ namespace AdminConsole
 
             Binding b_desc = new Binding("BuildingName_Info");
             b_desc.Source = AppData.s_activeBuilding;
-            BindingOperations.SetBinding(BuildingDesc, TextBlock.TextProperty, b_desc);
+            BindingOperations.SetBinding(BuildingName_Info, TextBlock.TextProperty, b_desc);
 
             Binding b_year = new Binding("BuildingConstructionYear");
             b_year.Source = AppData.s_activeBuilding;
-            BindingOperations.SetBinding(BuildingYear, TextBlock.TextProperty, b_year);
+            BindingOperations.SetBinding(BuildingConstructionYear, TextBlock.TextProperty, b_year);
         }
     }
 }

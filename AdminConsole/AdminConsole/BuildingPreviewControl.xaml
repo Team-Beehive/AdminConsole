@@ -12,8 +12,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="BuildingName" Grid.Row="0"/>
-        <TextBlock x:Name="BuildingDesc" Grid.Row="1"/>
-        <TextBlock x:Name="BuildingYear" Grid.Row="2"/>
+        <TextBlock x:Name="BuildingName" Grid.Row="0" MouseDown="ElementSelect"/>
+        <TextBlock x:Name="BuildingName_Info" Grid.Row="1" MouseDown="ElementSelect"/>
+        <TextBlock x:Name="BuildingConstructionYear" Grid.Row="2" MouseDown="ElementSelect"/>
     </Grid>
 </UserControl>

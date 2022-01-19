@@ -52,7 +52,7 @@ namespace AdminConsole
         private void ButtonPressExport(object sender, EventArgs e)
         {
             tb_status.Text = "";
-            Utilities.VolitileSave();
+            //Utilities.VolitileSave();
             Utilities.UploadData();
             tb_status.Text = "Database Updated";
         }

@@ -12,6 +12,7 @@ namespace AdminConsole
 {
     static class AppEvents
     {
+        
         public static void ButtonPressBuildingSelect(object sender, EventArgs e)
         {
             BuildingButton temp = sender as BuildingButton;
@@ -20,6 +21,7 @@ namespace AdminConsole
             {
                 AppData.s_previewPanel.Children.RemoveAt(1);
             }
+            AppData.s_building.updateLocalBuildings();
             AppData.s_previewPanel.Children.Add(new BuildingPreviewControl());
         }
 

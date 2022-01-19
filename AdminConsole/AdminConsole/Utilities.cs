@@ -83,6 +83,10 @@ namespace AdminConsole
             {
                 AppData.s_major.EditMajor(m);
             }
+            foreach (BuildingData b in AppData.s_changedBuildingList)
+            {
+                AppData.s_building.UpdateBuilding(b);
+            }
         }
 
         public static void GetData()
