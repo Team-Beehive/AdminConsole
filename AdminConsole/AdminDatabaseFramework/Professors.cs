@@ -55,21 +55,18 @@ namespace AdminDatabaseFramework
             Task.Run(() => db_RemoveProfessor(professor)).Wait();
         }
 
-        public void UpdateProfessor(ProfessorData professor)
+        public async void UpdateProfessor(ProfessorData professor)
         {
-            if(professor.professorName != professor.oldTitle)
+            if (professor.professorName != professor.oldTitle)
             {
-                ChangeProfessorName(professor);
+                DocumentReference documentReference = db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.oldTitle);
+                await documentReference.DeleteAsync();
+                Task.Run(() => db_CreateProfessor(professor)).Wait();
             }
             else
             {
-
+                await db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.professorName).CreateAsync(professor.ToDictionary());
             }
-
-        }
-
-        private void ChangeProfessorName(ProfessorData professor)
-        {
 
         }
 
