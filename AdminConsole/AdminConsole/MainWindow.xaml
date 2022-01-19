@@ -18,11 +18,16 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="MainDictionary.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Grid.Resources>
         <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Background="DarkBlue">
             <TextBlock Text="Headder" Foreground="White"/>
-            <Button Width="60" HorizontalAlignment="Left" Click="ButtonPressExport">
-                <TextBlock Text="Upload"/>
-            </Button>
+            <Button Width="60" HorizontalAlignment="Left" Click="ButtonPressExport" Content="Upload"/>
             <TextBlock x:Name="tb_status" Text="Status Indicator" Foreground="White"/>
         </StackPanel>
         <StackPanel x:Name="PageSelect" Grid.Row="1" Grid.Column="0" Background="Gray">
