@@ -24,6 +24,9 @@ namespace AdminConsole
         public static Majors s_major = new Majors();
         public static LinkedList<MajorData> s_majorList;
         public static List<MajorData> s_changedList = new List<MajorData>();
+        public static Professors s_professors = new Professors();
+        public static LinkedList<ProfessorData> s_professorList = new LinkedList<ProfessorData>();
+        public static ProfessorData s_activeProfessor;
 
         public static StackPanel s_previewPanel;
         public static StackPanel s_propertiesPanel;
