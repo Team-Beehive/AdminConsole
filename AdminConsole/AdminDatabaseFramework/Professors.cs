@@ -40,6 +40,12 @@ namespace AdminDatabaseFramework
             db = FirestoreDb.Create(project);
         }
 
+        public LinkedList<ProfessorData> GetProfessors()
+        {
+            UpdateLocal();
+            return LocalProfessors;
+        }
+
         public void UpdateLocal()
         {
             LocalProfessors = Task<LinkedList<ProfessorData>>.Run(() => db_GetProfessors()).Result;
