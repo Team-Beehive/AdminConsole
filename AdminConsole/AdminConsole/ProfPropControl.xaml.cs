@@ -45,7 +45,10 @@ namespace AdminConsole
 
         private void OnSourceUpdated(object sender, DataTransferEventArgs e)
         {
-            
+            if (!AppData.s_changedProf.Contains(AppData.s_activeProfessor))
+            {
+                AppData.s_changedProf.Add(AppData.s_activeProfessor);
+            }
         }
     }
 }

@@ -12,6 +12,40 @@ namespace AdminConsole
 {
     static class AppEvents
     {
+        public static void ContextItemRemoveProf(object sender, EventArgs e)
+        {
+            ProfMenuItem temp = sender as ProfMenuItem;
+            AppData.s_professors.RemoveProfessor(temp.data);
+            AppData.s_professorList.Remove(temp.data);
+            AppData.s_listPanel.Children.RemoveAt(1);
+            AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());
+
+        }
+        public static void ButtonPressAddProf(object sender, EventArgs e)
+        {
+            ProfessorButton temp = sender as ProfessorButton;
+            AppData.s_activeProfessor = temp.data;
+            if (AppData.s_previewPanel.Children.Count > 1)
+            {
+                AppData.s_previewPanel.Children.RemoveAt(1);
+            }
+            AppData.s_previewPanel.Children.Add(new ProfessorsPreviewControl());
+            AppData.s_professorList.AddLast(temp.data);
+            AppData.s_listPanel.Children.RemoveAt(1);
+            AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());
+            AppData.s_professors.CreateProfessor(temp.data);
+        }
+        public static void ButtonPressProf(object sender, EventArgs e)
+        {
+            ProfessorButton temp = sender as ProfessorButton;
+            AppData.s_activeProfessor = temp.data;
+            if (AppData.s_previewPanel.Children.Count > 1)
+            {
+                AppData.s_previewPanel.Children.RemoveAt(1);
+            }
+            AppData.s_previewPanel.Children.Add(new ProfessorsPreviewControl());
+        }
+
         //Runs when a major button is pressed
         //Get page info and display a preview
         public static void ButtonPressPage(object sender, EventArgs e)

@@ -38,6 +38,7 @@ namespace AdminConsole
 
             AppData.s_previewPanel = Preview;
             AppData.s_propertiesPanel = Properties;
+            AppData.s_listPanel = PageSelect;
 
             Utilities.GetData();
             //PageSelect.Children.Add(CreateElements.CreateMajorButtons(AppData.s_majorList));

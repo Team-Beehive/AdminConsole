@@ -27,9 +27,11 @@ namespace AdminConsole
         public static Professors s_professors = new Professors();
         public static LinkedList<ProfessorData> s_professorList = new LinkedList<ProfessorData>();
         public static ProfessorData s_activeProfessor;
+        public static List<ProfessorData> s_changedProf = new List<ProfessorData>();
 
         public static StackPanel s_previewPanel;
         public static StackPanel s_propertiesPanel;
+        public static StackPanel s_listPanel;
         public static TextBox s_properties;
     }
 }

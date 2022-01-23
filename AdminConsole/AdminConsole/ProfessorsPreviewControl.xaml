@@ -14,10 +14,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="professorName" Text="professorName" Grid.Row="0"/>
-        <TextBlock x:Name="professorDepartment" Text="professorDepartment" Grid.Row="1"/>
-        <TextBlock x:Name="professorOffice" Text="professorOffice" Grid.Row="2"/>
-        <TextBlock x:Name="professorEmail" Text="professorEmail" Grid.Row="3"/>
-        <TextBlock x:Name="professorPhoneNumber" Text="professorPhoneNumber" Grid.Row="4"/>
+        <TextBlock x:Name="professorName" Text="professorName" MouseDown="ElementSelect" Grid.Row="0"/>
+        <TextBlock x:Name="professorDepartment" Text="professorDepartment" MouseDown="ElementSelect" Grid.Row="1"/>
+        <TextBlock x:Name="professorOffice" Text="professorOffice" MouseDown="ElementSelect" Grid.Row="2"/>
+        <TextBlock x:Name="professorEmail" Text="professorEmail" MouseDown="ElementSelect" Grid.Row="3"/>
+        <TextBlock x:Name="professorPhoneNumber" Text="professorPhoneNumber" MouseDown="ElementSelect" Grid.Row="4"/>
     </Grid>
 </UserControl>
