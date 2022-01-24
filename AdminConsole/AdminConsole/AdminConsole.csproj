@@ -140,6 +140,7 @@
     <Compile Include="ProfMenuItem.cs" />
     <Compile Include="ProfPropControl.xaml.cs">
       <DependentUpon>ProfPropControl.xaml</DependentUpon>
+	</Compile>
     <Compile Include="BuildingButton.cs" />
     <Compile Include="BuildingPreviewControl.xaml.cs">
       <DependentUpon>BuildingPreviewControl.xaml</DependentUpon>
