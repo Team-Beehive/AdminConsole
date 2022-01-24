@@ -7,6 +7,32 @@
         mc:Ignorable="d"
         WindowState="Maximized"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="TopButtons">
+            <Setter Property="Background" Value="DarkBlue"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Border" x:Key="PanelStyle">
+            <Setter Property="Background" Value="Gray"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+    </Window.Resources>
     <!--Grid is 2 rows and 3 collums | Row 1: tool bar, Row 2: Stuff | Col 1: Page select, Col 2: preview, Col 3: properties-->
     <Grid>
         <Grid.RowDefinitions>
@@ -21,29 +47,33 @@
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="MainDictionary.xaml"/>
+                    <!--<ResourceDictionary Source="MainDictionary.xaml"/>-->
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Background="DarkBlue">
-            <TextBlock Text="Headder" Foreground="White"/>
-            <Button Width="60" HorizontalAlignment="Left" Click="ButtonPressExport" Content="Upload"/>
-            <TextBlock x:Name="tb_status" Text="Status Indicator" Foreground="White"/>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="3">
+            <TextBlock Text="Headder"/>
+            <Button Style="{StaticResource TopButtons}" Width="60" x:Name="upload" HorizontalAlignment="Left" Click="ButtonPressExport" Content="Upload"/>
+            <TextBlock x:Name="tb_status" Text="Status Indicator"/>
         </StackPanel>
-        <StackPanel x:Name="PageSelect" Grid.Row="1" Grid.Column="0" Background="Gray">
-            <TextBlock Text="Page Select"/>
-            <!--<Button Click="ButtonPressPage">
+        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource PanelStyle}">
+            <StackPanel x:Name="PageSelect" Grid.Row="1" Grid.Column="0">
+                <TextBlock Text="Page Select"/>
+                <!--<Button Click="ButtonPressPage">
                 <TextBlock Text="Major Page"/>
             </Button>-->
-        </StackPanel>
-        <StackPanel x:Name="Preview" Grid.Row="1" Grid.Column="1" Background="White">
+            </StackPanel>
+        </Border>
+        <StackPanel x:Name="Preview" Grid.Row="1" Grid.Column="1">
             <TextBlock Text="Page Preview"/>
             <!--Maybe use a form to load the page-->
         </StackPanel>
-        <StackPanel x:Name="Properties" Grid.Row="1" Grid.Column="2" Background="DarkGray">
-            <TextBlock Text="Page properties"/>
-            <!--Use a form to load a form for properties-->
+        <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource PanelStyle}">
+            <StackPanel x:Name="Properties">
+                <TextBlock Text="Page properties"/>
+                <!--Use a form to load a form for properties-->
 
-        </StackPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
