@@ -1,0 +1,177 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Google.Cloud.Firestore;
+using System.Threading.Tasks;
+
+
+namespace AdminDatabaseFramework
+{
+    /*--------------
+        Class: MajorList
+        Purpose: Used to store the Majors stored in the cloud database in memory on the admin computer
+        Date Created: 11/28/2021
+        Author: Tucker Nulty
+
+        Ctors:
+            -()
+                -Creates an inital download of the database
+
+        Local Variables:
+            -private LinkedList<DocumentSnapshot> m_dataBaseRefs
+                -Used to store the majors from the database
+            -public string project
+                -Stores the project id used to connect to firestore
+            -private MajorDatabase majorDatabase
+                -An instance of MajorDatabase used to interact with the firestore database
+            
+        
+        Funtions:
+            -EditMajor(MajorData majorData)
+                -Creates or updates a major
+                -CANNOT CHANGE THE NAME OF A MAJOR!
+            -EditMajor(MajorData major, string oldName)
+                -Updates a major that requires a name change
+            -DeleteMajor(MajorData major)
+                -Deletes a major that exists in the database
+            -EditMajorCatagoryTitle(string oldName, string newName)
+                -Changes a Catagory's title requires the old name
+            -AddMajorToCat(string CatName, MajorData major)
+                -Adds a major to a catagory
+                -This can only be ran if the major exists in the database, highly reccommended to run updateLocal before this 
+            -RemoveMajorFromCat(MajorCategories majorCategories, MajorData major)
+                -Removes the passed MajorData from the passed MajorCategories
+                -Only works if a DocumentReference exists in the MajorData
+            -CreateMajorCategory(string catTitle)
+                -Creates a new Major Category with the title passes
+            - DeleteMajorCategory(MajorCategories majorCategories)
+                -Deletes the MajorCategory passed if found
+            -UpdateLocal()
+                -Updates the m_dataBaseRefs
+                -Reccomended to call after each update
+            -GetMajors()
+                -Returns all majors stored in the database in the MajorData class
+                -Returns a LinkedList<MajorData>
+            -printMajors()
+                -Prints all majors to the console
+                -USE FOR DEBUGGING ONLY 
+        */
+    public class Majors
+    {
+        private LinkedList<DocumentSnapshot> m_dataBaseRefs = new LinkedList<DocumentSnapshot>();
+        public string project = "oit-kiosk";
+        private MajorDatabase majorDatabase = new MajorDatabase();
+        public Majors()
+        {
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Users\\nulty\\Documents\\JrProject\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
+            m_dataBaseRefs = majorDatabase.GetMajorData(project);
+        }
+
+        public void EditMajor(MajorData major)
+        {
+            majorDatabase.EditMajorData(project, major);
+
+            if (major.MajorName != major.OldName)
+            {
+                string temp = major.OldName;
+                major.OldName = major.MajorName;
+                majorDatabase.EditMajorName(project, major, temp);
+            }
+            else
+            {
+                majorDatabase.EditMajorData(project, major);
+            }
+        }
+
+        public void EditMajor(MajorData major, string oldName)
+        {
+            majorDatabase.EditMajorName(project, major, oldName);
+        }
+
+        public void DeleteMajor(MajorData major)
+        {
+            majorDatabase.DeleteMajorData(project, major);
+        }
+
+        public void EditMajorCatagoryTitle(MajorCategories majorCategories)
+        {
+            majorDatabase.EditCategoryTitle(project, majorCategories.oldTitle, majorCategories.categoryTitle);
+        }
+
+        public void AddMajorToCat(MajorCategories majorCategories, MajorData major)
+        {
+            majorDatabase.AddMajorToCat(project, majorCategories.oldTitle, major);
+        }
+
+        public void RemoveMajorFromCat(MajorCategories majorCategories, MajorData major)
+        {
+            majorDatabase.RemoveMajorFromCat(project, majorCategories, major);
+        }
+
+        public void CreateMajorCategory(string catTitle)
+        {
+            majorDatabase.CreateMajorCategory(project, catTitle);
+        }
+
+        public void DeleteMajorCategory(MajorCategories majorCategories)
+        {
+            majorDatabase.DeleteMajorCategory(project, majorCategories);
+        }
+        public void UpdateLocal()
+        {
+            m_dataBaseRefs = majorDatabase.GetMajorData(project);
+        }
+
+        public LinkedList<MajorData> GetMajors()
+        {
+            LinkedList<MajorData> datas = new LinkedList<MajorData>();
+            foreach(DocumentSnapshot document in m_dataBaseRefs)
+            {
+                Dictionary<string, object> documentDictionary = document.ToDictionary();
+                MajorData tempMajor = new MajorData();
+                tempMajor.MajorName = document.Id;
+                tempMajor.OldName = document.Id;
+<<<<<<< HEAD
+                tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
+                tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
+                tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
+=======
+                tempMajor.about = ObjToStr(documentDictionary["about"] as List<object>);
+                tempMajor.campuses = ObjToStr(documentDictionary["campuses"] as List<object>);
+                tempMajor.type = ObjToStr(documentDictionary["type"] as List<object>);
+                tempMajor.DocumentReferenceSelf = document.Reference;
+>>>>>>> MajorCatagories
+                datas.AddLast(tempMajor);
+            }
+            return datas;
+        }
+
+        public LinkedList<MajorCategories> GetCategories()
+        {
+            DocumentSnapshot documentSnapshot = majorDatabase.StoreMajorCategories(project);
+            LinkedList<MajorCategories> majorCategories = new LinkedList<MajorCategories>();
+
+            List<Dictionary<string, object>> categoryList = documentSnapshot.GetValue<List<Dictionary<string, object>>>("Categories");
+            foreach (Dictionary<string, object> category in categoryList)
+            {
+                MajorCategories majorCat = new MajorCategories();
+                majorCat.categoryTitle = category["categoryTitle"].ToString();
+                majorCat.relatedDegrees = category["relatedDegrees"] as List<object>;
+                majorCat.oldTitle = majorCat.categoryTitle;
+                majorCategories.AddLast(majorCat);
+            }
+            return majorCategories;
+        }
+
+        
+
+        public void printMajors()
+        {
+            foreach(DocumentSnapshot document in m_dataBaseRefs)
+            {
+                majorDatabase.PrintDocumentSnap(document);
+            }    
+
+        }
+    }
+}
