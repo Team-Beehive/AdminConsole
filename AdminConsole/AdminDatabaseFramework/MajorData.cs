@@ -15,13 +15,26 @@ namespace AdminDatabaseFramework
         public List<string> campuses { get; set; }
         public List<string> about { get; set; }
 
-        public DocumentReference DocumentReferenceSelf { get; set; } 
+        public DocumentReference DocumentReferenceSelf { get; set; }
 
     }
-    
+
     public class MajorCategories
     {
         public string categoryTitle { get; set; }
+        public string oldTitle { get; set; }
         public List<Object> relatedDegrees { get; set; }
+
+        public Dictionary<string, object> ToDictionary
+        {
+            get
+            {
+                return new Dictionary<string, object>()
+            {
+                {"categoryTitle", categoryTitle },
+                {"relatedDegrees", relatedDegrees }
+            };
+            }
+        }
     }
 }
