@@ -40,7 +40,7 @@ namespace AdminConsole
         public static List<BuildingData> s_changedBuildingList = new List<BuildingData>();
 
         public static LinkedList<MajorCategories> s_catList;
-        public static List<MajorData> s_changedList = new List<MajorData>();
+        //public static List<MajorData> s_changedList = new List<MajorData>();
         public static MajorCategories s_activeCat;
 
 

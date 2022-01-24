@@ -60,7 +60,7 @@ namespace AdminConsole
         public static Grid CreateBuildingButtons()
         {
             Grid grid = new Grid();
-            
+
             int btnPos = 0;
             foreach (BuildingData building in AppData.s_buildingList)
             {
@@ -73,6 +73,11 @@ namespace AdminConsole
                 btn.Name = cleanName;
                 btn.Click += AppEvents.ButtonPressBuildingSelect;
                 btn.data = building;
+            }
+
+            return grid;
+        }
+
         //New Functions for this Branch
         public static void AddCatButtons(LinkedList<MajorCategories> catList)
         {
@@ -103,8 +108,6 @@ namespace AdminConsole
                 btnPos++;
             }
 
-            return grid;
-        }
             Button btnAdd = new Button();
             btnAdd.Content = "Add category";
             btnAdd.Name = "addCat";
@@ -201,8 +204,8 @@ namespace AdminConsole
         public static Grid CreateMajorButtons(LinkedList<MajorData> majors)
         {
         //public static Grid CreateMajorButtons(LinkedList<MajorData> majors)
-        public static void CreateMajorButtons(LinkedList<MajorData> majors)
-        {
+        /*public static void CreateMajorButtons(LinkedList<MajorData> majors)
+        {*/
             if (AppData.s_listPanel.Children.Count > 1)
             {
                 AppData.s_listPanel.Children.RemoveAt(1);
@@ -218,7 +221,7 @@ namespace AdminConsole
                 string cleanName = Utilities.cleanString(major.MajorName);
 
 
-                Button btn = new Button();
+                //Button btn = new Button();
 
                 //Button btn = new Button();
                 MajorButton btn = new MajorButton();
@@ -236,9 +239,9 @@ namespace AdminConsole
         }
 
 
-            //return grid;
+        /*    //return grid;
             AppData.s_listPanel.Children.Add(grid);
-        }
+        }*/
 
         public static void AddProperties()
         {

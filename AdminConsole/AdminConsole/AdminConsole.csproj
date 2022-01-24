@@ -165,7 +165,6 @@
     <Compile Include="NewCatProp.xaml.cs">
       <DependentUpon>NewCatProp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities.cs" />
 
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -188,6 +187,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ProfPropControl.xaml">
+		<SubType>Designer</SubType>
+		<Generator>MSBuild:Compile</Generator>
+	</Page>
 
     <Page Include="MajorPreviewControl.xaml">
       <SubType>Designer</SubType>

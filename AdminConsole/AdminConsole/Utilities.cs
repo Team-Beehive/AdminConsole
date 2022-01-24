@@ -46,7 +46,7 @@ namespace AdminConsole
         {
             //string clean = String.Concat(str.Where(c => !Char.IsWhiteSpace(c)));
             //clean = String.Concat(clean.Where(c => !Char.IsSymbol(c)));
-            HashSet<char> set = new HashSet<char>(" !@#$%^&*()_+-=,:;<>/\\");
+            HashSet<char> set = new HashSet<char>(" !@#$%^&*()_+-=,:;.<>/\\");
             StringBuilder sb = new StringBuilder(str.Length);
             foreach (char x in str.Where(c => !set.Contains(c)))
             {
@@ -128,6 +128,7 @@ namespace AdminConsole
             foreach (BuildingData b in AppData.s_changedBuildingList)
             {
                 AppData.s_building.UpdateBuilding(b);
+            }
             foreach (MajorData m in AppData.s_changedList)
             {
                 AppData.s_major.EditMajor(m);

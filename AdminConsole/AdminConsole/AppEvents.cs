@@ -61,9 +61,10 @@ namespace AdminConsole
 
         //Runs when a major button is pressed
         //Get page info and display a preview
-        public static void ButtonPressPage(object sender, EventArgs e)
+        /*public static void ButtonPressPage(object sender, EventArgs e)
         {
             FrameworkElement page = sender as FrameworkElement;
+        }*/
 
     /*
      * Author: Destiny Dahlgren
@@ -146,7 +147,7 @@ namespace AdminConsole
                 }
                 AppData.s_lastSelected = page.Name;
 
-                Utilities.QueryPageData(page.Name);
+                //Utilities.QueryPageData(page.Name);
 
                 //Utilities.QueryPageData(page.Name);
                 //Utilities.QueryPageData(page.major);

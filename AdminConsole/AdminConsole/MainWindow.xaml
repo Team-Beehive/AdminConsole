@@ -53,10 +53,11 @@
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </Grid.Resources>
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="3">
+        <!--<StackPanel Grid.Row="0" Grid.ColumnSpan="3">
             <TextBlock Text="Headder"/>
             <Button Style="{StaticResource TopButtons}" Width="60" x:Name="upload" HorizontalAlignment="Left" Click="ButtonPressExport" Content="Upload"/>
             <TextBlock x:Name="tb_status" Text="Status Indicator"/>
+        </StackPanel>-->
 
         <!--Tool bar-->
         <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Background="DarkBlue">
