@@ -8,8 +8,24 @@ namespace AdminDatabaseFramework
     {
         public static void Main()
         {
+
             /*Majors majors = new Majors();
             MajorData majorData = new MajorData();
+
+            Majors majors = new Majors();
+            majors.GetCategories();
+            LinkedList<MajorData> majorData = majors.GetMajors();
+            MajorData minorData = majorData.Last.Value;
+            MajorCategories majorCategories = new MajorCategories();
+            majorCategories.oldTitle = "BioHealth";
+            majorCategories.categoryTitle = "BioHealth";
+
+            //majors.CreateMajorCategory("BioHealth");
+            majors.DeleteMajorCategory(majorCategories);
+
+            //majors.AddMajorToCat("Biological Sciences", minorData);
+            //majors.EditMajorCatagoryTitle(majorCategories);
+            /*MajorData majorData = new MajorData();
             majorData.MajorName = "Testing Major";
             List<string> aboutL = new List<string>(2);
             aboutL.Add("The best major at OIT");            
@@ -31,15 +47,6 @@ namespace AdminDatabaseFramework
             //Majors testMajor = new Majors();
             //testMajor.GetMajors();*/
 
-            Buildings buildingData = new Buildings();
-
-            BuildingData building = new BuildingData();
-            building.BuildingName = "Cornett Hall 2: World Warrior";
-            building.oldName = "Cornett Hall 2: World Warrior";
-            building.BuildingConstructionYear = "1999";
-
-            //buildingData.UpdateBuilding(building);
-            buildingData.RemoveBuilding(building);
         }
     }
 }

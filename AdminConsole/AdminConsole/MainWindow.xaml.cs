@@ -29,35 +29,43 @@ namespace AdminConsole
      */
 
 
-
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
-
             AppData.s_previewPanel = Preview;
             AppData.s_propertiesPanel = Properties;
             AppData.s_listPanel = PageSelect;
-
             Utilities.GetData();
-            //PageSelect.Children.Add(CreateElements.CreateMajorButtons(AppData.s_majorList));
-            //PageSelect.Children.Add(CreateElements.CreateSectionButtons());
-            //PageSelect.Children.Add(CreateElements.CreateProfButtons());
-            //PageSelect.Children.Add(CreateElements.CreateBuildingButtons());
-
-
             tb_status.Text = "";
+
+        }
+
+        private void ButtonPressMajors(object sender, EventArgs e)
+        {
+            CreateElements.CreateMajorButtons(AppData.s_majorList);
+        }
+
+        private void ButtonPressCategory(object sender, EventArgs e)
+        {
+            CreateElements.AddCatButtons(AppData.s_catList);
+        }
+
+        private void ButtonPressNewCat(object sender, EventArgs e)
+        {
+            Debug.WriteLine("New Cat!");
         }
 
         //Upload the updated information to the database
         private void ButtonPressExport(object sender, EventArgs e)
         {
             tb_status.Text = "";
-            //Utilities.VolitileSave();
+
+            Utilities.VolitileSave();
             Utilities.UploadData();
             tb_status.Text = "Database Updated";
         }
-
     }
 }

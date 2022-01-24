@@ -73,12 +73,79 @@ namespace AdminConsole
                 btn.Name = cleanName;
                 btn.Click += AppEvents.ButtonPressBuildingSelect;
                 btn.data = building;
+        //New Functions for this Branch
+        public static void AddCatButtons(LinkedList<MajorCategories> catList)
+        {
+            if (AppData.s_listPanel.Children.Count > 1)
+            {
+                AppData.s_listPanel.Children.RemoveAt(1);
+            }
+
+            Grid grid = new Grid();
+
+            int btnPos = 0;
+
+            foreach (MajorCategories cat in catList)
+            {
+                RowDefinition rd = new RowDefinition();
+                grid.RowDefinitions.Add(rd);
+                string cleanName = Utilities.cleanString(cat.categoryTitle);
+
+                //Button btn = new Button();
+                CatButton btn = new CatButton();
+                btn.category = cat;
+                btn.Content = cat.categoryTitle;
+                btn.Name = cleanName;
+                btn.Click += AppEvents.ButtonPressCatProp;
+
                 Grid.SetRow(btn, btnPos);
                 grid.Children.Add(btn);
                 btnPos++;
             }
+
             return grid;
         }
+            Button btnAdd = new Button();
+            btnAdd.Content = "Add category";
+            btnAdd.Name = "addCat";
+            btnAdd.Click += AppEvents.ButtonPressNewCat;
+            Grid.SetRow(btnAdd, btnPos);
+            grid.Children.Add(btnAdd);
+
+            AppData.s_listPanel.Children.Add(grid);
+        }
+
+        public static void AddCatProp()
+        {
+            if (AppData.s_propertiesPanel.Children.Count > 1)
+            {
+                AppData.s_propertiesPanel.Children.RemoveAt(1);
+            }
+
+            Grid grid = new Grid();
+            RowDefinition rd0 = new RowDefinition();
+            RowDefinition rd1 = new RowDefinition();
+            grid.RowDefinitions.Add(rd0);
+            grid.RowDefinitions.Add(rd1);
+            TextBox tb = new TextBox();
+            tb.Height = 80;
+            tb.TextWrapping = TextWrapping.Wrap;
+            tb.TextChanged += AppEvents.TextBoxCatName;
+            AppData.s_properties = tb;
+            Grid.SetRow(tb, 0);
+            grid.Children.Add(tb);
+
+            Button btn = new Button();
+            btn.Content = "Update";
+            btn.Click += AppEvents.ButtonPressUpdateCat;
+            Grid.SetRow(btn, 1);
+            grid.Children.Add(btn);
+
+            //Properties.Children.Add(grid);
+            AppData.s_propertiesPanel.Children.Add(grid);
+        }
+
+        //Old functions
 
         //Create a set of navigation buttons
         public static Grid CreateSectionButtons()
@@ -133,6 +200,14 @@ namespace AdminConsole
         //      Add a back button to get back to a "higher level" of the ui (Major list -> Major categories)
         public static Grid CreateMajorButtons(LinkedList<MajorData> majors)
         {
+        //public static Grid CreateMajorButtons(LinkedList<MajorData> majors)
+        public static void CreateMajorButtons(LinkedList<MajorData> majors)
+        {
+            if (AppData.s_listPanel.Children.Count > 1)
+            {
+                AppData.s_listPanel.Children.RemoveAt(1);
+            }
+
             Grid grid = new Grid();
 
             int btnPos = 0;
@@ -142,7 +217,13 @@ namespace AdminConsole
                 grid.RowDefinitions.Add(rd);
                 string cleanName = Utilities.cleanString(major.MajorName);
 
+
                 Button btn = new Button();
+
+                //Button btn = new Button();
+                MajorButton btn = new MajorButton();
+                btn.major = major;
+
                 btn.Content = major.MajorName;
                 btn.Name = cleanName;
                 btn.Click += AppEvents.ButtonPressPage;
@@ -152,6 +233,11 @@ namespace AdminConsole
             }
 
             return grid;
+        }
+
+
+            //return grid;
+            AppData.s_listPanel.Children.Add(grid);
         }
 
         public static void AddProperties()
@@ -236,7 +322,11 @@ namespace AdminConsole
             Grid.SetRow(desc, 4);
 
             grid.Children.Add(title);
+
             //grid.Children.Add(classes);
+
+            grid.Children.Add(classes);
+
             //grid.Children.Add(prof);
             grid.Children.Add(camp);
             grid.Children.Add(type);
@@ -249,8 +339,15 @@ namespace AdminConsole
         public static void ShowPreview()
         {
             //TODO: add logic to select the proper preview
+
             Grid grid = CreateElements.MajorsTemplate();
             AppData.s_previewPanel.Children.Add(grid);
+
+            //Grid grid = MajorsTemplate();
+            //AppData.s_previewPanel.Children.Add(grid);
+            UserControl test = new MajorPreviewControl();
+            AppData.s_previewPanel.Children.Add(test);
+
         }
     }
 }
