@@ -11,11 +11,23 @@ namespace AdminConsole
 {
     static class Utilities
     {
+        public static ProfessorData NewProf()
+        {
+            ProfessorData temp = new ProfessorData();
+            temp.professorName = "Professor Name";
+            temp.professorDepartment = "Dept.";
+            temp.professorEmail = "email@cset.oit.edu";
+            temp.professorOffice = "Office";
+            temp.professorPhoneNumber = "123-456-7890";
+
+            return temp;
+        }
+
         public static string cleanString(string str)
         {
             //string clean = String.Concat(str.Where(c => !Char.IsWhiteSpace(c)));
             //clean = String.Concat(clean.Where(c => !Char.IsSymbol(c)));
-            HashSet<char> set = new HashSet<char>(" !@#$%^&*()_+-=,:;<>");
+            HashSet<char> set = new HashSet<char>(" !@#$%^&*()_+-=,:;<>.");
             StringBuilder sb = new StringBuilder(str.Length);
             foreach (char x in str.Where(c => !set.Contains(c)))
             {
@@ -79,9 +91,13 @@ namespace AdminConsole
 
         public static void UploadData()
         {
-            foreach (MajorData m in AppData.s_changedList)
+            /*foreach (MajorData m in AppData.s_changedList)
             {
                 AppData.s_major.EditMajor(m);
+            }*/
+            foreach (ProfessorData p in AppData.s_changedProf)
+            {
+                AppData.s_professors.UpdateProfessor(p);
             }
             foreach (BuildingData b in AppData.s_changedBuildingList)
             {
@@ -91,7 +107,10 @@ namespace AdminConsole
 
         public static void GetData()
         {
-            AppData.s_majorList = AppData.s_major.GetMajors();
+            //AppData.s_majorList = AppData.s_major.GetMajors();
+            AppData.s_professorList = AppData.s_professors.GetProfessors();
+            
+            //AppData.s_majorList = AppData.s_major.GetMajors();
             AppData.s_buildingList = AppData.s_building.GetBuildings();
         }
         

@@ -24,6 +24,10 @@ namespace AdminConsole
         public static Majors s_major = new Majors();
         public static LinkedList<MajorData> s_majorList;
         public static List<MajorData> s_changedList = new List<MajorData>();
+        public static Professors s_professors = new Professors();
+        public static LinkedList<ProfessorData> s_professorList = new LinkedList<ProfessorData>();
+        public static ProfessorData s_activeProfessor;
+        public static List<ProfessorData> s_changedProf = new List<ProfessorData>();
         public static Buildings s_building = new Buildings();
         public static LinkedList<BuildingData> s_buildingList;
         public static BuildingData s_activeBuilding;
@@ -31,6 +35,7 @@ namespace AdminConsole
 
         public static StackPanel s_previewPanel;
         public static StackPanel s_propertiesPanel;
+        public static StackPanel s_listPanel;
         public static TextBox s_properties;
     }
 }

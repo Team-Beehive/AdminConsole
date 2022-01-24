@@ -19,6 +19,44 @@ namespace AdminConsole
 
     static class CreateElements
     {
+        public static Grid CreateProfButtons()
+        {
+            Grid grid = new Grid();
+
+            int btnPos = 0;
+            foreach (ProfessorData p in AppData.s_professorList)
+            {
+                RowDefinition rd = new RowDefinition();
+                grid.RowDefinitions.Add(rd);
+                string cleanName = Utilities.cleanString(p.professorName);
+
+                ProfessorButton btn = new ProfessorButton();
+                btn.Content = p.professorName;
+                btn.Name = cleanName;
+                btn.data = p;
+                btn.Click += AppEvents.ButtonPressProf;
+                ContextMenu deleteMenu = new ContextMenu();
+                ProfMenuItem deleteItem = new ProfMenuItem();
+                deleteItem.data = p;
+                deleteItem.Click += AppEvents.ContextItemRemoveProf;
+                deleteItem.Header = "Delete";
+                deleteMenu.Items.Add(deleteItem);
+                btn.ContextMenu = deleteMenu;
+            }
+  
+            RowDefinition rd1 = new RowDefinition();
+            grid.RowDefinitions.Add(rd1);
+            ProfessorButton add = new ProfessorButton();
+            add.Content = "Add professor";
+            add.Name = "Add";
+            add.data = Utilities.NewProf();
+            add.Click += AppEvents.ButtonPressAddProf;
+            Grid.SetRow(add, btnPos);
+            grid.Children.Add(add);
+            return grid;
+  
+        }
+
         public static Grid CreateBuildingButtons()
         {
             Grid grid = new Grid();
