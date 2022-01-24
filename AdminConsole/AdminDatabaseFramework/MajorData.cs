@@ -15,4 +15,10 @@ namespace AdminDatabaseFramework
         public List<string> about { get; set; }
 
     }
+    
+    public class MajorCategories
+    {
+        public string categoryTitle { get; set; }
+        public List<Object> relatedDegrees { get; set; }
+    }
 }

@@ -28,6 +28,10 @@ namespace AdminConsole
         public static LinkedList<ProfessorData> s_professorList = new LinkedList<ProfessorData>();
         public static ProfessorData s_activeProfessor;
         public static List<ProfessorData> s_changedProf = new List<ProfessorData>();
+        public static Buildings s_building = new Buildings();
+        public static LinkedList<BuildingData> s_buildingList;
+        public static BuildingData s_activeBuilding;
+        public static List<BuildingData> s_changedBuildingList = new List<BuildingData>();
 
         public static StackPanel s_previewPanel;
         public static StackPanel s_propertiesPanel;

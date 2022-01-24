@@ -99,6 +99,10 @@ namespace AdminConsole
             {
                 AppData.s_professors.UpdateProfessor(p);
             }
+            foreach (BuildingData b in AppData.s_changedBuildingList)
+            {
+                AppData.s_building.UpdateBuilding(b);
+            }
         }
 
         public static void GetData()
@@ -106,6 +110,8 @@ namespace AdminConsole
             //AppData.s_majorList = AppData.s_major.GetMajors();
             AppData.s_professorList = AppData.s_professors.GetProfessors();
             
+            //AppData.s_majorList = AppData.s_major.GetMajors();
+            AppData.s_buildingList = AppData.s_building.GetBuildings();
         }
         
     }

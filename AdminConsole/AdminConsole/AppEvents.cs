@@ -45,6 +45,18 @@ namespace AdminConsole
             }
             AppData.s_previewPanel.Children.Add(new ProfessorsPreviewControl());
         }
+        
+        public static void ButtonPressBuildingSelect(object sender, EventArgs e)
+        {
+            BuildingButton temp = sender as BuildingButton;
+            AppData.s_activeBuilding = temp.data;
+            if (AppData.s_previewPanel.Children.Count > 1)
+            {
+                AppData.s_previewPanel.Children.RemoveAt(1);
+            }
+            AppData.s_building.updateLocalBuildings();
+            AppData.s_previewPanel.Children.Add(new BuildingPreviewControl());
+        }
 
         //Runs when a major button is pressed
         //Get page info and display a preview

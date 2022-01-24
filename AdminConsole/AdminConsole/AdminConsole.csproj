@@ -140,8 +140,22 @@
     <Compile Include="ProfMenuItem.cs" />
     <Compile Include="ProfPropControl.xaml.cs">
       <DependentUpon>ProfPropControl.xaml</DependentUpon>
+    <Compile Include="BuildingButton.cs" />
+    <Compile Include="BuildingPreviewControl.xaml.cs">
+      <DependentUpon>BuildingPreviewControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BuildingPropertiesControl.xaml.cs">
+      <DependentUpon>BuildingPropertiesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities.cs" />
+    <Page Include="BuildingPreviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BuildingPropertiesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

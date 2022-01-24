@@ -42,11 +42,8 @@ namespace AdminConsole
                 deleteItem.Header = "Delete";
                 deleteMenu.Items.Add(deleteItem);
                 btn.ContextMenu = deleteMenu;
-                Grid.SetRow(btn, btnPos);
-                grid.Children.Add(btn);
-                btnPos++;
             }
-
+  
             RowDefinition rd1 = new RowDefinition();
             grid.RowDefinitions.Add(rd1);
             ProfessorButton add = new ProfessorButton();
@@ -56,7 +53,30 @@ namespace AdminConsole
             add.Click += AppEvents.ButtonPressAddProf;
             Grid.SetRow(add, btnPos);
             grid.Children.Add(add);
+            return grid;
+  
+        }
 
+        public static Grid CreateBuildingButtons()
+        {
+            Grid grid = new Grid();
+            
+            int btnPos = 0;
+            foreach (BuildingData building in AppData.s_buildingList)
+            {
+                RowDefinition rd = new RowDefinition();
+                grid.RowDefinitions.Add(rd);
+                string cleanName = Utilities.cleanString(building.BuildingName);
+
+                BuildingButton btn = new BuildingButton();
+                btn.Content = building.BuildingName;
+                btn.Name = cleanName;
+                btn.Click += AppEvents.ButtonPressBuildingSelect;
+                btn.data = building;
+                Grid.SetRow(btn, btnPos);
+                grid.Children.Add(btn);
+                btnPos++;
+            }
             return grid;
         }
 
