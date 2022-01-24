@@ -40,9 +40,9 @@ namespace AdminConsole
             AppData.s_propertiesPanel = Properties;
 
             Utilities.GetData();
-            PageSelect.Children.Add(CreateElements.CreateMajorButtons(AppData.s_majorList));
+            //PageSelect.Children.Add(CreateElements.CreateMajorButtons(AppData.s_majorList));
             //PageSelect.Children.Add(CreateElements.CreateSectionButtons());
-            
+            PageSelect.Children.Add(CreateElements.CreateBuildingButtons());
 
 
             tb_status.Text = "";
@@ -52,7 +52,7 @@ namespace AdminConsole
         private void ButtonPressExport(object sender, EventArgs e)
         {
             tb_status.Text = "";
-            Utilities.VolitileSave();
+            //Utilities.VolitileSave();
             Utilities.UploadData();
             tb_status.Text = "Database Updated";
         }
