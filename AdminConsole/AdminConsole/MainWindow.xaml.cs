@@ -45,7 +45,8 @@ namespace AdminConsole
 
         private void ButtonPressMajors(object sender, EventArgs e)
         {
-            CreateElements.CreateMajorButtons(AppData.s_majorList);
+            RemovePageSelect();
+            PageSelect.Children.Add(CreateElements.CreateMajorButtons(AppData.s_majorList));
         }
 
         private void ButtonPressCategory(object sender, EventArgs e)
@@ -53,9 +54,29 @@ namespace AdminConsole
             CreateElements.AddCatButtons(AppData.s_catList);
         }
 
+        private void ButtonPressBuilding(object sender, EventArgs e)
+        {
+            RemovePageSelect();
+            PageSelect.Children.Add(CreateElements.CreateBuildingButtons());
+        }
+
+        private void ButtonPressProf(object sender, EventArgs e)
+        {
+            RemovePageSelect();
+            PageSelect.Children.Add(CreateElements.CreateProfButtons());
+        }
+
         private void ButtonPressNewCat(object sender, EventArgs e)
         {
             Debug.WriteLine("New Cat!");
+        }
+
+        private void RemovePageSelect()
+        {
+            if (PageSelect.Children.Count > 1)
+            {
+                PageSelect.Children.RemoveAt(1);
+            }
         }
 
         //Upload the updated information to the database

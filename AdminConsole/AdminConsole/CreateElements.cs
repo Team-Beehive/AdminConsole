@@ -42,6 +42,10 @@ namespace AdminConsole
                 deleteItem.Header = "Delete";
                 deleteMenu.Items.Add(deleteItem);
                 btn.ContextMenu = deleteMenu;
+
+                Grid.SetRow(btn, btnPos);
+                btnPos++;
+                grid.Children.Add(btn);
             }
   
             RowDefinition rd1 = new RowDefinition();
@@ -73,6 +77,10 @@ namespace AdminConsole
                 btn.Name = cleanName;
                 btn.Click += AppEvents.ButtonPressBuildingSelect;
                 btn.data = building;
+
+                Grid.SetRow(btn, btnPos);
+                btnPos++;
+                grid.Children.Add(btn);
             }
 
             return grid;
