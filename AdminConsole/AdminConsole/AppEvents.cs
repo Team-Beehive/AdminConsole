@@ -152,7 +152,7 @@ namespace AdminConsole
                 //Utilities.QueryPageData(page.Name);
                 //Utilities.QueryPageData(page.major);
                 //MajorButton temp = sender as MajorButton;
-                //AppData.s_activeData = page.major;
+                AppData.s_activeData = page.major;
 
                 CreateElements.ShowPreview();
             }

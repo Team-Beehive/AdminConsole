@@ -74,7 +74,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 
-                <TextBlock Grid.Row="0" Text="Headder"/>
+                <!--<TextBlock Grid.Row="0" Text="Headder"/>-->
                 <Button Grid.Row="1" Width="60" Style="{StaticResource TopButtons}" HorizontalAlignment="Left" Click="ButtonPressExport" Content="Upload"/>
                 <TextBlock Grid.Row="2" x:Name="tb_status" Text="Status Indicator"/>
 

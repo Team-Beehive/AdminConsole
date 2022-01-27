@@ -99,9 +99,9 @@ namespace AdminConsole
 
         public static void VolitileSave()
         {
-            AppData.s_activeData.type[0] = AppData.s_activeType;
-            AppData.s_activeData.about[0] = AppData.s_activeDesc;
-            AppData.s_activeData.Classes[0] = AppData.s_activeClasses;
+            //AppData.s_activeData.type[0] = AppData.s_activeType;
+            //AppData.s_activeData.about[0] = AppData.s_activeDesc;
+            //AppData.s_activeData.Classes[0] = AppData.s_activeClasses;
 
             if (AppData.s_hasChanged)
             {

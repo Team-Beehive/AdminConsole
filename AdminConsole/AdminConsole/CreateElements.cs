@@ -116,6 +116,8 @@ namespace AdminConsole
                 btnPos++;
             }
 
+            grid.RowDefinitions.Add(new RowDefinition());
+
             Button btnAdd = new Button();
             btnAdd.Content = "Add category";
             btnAdd.Name = "addCat";
@@ -234,7 +236,6 @@ namespace AdminConsole
                 //Button btn = new Button();
                 MajorButton btn = new MajorButton();
                 btn.major = major;
-
                 btn.Content = major.MajorName;
                 btn.Name = cleanName;
                 btn.Click += AppEvents.ButtonPressPage;
@@ -351,8 +352,10 @@ namespace AdminConsole
         {
             //TODO: add logic to select the proper preview
 
-            Grid grid = CreateElements.MajorsTemplate();
-            AppData.s_previewPanel.Children.Add(grid);
+            //Grid grid = CreateElements.MajorsTemplate();
+            //AppData.s_previewPanel.Children.Add(grid);
+
+            //AppData.s_previewPanel.Children.Add(new MajorPreviewControl());
 
             //Grid grid = MajorsTemplate();
             //AppData.s_previewPanel.Children.Add(grid);
