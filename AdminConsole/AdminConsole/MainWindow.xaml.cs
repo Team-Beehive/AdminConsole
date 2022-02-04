@@ -66,6 +66,16 @@ namespace AdminConsole
             PageSelect.Children.Add(CreateElements.CreateProfButtons());
         }
 
+        private void ButtonPressMap(object sender, EventArgs e)
+        {
+            RemovePageSelect();
+            if (Preview.Children.Count > 1)
+            {
+                Preview.Children.RemoveAt(1);
+            }
+            Preview.Children.Add(new MapTest());
+        }
+
         private void ButtonPressNewCat(object sender, EventArgs e)
         {
             Debug.WriteLine("New Cat!");
@@ -77,6 +87,7 @@ namespace AdminConsole
             {
                 PageSelect.Children.RemoveAt(1);
             }
+            
         }
 
         //Upload the updated information to the database
