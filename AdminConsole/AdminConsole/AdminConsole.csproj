@@ -151,6 +151,9 @@
     <Compile Include="BuildingPropertiesControl.xaml.cs">
       <DependentUpon>BuildingPropertiesControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MapPin.xaml.cs">
+      <DependentUpon>MapPin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities.cs" />
     <Page Include="BuildingPreviewControl.xaml">
       <SubType>Designer</SubType>
@@ -200,6 +203,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewCatProp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MapPin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

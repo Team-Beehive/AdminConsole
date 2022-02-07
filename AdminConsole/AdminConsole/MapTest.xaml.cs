@@ -20,9 +20,13 @@ namespace AdminConsole
     /// </summary>
     public partial class MapTest : UserControl
     {
+        
         public MapTest()
         {
             InitializeComponent();
+            PinTest.m_building = AppData.s_buildingList.First();
         }
+
+       
     }
 }

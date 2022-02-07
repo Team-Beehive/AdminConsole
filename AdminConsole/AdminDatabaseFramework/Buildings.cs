@@ -46,7 +46,7 @@ namespace AdminDatabaseFramework
         public string project = "oit-kiosk";
         public Buildings()
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Dev\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "F:\\CSTCode\\JP\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
             firestoreDb = FirestoreDb.Create(project);
         }
 
