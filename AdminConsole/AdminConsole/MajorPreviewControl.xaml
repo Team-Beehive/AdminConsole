@@ -7,17 +7,40 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Name="tb_title"/>
-        <TextBlock Grid.Row="1" Name="tb_classes"/>
-        <TextBlock Grid.Row="2" Name="tb_camp"/>
-        <TextBlock Grid.Row="3" Name="tb_type"/>
-        <TextBlock Grid.Row="4" Name="tb_desc"/>
+        <!--Image here Column Span = 2-->
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+            <Label FontSize="24" MouseDown="ElementSelect" HorizontalContentAlignment="Center" VerticalAlignment="Center" Name="MajorName"/>
+            <Label FontSize="20" MouseDown="ElementSelect"  HorizontalContentAlignment="Center" Name="type"/>
+        </StackPanel>
+        <StackPanel Background="#003767" Grid.Row="2">
+            <StackPanel.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
+            </StackPanel.Resources>
+            <Label>
+                Quick Facts
+            </Label>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="about"/>
+        </StackPanel>
     </Grid>
 </UserControl>
+
+<!--
+    <TextBlock Grid.Row="0" Name="tb_title"/>
+    <TextBlock Grid.Row="1" Name="tb_classes"/>
+    <TextBlock Grid.Row="2" Name="tb_camp"/>
+    <TextBlock Grid.Row="3" Name="tb_type"/>
+    <TextBlock Grid.Row="4" Name="tb_desc"/> 
+-->
