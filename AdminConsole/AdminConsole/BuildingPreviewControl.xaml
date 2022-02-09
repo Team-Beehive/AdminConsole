@@ -7,13 +7,45 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
+        <!--Images should go here-->
+        <Label x:Name="BuildingName" MouseDown="ElementSelect" FontSize="48" HorizontalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="5"/>
+
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Background="#003767">
+            <StackPanel.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
+            </StackPanel.Resources>
+            <Label FontSize="20">
+                Quick Facts
+            </Label>
+            <Label FontSize="16">
+                Built
+            </Label>
+            <Label x:Name="BuildingConstructionYear" MouseDown="ElementSelect" FontSize="12"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3">
+            <TextBlock Foreground="Black" x:Name="BuildingName_Info" MouseDown="ElementSelect" TextWrapping="WrapWithOverflow"/>
+        </StackPanel>
+
+        <!--
         <TextBlock x:Name="BuildingName" Grid.Row="0" MouseDown="ElementSelect"/>
         <TextBlock x:Name="BuildingName_Info" Grid.Row="1" MouseDown="ElementSelect"/>
         <TextBlock x:Name="BuildingConstructionYear" Grid.Row="2" MouseDown="ElementSelect"/>
+        -->
     </Grid>
 </UserControl>

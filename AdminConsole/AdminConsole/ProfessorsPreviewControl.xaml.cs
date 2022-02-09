@@ -32,31 +32,37 @@ namespace AdminConsole
             {
                 AppData.s_propertiesPanel.Children.RemoveAt(1);
             }
-            TextBlock temp = sender as TextBlock;
-            AppData.s_propertiesPanel.Children.Add(new ProfPropControl(temp.Name));
+            //TextBlock tbElement = sender as TextBlock;
+            Label lElement = sender as Label;
+            //AppData.s_propertiesPanel.Children.Add(new ProfPropControl(temp.Name));
+            AppData.s_propertiesPanel.Children.Add(new ProfPropControl(lElement.Name));
         }
 
         private void Binding()
         {
             Binding b_name = new Binding("professorName");
             b_name.Source = AppData.s_activeProfessor;
-            BindingOperations.SetBinding(professorName, TextBlock.TextProperty, b_name);
+            //BindingOperations.SetBinding(professorName, TextBlock.TextProperty, b_name);
 
             Binding b_dep = new Binding("professorDepartment");
             b_dep.Source = AppData.s_activeProfessor;
-            BindingOperations.SetBinding(professorDepartment, TextBlock.TextProperty, b_dep);
+            //BindingOperations.SetBinding(professorDepartment, TextBlock.TextProperty, b_dep);
+            BindingOperations.SetBinding(professorDepartment, Label.ContentProperty, b_dep);
 
             Binding b_office = new Binding("professorOffice");
             b_office.Source = AppData.s_activeProfessor;
-            BindingOperations.SetBinding(professorOffice, TextBlock.TextProperty, b_office);
+            //BindingOperations.SetBinding(professorOffice, TextBlock.TextProperty, b_office);
+            BindingOperations.SetBinding(professorOffice, Label.ContentProperty, b_office);
 
             Binding b_email = new Binding("professorEmail");
             b_email.Source = AppData.s_activeProfessor;
-            BindingOperations.SetBinding(professorEmail, TextBlock.TextProperty, b_email);
+            //BindingOperations.SetBinding(professorEmail, TextBlock.TextProperty, b_email);
+            BindingOperations.SetBinding(professorEmail, Label.ContentProperty, b_email);
 
             Binding b_phone = new Binding("professorPhoneNumber");
             b_phone.Source = AppData.s_activeProfessor;
-            BindingOperations.SetBinding(professorPhoneNumber, TextBlock.TextProperty, b_phone);
+            //BindingOperations.SetBinding(professorPhoneNumber, TextBlock.TextProperty, b_phone);
+            BindingOperations.SetBinding(professorPhoneNumber, Label.ContentProperty, b_phone);
         }
     }
 }

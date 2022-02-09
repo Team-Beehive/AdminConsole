@@ -8,16 +8,44 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!--Image-->
+        <StackPanel Grid.Row="1" Background="#003767">
+            <StackPanel.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
+            </StackPanel.Resources>
+
+            <Label FontSize="18">
+                Department
+            </Label>
+            <Label x:Name="professorDepartment" MouseDown="ElementSelect"/>
+            <Label FontSize="18">
+                Email
+            </Label>
+            <Label x:Name="professorEmail" MouseDown="ElementSelect"/>
+            <Label FontSize="18">
+                Office
+            </Label>
+            <Label x:Name="professorOffice" MouseDown="ElementSelect"/>
+            <Label FontSize="18">
+                Phone Number
+            </Label>
+            <Label x:Name="professorPhoneNumber" MouseDown="ElementSelect"/>
+        </StackPanel>
+        <!--
         <TextBlock x:Name="professorName" Text="professorName" MouseDown="ElementSelect" Grid.Row="0"/>
         <TextBlock x:Name="professorDepartment" Text="professorDepartment" MouseDown="ElementSelect" Grid.Row="1"/>
         <TextBlock x:Name="professorOffice" Text="professorOffice" MouseDown="ElementSelect" Grid.Row="2"/>
         <TextBlock x:Name="professorEmail" Text="professorEmail" MouseDown="ElementSelect" Grid.Row="3"/>
         <TextBlock x:Name="professorPhoneNumber" Text="professorPhoneNumber" MouseDown="ElementSelect" Grid.Row="4"/>
+        -->
     </Grid>
 </UserControl>

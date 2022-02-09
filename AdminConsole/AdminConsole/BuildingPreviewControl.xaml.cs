@@ -32,23 +32,34 @@ namespace AdminConsole
             {
                 AppData.s_propertiesPanel.Children.RemoveAt(1);
             }
-            TextBlock temp = sender as TextBlock;
-            AppData.s_propertiesPanel.Children.Add(new BuildingPropertiesControl(temp.Name));
+            TextBlock tbElement = sender as TextBlock;
+            Label lElement = sender as Label;
+            if (tbElement != null)
+            {
+                AppData.s_propertiesPanel.Children.Add(new BuildingPropertiesControl(tbElement.Name));
+            }
+            else
+            {
+                AppData.s_propertiesPanel.Children.Add(new BuildingPropertiesControl(lElement.Name));
+            }
         }
 
         private void BindElements()
         {
             Binding b_name = new Binding("BuildingName");
             b_name.Source = AppData.s_activeBuilding;
-            BindingOperations.SetBinding(BuildingName, TextBlock.TextProperty, b_name);
+            //BindingOperations.SetBinding(BuildingName, TextBlock.TextProperty, b_name);
+            BindingOperations.SetBinding(BuildingName, Label.ContentProperty, b_name);
 
             Binding b_desc = new Binding("BuildingName_Info");
             b_desc.Source = AppData.s_activeBuilding;
             BindingOperations.SetBinding(BuildingName_Info, TextBlock.TextProperty, b_desc);
+            //BindingOperations.SetBinding(BuildingName_Info, Label.ContentProperty, b_desc);
 
             Binding b_year = new Binding("BuildingConstructionYear");
             b_year.Source = AppData.s_activeBuilding;
-            BindingOperations.SetBinding(BuildingConstructionYear, TextBlock.TextProperty, b_year);
+            //BindingOperations.SetBinding(BuildingConstructionYear, TextBlock.TextProperty, b_year);
+            BindingOperations.SetBinding(BuildingConstructionYear, Label.ContentProperty, b_year);
         }
     }
 }
