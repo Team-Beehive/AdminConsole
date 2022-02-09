@@ -24,6 +24,8 @@ namespace AdminConsole.UserControls
         public BuildingData m_building { get; set; }
         public UIElement m_Map { get; set; }
         public Point m_MapPoint { get; set; }
+        public Point m_newPoint { get; set; }
+
 
         public MapPin()
         {
@@ -40,11 +42,8 @@ namespace AdminConsole.UserControls
 
         private void Grid_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (m_building != null)
-            {
-                PinName.Text = m_building.BuildingName;
-                PinName.Opacity = 1;
-            }
+            PinName.Text = m_building.BuildingName;
+            PinName.Opacity = 1;
         }
 
         private void InitialPosition()
@@ -53,7 +52,7 @@ namespace AdminConsole.UserControls
             m_MapPoint = this.TranslatePoint(new Point(0, 0), m_Map);
         }
 
-        public void MovePinPosition(int x, int y)
+        public void MovePinPosition(double x, double y)
         {
             this.Margin = new Thickness(m_MapPoint.X + x, m_MapPoint.Y + y, 0, 0);
         }
@@ -61,6 +60,11 @@ namespace AdminConsole.UserControls
         private void Grid_MouseLeave(object sender, MouseEventArgs e)
         {
             PinName.Opacity=0;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

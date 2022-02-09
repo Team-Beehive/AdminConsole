@@ -20,13 +20,17 @@ namespace AdminConsole
     /// </summary>
     public partial class MapTest : UserControl
     {
-        
+        public Point m_absPoint { get; set; }
         public MapTest()
         {
             InitializeComponent();
             PinTest.m_building = AppData.s_buildingList.First();
         }
 
-       
+        private void UserControl_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            m_absPoint = Mouse.GetPosition(this);
+            PinTest.MovePinPosition(m_absPoint.X, m_absPoint.Y);
+        }
     }
 }
