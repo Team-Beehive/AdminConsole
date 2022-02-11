@@ -43,7 +43,6 @@ namespace AdminConsole.UserControls
         private void Grid_MouseEnter(object sender, MouseEventArgs e)
         {
             PinName.Text = m_building.BuildingName;
-            PinName.Opacity = 1;
         }
 
         private void InitialPosition()
@@ -54,17 +53,23 @@ namespace AdminConsole.UserControls
 
         public void MovePinPosition(double x, double y)
         {
-            this.Margin = new Thickness(m_MapPoint.X + x, m_MapPoint.Y + y, 0, 0);
+            this.Margin = new Thickness(x, y, 0, 0);
         }
 
         private void Grid_MouseLeave(object sender, MouseEventArgs e)
         {
-            PinName.Opacity=0;
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        public System.Windows.Media.HitTestResult HitTestCore(System.Windows.Media.PointHitTestParameters hitTestParameters)
+        {
+            return new PointHitTestResult(this, hitTestParameters.HitPoint);
+        }
+
     }
 }

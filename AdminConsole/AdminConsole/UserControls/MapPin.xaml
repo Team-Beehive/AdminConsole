@@ -5,16 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AdminConsole.UserControls"
              mc:Ignorable="d">
-    <Button Background="Transparent" BorderBrush="Transparent" 
-            MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave"
-            HorizontalAlignment="Center" VerticalAlignment="Center"
-            Click="Button_Click">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock x:Name="PinName"/>
-            <Grid>
-                <Ellipse Width="50" Height="50" Fill="Red"/>
-                <Ellipse Width="10" Height="10" Fill="DarkRed" Stroke="#520e00"/>
-            </Grid>
-        </StackPanel>
-    </Button>
+
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
+        <TextBlock x:Name="PinName"/>
+        <Grid>
+            <Ellipse Width="50" Height="50" Fill="Red"/>
+            <Ellipse Width="10" Height="10" Fill="DarkRed" Stroke="#520e00"/>
+        </Grid>
+    </StackPanel>
 </UserControl>

@@ -6,8 +6,11 @@
              xmlns:local="clr-namespace:AdminConsole"
              xmlns:control="clr-namespace:AdminConsole.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="Aqua" MouseDown="UserControl_MouseUp">
-    <Grid>
+             d:DesignHeight="450" d:DesignWidth="800" Background="Aqua"
+             MouseDown="UserControl_MouseDown" MouseUp="UserControl_MouseUp"
+             MouseMove="UserControl_MouseMove">
+    <Canvas x:Name="Map" Width="300" Height="200" MaxHeight="200" MaxWidth="300" Background="AliceBlue">
+        
         <control:MapPin x:Name="PinTest"/>
-    </Grid>
+    </Canvas>
 </UserControl>
