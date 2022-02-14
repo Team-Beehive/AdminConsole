@@ -133,6 +133,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BuildingMenuItem.cs" />
     <Compile Include="MajorPropControl.xaml.cs">
       <DependentUpon>MajorPropControl.xaml</DependentUpon>
     </Compile>

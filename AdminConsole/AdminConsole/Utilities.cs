@@ -12,6 +12,18 @@ namespace AdminConsole
 
     static class Utilities
     {
+        public static BuildingData NewBuilding()
+        {
+            BuildingData temp = new BuildingData();
+            temp.BuildingName = "New Building";
+            temp.BuildingMajors = new List<string>();
+            temp.BuildingName_Info = "Lorium Ipsum";
+            temp.BuildingProfessors = new List<string>();
+            temp.BuildingRoom_Type = new List<string>();
+            temp.BuildingConstructionYear = "9999";
+
+            return temp;
+        }
         public static ProfessorData NewProf()
         {
             ProfessorData temp = new ProfessorData();

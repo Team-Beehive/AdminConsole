@@ -13,12 +13,36 @@ namespace AdminConsole
 
     static class AppEvents
     {
+        public static void ContextItemRemoveBuilding(object sender, EventArgs e)
+        {
+            BuildingMenuItem temp = sender as BuildingMenuItem;
+            AppData.s_building.RemoveBuilding(temp.data);
+            AppData.s_buildingList.Remove(temp.data);
+            AppData.s_listPanel.Children.RemoveAt(1);
+            AppData.s_previewPanel.Children.RemoveAt(1);
+            AppData.s_listPanel.Children.Add(CreateElements.CreateBuildingButtons());
+        }
+        public static void ButtonPressAddBuilding(object sender, EventArgs e)
+        {
+            BuildingButton temp = sender as BuildingButton;
+            AppData.s_activeBuilding = temp.data;
+            if (AppData.s_previewPanel.Children.Count > 1)
+            {
+                AppData.s_previewPanel.Children.RemoveAt(1);
+            }
+            AppData.s_previewPanel.Children.Add(new BuildingPreviewControl());
+            AppData.s_buildingList.AddLast(temp.data);
+            AppData.s_listPanel.Children.RemoveAt(1);
+            AppData.s_listPanel.Children.Add(CreateElements.CreateBuildingButtons());
+            AppData.s_building.CreateBuilding(temp.data);
+        }
         public static void ContextItemRemoveProf(object sender, EventArgs e)
         {
             ProfMenuItem temp = sender as ProfMenuItem;
             AppData.s_professors.RemoveProfessor(temp.data);
             AppData.s_professorList.Remove(temp.data);
             AppData.s_listPanel.Children.RemoveAt(1);
+            AppData.s_previewPanel.Children.RemoveAt(1);
             AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());
 
         }

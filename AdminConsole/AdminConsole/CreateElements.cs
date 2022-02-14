@@ -77,11 +77,27 @@ namespace AdminConsole
                 btn.Name = cleanName;
                 btn.Click += AppEvents.ButtonPressBuildingSelect;
                 btn.data = building;
+                ContextMenu deleteMenu = new ContextMenu();
+                BuildingMenuItem deleteItem = new BuildingMenuItem();
+                deleteItem.data = building;
+                deleteItem.Header = "Delete";
+                deleteItem.Click += AppEvents.ContextItemRemoveBuilding;
+                deleteMenu.Items.Add(deleteItem);
+                btn.ContextMenu = deleteMenu;
 
                 Grid.SetRow(btn, btnPos);
                 btnPos++;
                 grid.Children.Add(btn);
             }
+
+            grid.RowDefinitions.Add(new RowDefinition());
+            BuildingButton add = new BuildingButton();
+            add.Content = "Add Building";
+            add.Name = "add";
+            add.data = Utilities.NewBuilding();
+            add.Click += AppEvents.ButtonPressAddBuilding;
+            Grid.SetRow(add, btnPos);
+            grid.Children.Add(add);
 
             return grid;
         }
