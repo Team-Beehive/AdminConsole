@@ -21,10 +21,13 @@
             <RowDefinition Height="5*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <!--Images should go here-->
+        <Image Grid.ColumnSpan="5" Source="Resources/placeholder-image.png" Height="100" Stretch="Fill"/>
+        <Image Grid.Row="1" Source="Resources/placeholder-image.png" Height="75"/>
+        <Image Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Source="Resources/placeholder-image.png" Height="75" Stretch="Fill" />
+        <Image Grid.Row="1" Grid.Column="4" Source="Resources/placeholder-image.png" Height="75"/>
         <Label x:Name="BuildingName" MouseDown="ElementSelect" FontSize="48" HorizontalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="5"/>
 
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Background="#003767">
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Background="#003767" Height="300">
             <StackPanel.Resources>
                 <Style TargetType="Label">
                     <Setter Property="Foreground" Value="White"/>
@@ -41,6 +44,7 @@
         <StackPanel Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3">
             <TextBlock Foreground="Black" x:Name="BuildingName_Info" MouseDown="ElementSelect" TextWrapping="WrapWithOverflow"/>
         </StackPanel>
+
 
         <!--
         <TextBlock x:Name="BuildingName" Grid.Row="0" MouseDown="ElementSelect"/>

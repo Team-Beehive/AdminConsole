@@ -17,11 +17,12 @@
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <!--Image here Column Span = 2-->
+        <Image Source="Resources/placeholder-image.png" Stretch="Fill" Height="200" Grid.ColumnSpan="2"/>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
             <Label FontSize="24" MouseDown="ElementSelect" HorizontalContentAlignment="Center" VerticalAlignment="Center" Name="MajorName"/>
             <Label FontSize="20" MouseDown="ElementSelect"  HorizontalContentAlignment="Center" Name="type"/>
         </StackPanel>
-        <StackPanel Background="#003767" Grid.Row="2">
+        <StackPanel Height="400" Background="#003767" Grid.Row="2">
             <StackPanel.Resources>
                 <Style TargetType="Label">
                     <Setter Property="Foreground" Value="White"/>

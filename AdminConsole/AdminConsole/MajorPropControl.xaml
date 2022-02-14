@@ -7,6 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBox x:Name="tb_prop" Height="50" TextWrapping="WrapWithOverflow" SourceUpdated="OnSourceUpdated"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" FontSize="15" FontFamily="Tahoma">
+            Edit Text
+        </Label>
+        <TextBox Grid.Row="1" FontSize="15" x:Name="tb_prop" TextWrapping="WrapWithOverflow" SourceUpdated="OnSourceUpdated"/>
     </Grid>
 </UserControl>

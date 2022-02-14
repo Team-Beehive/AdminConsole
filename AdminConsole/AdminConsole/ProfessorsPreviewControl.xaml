@@ -16,7 +16,8 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!--Image-->
-        <StackPanel Grid.Row="1" Background="#003767">
+        <Image Source="Resources/blankpfp.png" Height="200" Width="200"/>
+        <StackPanel Height="500" Grid.Row="1" Background="#003767">
             <StackPanel.Resources>
                 <Style TargetType="Label">
                     <Setter Property="Foreground" Value="White"/>
