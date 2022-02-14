@@ -25,7 +25,8 @@ namespace AdminConsole.UserControls
         public UIElement m_Map { get; set; }
         public Point m_MapPoint { get; set; }
         public Point m_newPoint { get; set; }
-
+        public double m_leftPercent { get; set; }
+        public double m_topPercent { get; set; }
 
         public MapPin()
         {
@@ -53,19 +54,12 @@ namespace AdminConsole.UserControls
 
         public void MovePinPosition(double x, double y)
         {
+            m_leftPercent = x / (this.Parent as Canvas).ActualWidth;
+
+            m_topPercent = y / (this.Parent as Canvas).ActualHeight;
+
             this.Margin = new Thickness(x, y, 0, 0);
         }
-
-        private void Grid_MouseLeave(object sender, MouseEventArgs e)
-        {
-            
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         public System.Windows.Media.HitTestResult HitTestCore(System.Windows.Media.PointHitTestParameters hitTestParameters)
         {
             return new PointHitTestResult(this, hitTestParameters.HitPoint);

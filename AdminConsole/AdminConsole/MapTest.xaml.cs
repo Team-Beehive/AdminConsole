@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AdminDatabaseFramework;
 
 namespace AdminConsole
 {
@@ -22,13 +23,16 @@ namespace AdminConsole
     {
         public Point m_absPoint { get; set; }
         private UserControls.MapPin m_mapPin;
+        private LinkedList<UserControls.MapPin> m_mapPinList;
         public MapTest()
         {
             InitializeComponent();
-            PinTest.m_building = AppData.s_buildingList.First();
-            UserControls.MapPin pin = new UserControls.MapPin();
-            pin.m_building = AppData.s_buildingList.ElementAt(1);
-            Map.Children.Add(pin);
+            m_mapPinList = new LinkedList<UserControls.MapPin>();
+            foreach(BuildingData data in AppData.s_buildingList)
+            {
+                BuildingsList.Items.Add(new UserControls.BuildingListItem(data));
+            }
+
         }
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
@@ -44,8 +48,11 @@ namespace AdminConsole
 
         private void UserControl_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            m_mapPin.PinName.Opacity = 0;
-            m_mapPin = null;
+            if (m_mapPin != null)
+            {
+                m_mapPin.PinName.Opacity = 0;
+                m_mapPin = null;
+            }
         }
 
         private void UserControl_MouseMove(object sender, MouseEventArgs e)
@@ -88,5 +95,28 @@ namespace AdminConsole
             }    
         }
 
+        private void AddPin_Click(object sender, RoutedEventArgs e)
+        {
+            if (BuildingsList.SelectedItems != null)
+            {
+                UserControls.MapPin pin = new UserControls.MapPin(
+                    (BuildingsList.SelectedItem as UserControls.BuildingListItem).m_buildingData);
+                Map.Children.Add(pin);
+                m_mapPinList.AddLast(pin);
+            }
+        }
+
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            foreach(UserControls.MapPin pin in m_mapPinList)
+            {
+                pin.MovePinPosition(Map.ActualWidth / pin.m_leftPercent, Map.ActualHeight / pin.m_topPercent);
+            }
+        }
+
+        private void UpdateDBButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

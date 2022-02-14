@@ -6,11 +6,32 @@
              xmlns:local="clr-namespace:AdminConsole"
              xmlns:control="clr-namespace:AdminConsole.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="Aqua"
+             d:DesignHeight="450" d:DesignWidth="800" Background="Aqua" MinHeight="450px"
              MouseDown="UserControl_MouseDown" MouseUp="UserControl_MouseUp"
-             MouseMove="UserControl_MouseMove">
-    <Canvas x:Name="Map" Width="300" Height="200" MaxHeight="200" MaxWidth="300" Background="AliceBlue">
-        
-        <control:MapPin x:Name="PinTest"/>
-    </Canvas>
+             MouseMove="UserControl_MouseMove" SizeChanged="UserControl_SizeChanged">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ListBox x:Name="BuildingsList" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Button x:Name="AddPin" Content="Create Pin" Grid.Row="1" Click="AddPin_Click"/>
+            <Button x:Name="UpdateDBButton" Grid.Row="2" Content="UpdateDB" Click="UpdateDBButton_Click"/>
+        </Grid>
+
+        <Canvas x:Name="Map" Background="AliceBlue"
+                Grid.Column="1">
+            <Image Source="ot-campus-map-2019.png" 
+                   Width="{Binding ActualWidth, ElementName=Map}"
+                   Height="{Binding ActualHeight, ElementName=Map}"/>
+        </Canvas>
+
+    </Grid>
 </UserControl>

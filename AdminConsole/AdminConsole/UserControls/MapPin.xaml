@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:AdminConsole.UserControls"
              mc:Ignorable="d">
 
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MouseEnter="Grid_MouseEnter">
         <TextBlock x:Name="PinName"/>
         <Grid>
-            <Ellipse Width="50" Height="50" Fill="Red"/>
-            <Ellipse Width="10" Height="10" Fill="DarkRed" Stroke="#520e00"/>
+            <Ellipse Width="20" Height="20" Fill="Red"/>
+            <Ellipse Width="5" Height="5" Fill="DarkRed" Stroke="#520e00"/>
         </Grid>
     </StackPanel>
 </UserControl>

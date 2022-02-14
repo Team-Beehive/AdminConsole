@@ -46,7 +46,7 @@ namespace AdminDatabaseFramework
         public string project = "oit-kiosk";
         public Buildings()
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Users\\nulty\\Documents\\JrProject\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "F:\\CSTCode\\JP\\Database\\it-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
             firestoreDb = FirestoreDb.Create(project);
         }
 
@@ -129,6 +129,37 @@ namespace AdminDatabaseFramework
                 await firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).UpdateAsync(buildingData.ToDictionary());
             }
         }
+
+        public void UpdateMap(LinkedList<MapPin> mapPin)
+        {
+
+        }
+
+        private async Task db_updateMap(LinkedList<MapPin> mapPin)
+        {
+            foreach (MapPin pin in mapPin)
+            {
+                DocumentReference documentReference = firestoreDb.Collection("Pages").Document("Map").Collection("MapPins").Document(pin.buildingData.BuildingName);
+                await documentReference.UpdateAsync(pin.toDict());
+            }
+        }
        
+    }
+
+    public struct MapPin
+    {
+        public BuildingData buildingData;
+        public double m_left;
+        public double m_top;
+
+        public Dictionary<string, object> toDict()
+        {
+            return new Dictionary<string, object>
+            {
+                {"buildingRef", buildingData.DocumentReferenceSelf },
+                {"LeftMargin", m_left},
+                {"TopMargin", m_top }
+            };
+        }
     }
 }
