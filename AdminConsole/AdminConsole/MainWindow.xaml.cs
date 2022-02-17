@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using AdminDatabaseFramework;
 using System.Xaml;
+using Microsoft.Win32;
 
 namespace AdminConsole
 {
@@ -41,6 +42,17 @@ namespace AdminConsole
             Utilities.GetData();
             tb_status.Text = "";
 
+        }
+
+        private void ButtonPressOpen(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Firebase credentials (JSON)|*.json";
+            Debug.WriteLine("Hello");
+            if (openFile.ShowDialog() == true)
+            {
+                Debug.WriteLine(openFile.FileName);
+            }
         }
 
         private void ButtonPressMajors(object sender, EventArgs e)

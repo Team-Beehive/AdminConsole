@@ -17,7 +17,7 @@
             <Setter Property="FontFamily" Value="Tahoma"/>
             <Setter Property="Margin" Value="1"/>
             <Setter Property="Height" Value="25"/>
-            <Setter Property="Width" Value="80"/>
+            <Setter Property="Width" Value="100"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Foreground" Value="Black"/>
@@ -116,7 +116,7 @@
 
         <!--Tool bar-->
         <StackPanel Grid.Row="0" Grid.ColumnSpan="3">
-            <Border Background="white">
+            <Border Background="DarkBlue">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="1" Color="Gray"/>
                 </Border.Effect>
@@ -134,22 +134,24 @@
 
                     <!--<TextBlock Grid.Row="0" Text="Headder"/>-->
                     <Button Grid.Row="1" Style="{StaticResource TopButtons}" HorizontalAlignment="Left" Click="ButtonPressExport" Content="Upload"/>
-                    <TextBlock Grid.Row="2" x:Name="tb_status" Text="Status Indicator"/>
+                    <TextBlock Grid.Row="2" Foreground="White" x:Name="tb_status" Text="Status Indicator"/>
 
-                    <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
+                    <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource TopButtons}" Content="Category" HorizontalAlignment="Left" Click="ButtonPressCategory"/>
-                        <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource TopButtons}" Content="Majors" HorizontalAlignment="Left" Click="ButtonPressMajors"/>
-                        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Building" HorizontalAlignment="Left" Click="ButtonPressBuilding"/>
-                        <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Professor" HorizontalAlignment="Left" Click="ButtonPressProf"/>
+                        <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource TopButtons}" Content="Category" HorizontalAlignment="Center" Click="ButtonPressCategory"/>
+                        <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource TopButtons}" Content="Majors" HorizontalAlignment="Center" Click="ButtonPressMajors"/>
+                        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Building" HorizontalAlignment="Center" Click="ButtonPressBuilding"/>
+                        <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Professor" HorizontalAlignment="Center" Click="ButtonPressProf"/>
+                        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource TopButtons}" Content="Open File" HorizontalAlignment="Center" Click="ButtonPressOpen"/>
                     </Grid>
                 </Grid>
             </Border>
