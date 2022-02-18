@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -147,17 +148,23 @@ namespace AdminConsole
             }
         }
 
-        public static void GetData()
+        public static void GetData(ref bool connected)
         {
+            if (connected)
+            {
+                //AppData.s_majorList = AppData.s_major.GetMajors();
+                AppData.s_professorList = AppData.s_professors.GetProfessors();
 
-            //AppData.s_majorList = AppData.s_major.GetMajors();
-            AppData.s_professorList = AppData.s_professors.GetProfessors();
-            
-            //AppData.s_majorList = AppData.s_major.GetMajors();
-            AppData.s_buildingList = AppData.s_building.GetBuildings();
+                //AppData.s_majorList = AppData.s_major.GetMajors();
+                AppData.s_buildingList = AppData.s_building.GetBuildings();
 
-            AppData.s_majorList = AppData.s_major.GetMajors();
-            AppData.s_catList = AppData.s_major.GetCategories();
+                AppData.s_majorList = AppData.s_major.GetMajors();
+                AppData.s_catList = AppData.s_major.GetCategories();
+            }
+            else
+            {
+                MessageBox.Show("Is not connected to server");
+            }
 
         }
         

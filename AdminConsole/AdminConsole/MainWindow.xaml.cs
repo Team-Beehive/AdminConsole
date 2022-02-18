@@ -32,14 +32,17 @@ namespace AdminConsole
 
     public partial class MainWindow : Window
     {
-
+        private bool isConnected = false;
         public MainWindow()
         {
             InitializeComponent();
             AppData.s_previewPanel = Preview;
             AppData.s_propertiesPanel = Properties;
             AppData.s_listPanel = PageSelect;
-            Utilities.GetData();
+            //Check if there a saved database key
+            //remove this bool set once the check is implimented
+            //isConnected = true;
+            Utilities.GetData(ref isConnected);
             tb_status.Text = "";
 
         }
@@ -52,30 +55,44 @@ namespace AdminConsole
             if (openFile.ShowDialog() == true)
             {
                 Debug.WriteLine(openFile.FileName);
+                isConnected = true;
+                Utilities.GetData(ref isConnected);
             }
         }
 
         private void ButtonPressMajors(object sender, EventArgs e)
         {
-            RemovePageSelect();
-            PageSelect.Children.Add(CreateElements.CreateMajorButtons(AppData.s_majorList));
+            if (isConnected)
+            { 
+                RemovePageSelect();
+                PageSelect.Children.Add(CreateElements.CreateMajorButtons(AppData.s_majorList));
+            }
         }
 
         private void ButtonPressCategory(object sender, EventArgs e)
         {
-            CreateElements.AddCatButtons(AppData.s_catList);
+            if (isConnected)
+            { 
+                CreateElements.AddCatButtons(AppData.s_catList);
+            }
         }
 
         private void ButtonPressBuilding(object sender, EventArgs e)
         {
-            RemovePageSelect();
-            PageSelect.Children.Add(CreateElements.CreateBuildingButtons());
+            if (isConnected)
+            { 
+                RemovePageSelect();
+                PageSelect.Children.Add(CreateElements.CreateBuildingButtons());
+            }
         }
 
         private void ButtonPressProf(object sender, EventArgs e)
         {
-            RemovePageSelect();
-            PageSelect.Children.Add(CreateElements.CreateProfButtons());
+            if (isConnected)
+            { 
+                RemovePageSelect();
+                PageSelect.Children.Add(CreateElements.CreateProfButtons());
+            }
         }
 
         private void ButtonPressNewCat(object sender, EventArgs e)
