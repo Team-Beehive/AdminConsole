@@ -59,67 +59,66 @@ namespace AdminDatabaseFramework
     public class Majors
     {
         private LinkedList<DocumentSnapshot> m_dataBaseRefs = new LinkedList<DocumentSnapshot>();
-        public string project = "oit-kiosk";
-        private MajorDatabase majorDatabase = new MajorDatabase();
+        public static string project = "oit-kiosk";
+        private MajorDatabase majorDatabase = new MajorDatabase(project);
         public Majors()
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Dev\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
-            m_dataBaseRefs = majorDatabase.GetMajorData(project);
+                m_dataBaseRefs = majorDatabase.GetMajorData();
         }
 
         public void EditMajor(MajorData major)
         {
-            majorDatabase.EditMajorData(project, major);
+            majorDatabase.EditMajorData(major);
 
             if (major.MajorName != major.OldName)
             {
                 string temp = major.OldName;
                 major.OldName = major.MajorName;
-                majorDatabase.EditMajorName(project, major, temp);
+                majorDatabase.EditMajorName(major, temp);
             }
             else
             {
-                majorDatabase.EditMajorData(project, major);
+                majorDatabase.EditMajorData(major);
             }
         }
 
         public void EditMajor(MajorData major, string oldName)
         {
-            majorDatabase.EditMajorName(project, major, oldName);
+            majorDatabase.EditMajorName(major, oldName);
         }
 
         public void DeleteMajor(MajorData major)
         {
-            majorDatabase.DeleteMajorData(project, major);
+            majorDatabase.DeleteMajorData(major);
         }
 
         public void EditMajorCatagoryTitle(MajorCategories majorCategories)
         {
-            majorDatabase.EditCategoryTitle(project, majorCategories.oldTitle, majorCategories.categoryTitle);
+            majorDatabase.EditCategoryTitle(majorCategories.oldTitle, majorCategories.categoryTitle);
         }
 
         public void AddMajorToCat(MajorCategories majorCategories, MajorData major)
         {
-            majorDatabase.AddMajorToCat(project, majorCategories.oldTitle, major);
+            majorDatabase.AddMajorToCat(majorCategories.oldTitle, major);
         }
 
         public void RemoveMajorFromCat(MajorCategories majorCategories, MajorData major)
         {
-            majorDatabase.RemoveMajorFromCat(project, majorCategories, major);
+            majorDatabase.RemoveMajorFromCat(majorCategories, major);
         }
 
         public void CreateMajorCategory(string catTitle)
         {
-            majorDatabase.CreateMajorCategory(project, catTitle);
+            majorDatabase.CreateMajorCategory(catTitle);
         }
 
         public void DeleteMajorCategory(MajorCategories majorCategories)
         {
-            majorDatabase.DeleteMajorCategory(project, majorCategories);
+            majorDatabase.DeleteMajorCategory(majorCategories);
         }
         public void UpdateLocal()
         {
-            m_dataBaseRefs = majorDatabase.GetMajorData(project);
+            m_dataBaseRefs = majorDatabase.GetMajorData();
         }
 
         public LinkedList<MajorData> GetMajors()
@@ -143,7 +142,7 @@ namespace AdminDatabaseFramework
 
         public LinkedList<MajorCategories> GetCategories()
         {
-            DocumentSnapshot documentSnapshot = majorDatabase.StoreMajorCategories(project);
+            DocumentSnapshot documentSnapshot = majorDatabase.StoreMajorCategories();
             LinkedList<MajorCategories> majorCategories = new LinkedList<MajorCategories>();
 
             List<Dictionary<string, object>> categoryList = documentSnapshot.GetValue<List<Dictionary<string, object>>>("Categories");
