@@ -41,7 +41,7 @@ namespace AdminConsole
             AppData.s_listPanel = PageSelect;
             //Check if there a saved database key
             //remove this bool set once the check is implimented
-            //isConnected = true;
+            isConnected = true;
             Utilities.GetData(ref isConnected);
             tb_status.Text = "";
 
@@ -51,7 +51,6 @@ namespace AdminConsole
         {
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Filter = "Firebase credentials (JSON)|*.json";
-            Debug.WriteLine("Hello");
             if (openFile.ShowDialog() == true)
             {
                 Debug.WriteLine(openFile.FileName);

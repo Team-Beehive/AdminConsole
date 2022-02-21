@@ -83,34 +83,6 @@ namespace AdminConsole
             AppData.s_previewPanel.Children.Add(new BuildingPreviewControl());
         }
 
-        //Runs when a major button is pressed
-        //Get page info and display a preview
-        /*public static void ButtonPressPage(object sender, EventArgs e)
-        {
-            FrameworkElement page = sender as FrameworkElement;
-        }*/
-
-    /*
-     * Author: Destiny Dahlgren
-     * Purpose: Holds most of the interactive events. Mostly for items that are generated at runtime
-     */
-
-    /*
-     * Functions:
-     * ButtonPressCatProp(object sender, EventArgs e)
-     * - Creates a list of buttons from the given category list
-     * ButtonPressUpdateCat(object sender, EventArgs e)
-     * - Updates the category name locally and remakes the buttons to reflect it
-     * TextBoxCatName(object sender, TextChangedEventArgs e)
-     * - Triggers when the text box changes. Puts the changes into the variables
-     * ButtonPressPage(object sender, EventArgs e)
-     * - When a major is selected it gets the relivent info and displays the preview
-     * ButtonPressPage(object sender, EventArgs e)
-     * - When a page element is selected open its properties panel
-     * - Currently only set for modifying the text it contains
-     * 
-     */
-
         public static void ButtonPressNewCat(object sender, EventArgs e)
         {
             if (AppData.s_propertiesPanel.Children.Count > 1)
@@ -124,18 +96,6 @@ namespace AdminConsole
         {
             CatButton temp = sender as CatButton;
             AppData.s_activeCat = temp.category;
-
-            //Button temp = sender as Button;
-
-            /*foreach (MajorCategories c in AppData.s_catList)
-            {
-                if (c.categoryTitle == temp.Content.ToString())
-                {
-                    //c.oldTitle = c.categoryTitle;
-                    AppData.s_activeCat = c;
-                    break;
-                }
-            }*/
             CreateElements.AddCatProp();
             AppData.s_properties.Text = temp.category.categoryTitle;
         }
@@ -171,74 +131,11 @@ namespace AdminConsole
                 }
                 AppData.s_lastSelected = page.Name;
 
-                //Utilities.QueryPageData(page.Name);
-
-                //Utilities.QueryPageData(page.Name);
-                //Utilities.QueryPageData(page.major);
-                //MajorButton temp = sender as MajorButton;
                 AppData.s_activeData = page.major;
 
                 CreateElements.ShowPreview();
             }
         }
 
-
-        //When a page element is selected open the properties panel for that element
-        //Set for modyfying text elements
-
-        public static void ButtonPressSelected(object sender, EventArgs e)
-        {
-            if (AppData.s_propertiesPanel.Children.Count == 1)
-            {
-                CreateElements.AddProperties();
-            }
-            AppData.s_activeElement = sender;
-            TextBlock temp = sender as TextBlock;
-            if (temp != null)
-            {
-                AppData.s_properties.Text = temp.Text;
-            }
-        }
-
-        //When the text is changed in the text box
-        public static void TextChangedTest(object sender, TextChangedEventArgs e)
-        {
-            TextBlock temp = AppData.s_activeElement as TextBlock;
-            TextBox tb = sender as TextBox;
-
-            AppData.s_hasChanged = true;
-
-            if (temp != null)
-            {
-                switch (temp.Name)
-                {
-                    case "title":
-                        AppData.s_activeTitle = tb.Text;
-                        break;
-                    case "type":
-                        AppData.s_activeType = tb.Text;
-                        break;
-                    case "desc":
-                        AppData.s_activeDesc = tb.Text;
-                        break;
-                    case "classes":
-                        AppData.s_activeClasses = tb.Text;
-                        break;
-                    case "prof":
-                        //AppData.s_act
-                        break;
-                    case "camp":
-                        AppData.s_activeCampus = tb.Text;
-                        break;
-                }
-                temp.Text = tb.Text;
-            }
-        }
-
-        //Test function for button presses
-        public static void ButtonPressTest(object sender, EventArgs e)
-        {
-            Debug.WriteLine("Hello world!");
-        }
     }
 }   
