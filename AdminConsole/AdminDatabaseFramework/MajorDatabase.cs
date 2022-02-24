@@ -48,11 +48,11 @@ namespace AdminDatabaseFramework
 
         */
         private FirestoreDb db;
-        public MajorDatabase(string project)
+        public MajorDatabase(FirestoreDb m_db)
         {
             try
             {
-                db = FirestoreDb.Create(project);
+                db = m_db;
             }
             catch
             {

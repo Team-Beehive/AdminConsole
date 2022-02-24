@@ -126,6 +126,7 @@
   <ItemGroup>
     <Compile Include="BuildingData.cs" />
     <Compile Include="Buildings.cs" />
+    <Compile Include="Database.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="MajorData.cs" />
     <Compile Include="MajorDatabase.cs" />

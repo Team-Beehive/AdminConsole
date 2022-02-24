@@ -42,12 +42,17 @@ namespace AdminDatabaseFramework
     public class Buildings
     {
         public LinkedList<BuildingData> BuildingList { get; set; }
-        private FirestoreDb firestoreDb { get; set; }
-        public string project = "oit-kiosk";
-        public Buildings()
+        private FirestoreDb db { get; set; }
+        public Buildings(FirestoreDb m_db)
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Dev\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
-            firestoreDb = FirestoreDb.Create(project);
+            try
+            {
+                db = m_db;
+            }
+            catch
+            {
+                throw new DatabaseException("Unable to connect to Firestore");
+            }
         }
 
         public void updateLocalBuildings()
@@ -77,7 +82,7 @@ namespace AdminDatabaseFramework
 
         private async Task<LinkedList<BuildingData>> db_GetBuildingListAsync()
         {
-            CollectionReference buildingRef = firestoreDb.Collection("pages").Document("Map").Collection("Buildings");
+            CollectionReference buildingRef = db.Collection("pages").Document("Map").Collection("Buildings");
             QuerySnapshot snapshot = await buildingRef.GetSnapshotAsync();
             LinkedList<BuildingData> buildings = new LinkedList<BuildingData>();
 
@@ -95,7 +100,7 @@ namespace AdminDatabaseFramework
         {
             if(buildingData.BuildingName != null)
             {
-                DocumentReference buildingRef = firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName);
+                DocumentReference buildingRef = db.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName);
                 await buildingRef.SetAsync(buildingData.ToDictionary());
             }
             else
@@ -108,7 +113,7 @@ namespace AdminDatabaseFramework
         {
             if(buildingData.BuildingName != null)
             {
-                await firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).DeleteAsync();
+                await db.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).DeleteAsync();
             }
             else
             {
@@ -120,13 +125,13 @@ namespace AdminDatabaseFramework
         {
             if (buildingData.BuildingName != buildingData.oldName)
             {
-                DocumentReference buildingRef = firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.oldName);
+                DocumentReference buildingRef = db.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.oldName);
                 await buildingRef.DeleteAsync();
                 Task.Run(async () => await db_CreateBuilding(buildingData)).Wait();
             }
             else if (buildingData.BuildingName == buildingData.oldName)
             {
-                await firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).UpdateAsync(buildingData.ToDictionary());
+                await db.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).UpdateAsync(buildingData.ToDictionary());
             }
         }
        

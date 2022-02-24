@@ -59,11 +59,11 @@ namespace AdminDatabaseFramework
     public class Majors
     {
         private LinkedList<DocumentSnapshot> m_dataBaseRefs = new LinkedList<DocumentSnapshot>();
-        public static string project = "oit-kiosk";
-        private MajorDatabase majorDatabase = new MajorDatabase(project);
-        public Majors()
+        private MajorDatabase majorDatabase;
+        public Majors(FirestoreDb m_db)
         {
-                m_dataBaseRefs = majorDatabase.GetMajorData();
+            majorDatabase = new MajorDatabase(m_db);
+            m_dataBaseRefs = majorDatabase.GetMajorData();
         }
 
         public void EditMajor(MajorData major)
@@ -123,25 +123,35 @@ namespace AdminDatabaseFramework
 
         public LinkedList<MajorData> GetMajors()
         {
-            LinkedList<MajorData> datas = new LinkedList<MajorData>();
-            foreach(DocumentSnapshot document in m_dataBaseRefs)
-            {
-                Dictionary<string, object> documentDictionary = document.ToDictionary();
-                MajorData tempMajor = new MajorData();
-                tempMajor.MajorName = document.Id;
-                tempMajor.OldName = document.Id;
-                tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
-                tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
-                tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
 
-                tempMajor.DocumentReferenceSelf = document.Reference;
-                datas.AddLast(tempMajor);
+            try
+            {
+                LinkedList<MajorData> datas = new LinkedList<MajorData>();
+                foreach (DocumentSnapshot document in m_dataBaseRefs)
+                {
+                    Dictionary<string, object> documentDictionary = document.ToDictionary();
+                    MajorData tempMajor = new MajorData();
+                    tempMajor.MajorName = document.Id;
+                    tempMajor.OldName = document.Id;
+                    tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
+                    tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
+                    tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
+
+                    tempMajor.DocumentReferenceSelf = document.Reference;
+                    datas.AddLast(tempMajor);
+                }
+                return datas;
             }
-            return datas;
+            catch
+            {
+                throw new DatabaseException("Could not save data from database");
+            }
+            
         }
 
         public LinkedList<MajorCategories> GetCategories()
         {
+            
             DocumentSnapshot documentSnapshot = majorDatabase.StoreMajorCategories();
             LinkedList<MajorCategories> majorCategories = new LinkedList<MajorCategories>();
 
