@@ -205,10 +205,5 @@ namespace AdminConsole
             return grid;
         }
         
-        public static void ShowPreview()
-        {
-            UserControl test = new MajorPreviewControl();
-            AppData.s_previewPanel.Children.Add(test);
-        }
     }
 }

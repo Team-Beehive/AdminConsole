@@ -112,7 +112,7 @@ namespace AdminConsole
         {
             tb_status.Text = "";
 
-            Utilities.VolitileSave();
+            //Utilities.VolitileSave();
             Utilities.UploadData();
             tb_status.Text = "Database Updated";
         }

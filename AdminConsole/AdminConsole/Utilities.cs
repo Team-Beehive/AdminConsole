@@ -50,19 +50,19 @@ namespace AdminConsole
             return sb.ToString();
         }
 
-        public static void VolitileSave()
+        /*public static void VolitileSave()
         {
-            if (AppData.s_hasChanged)
-            {
-                AppData.s_major.UpdateLocal();
+            //if (AppData.s_hasChanged)
+            //{
+                //AppData.s_major.UpdateLocal();
                 if (!AppData.s_changedList.Contains(AppData.s_activeData))
                 {
                     AppData.s_changedList.Add(AppData.s_activeData);
                 }
 
-                AppData.s_hasChanged = false;
-            }
-        }
+                //AppData.s_hasChanged = false;
+            //}
+        }*/
 
         public static void UploadData()
         {

@@ -22,6 +22,16 @@ namespace AdminConsole
             AppData.s_previewPanel.Children.RemoveAt(1);
             AppData.s_listPanel.Children.Add(CreateElements.CreateBuildingButtons());
         }
+        public static void ContextItemRemoveProf(object sender, EventArgs e)
+        {
+            ProfMenuItem temp = sender as ProfMenuItem;
+            AppData.s_professors.RemoveProfessor(temp.data);
+            AppData.s_professorList.Remove(temp.data);
+            AppData.s_listPanel.Children.RemoveAt(1);
+            AppData.s_previewPanel.Children.RemoveAt(1);
+            AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());
+
+        }
         public static void ButtonPressAddBuilding(object sender, EventArgs e)
         {
             BuildingButton temp = sender as BuildingButton;
@@ -35,16 +45,6 @@ namespace AdminConsole
             AppData.s_listPanel.Children.RemoveAt(1);
             AppData.s_listPanel.Children.Add(CreateElements.CreateBuildingButtons());
             AppData.s_building.CreateBuilding(temp.data);
-        }
-        public static void ContextItemRemoveProf(object sender, EventArgs e)
-        {
-            ProfMenuItem temp = sender as ProfMenuItem;
-            AppData.s_professors.RemoveProfessor(temp.data);
-            AppData.s_professorList.Remove(temp.data);
-            AppData.s_listPanel.Children.RemoveAt(1);
-            AppData.s_previewPanel.Children.RemoveAt(1);
-            AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());
-
         }
         public static void ButtonPressAddProf(object sender, EventArgs e)
         {
@@ -60,6 +60,14 @@ namespace AdminConsole
             AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());
             AppData.s_professors.CreateProfessor(temp.data);
         }
+        public static void ButtonPressNewCat(object sender, EventArgs e)
+        {
+            if (AppData.s_propertiesPanel.Children.Count > 1)
+            {
+                AppData.s_propertiesPanel.Children.RemoveAt(1);
+            }
+            AppData.s_propertiesPanel.Children.Add(new NewCatProp());
+        }
         public static void ButtonPressProf(object sender, EventArgs e)
         {
             ProfessorButton temp = sender as ProfessorButton;
@@ -69,8 +77,7 @@ namespace AdminConsole
                 AppData.s_previewPanel.Children.RemoveAt(1);
             }
             AppData.s_previewPanel.Children.Add(new ProfessorsPreviewControl());
-        }
-        
+        }    
         public static void ButtonPressBuildingSelect(object sender, EventArgs e)
         {
             BuildingButton temp = sender as BuildingButton;
@@ -82,16 +89,6 @@ namespace AdminConsole
             AppData.s_building.updateLocalBuildings();
             AppData.s_previewPanel.Children.Add(new BuildingPreviewControl());
         }
-
-        public static void ButtonPressNewCat(object sender, EventArgs e)
-        {
-            if (AppData.s_propertiesPanel.Children.Count > 1)
-            {
-                AppData.s_propertiesPanel.Children.RemoveAt(1);
-            }
-            AppData.s_propertiesPanel.Children.Add(new NewCatProp());
-        }
-        
         public static void ButtonPressCatProp(object sender, EventArgs e)
         {
             CatButton temp = sender as CatButton;
@@ -99,43 +96,27 @@ namespace AdminConsole
             CreateElements.AddCatProp();
             AppData.s_properties.Text = temp.category.categoryTitle;
         }
-
         public static void ButtonPressUpdateCat(object sender, EventArgs e)
         {
             AppData.s_major.EditMajorCatagoryTitle(AppData.s_activeCat);
             CreateElements.AddCatButtons(AppData.s_catList);
         }
-
         public static void TextBoxCatName(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
             AppData.s_activeCat.categoryTitle = tb.Text;
         }
-
         public static void ButtonPressPage(object sender, EventArgs e)
         {
-            //FrameworkElement page = sender as FrameworkElement;
             MajorButton page = sender as MajorButton;
-            if (AppData.s_lastSelected != page.Name)
+
+            AppData.s_activeData = page.major;
+            if (AppData.s_previewPanel.Children.Count > 1)
             {
-                if (AppData.s_lastSelected != "n")
-                {
-                    Utilities.VolitileSave();
-                    AppData.s_previewPanel.Children.RemoveAt(1);
-                    //clear text in properties
-                    if (AppData.s_propertiesPanel.Children.Count > 1)
-                    {
-                        AppData.s_propertiesPanel.Children.RemoveAt(1);
-                    }
-
-                }
-                AppData.s_lastSelected = page.Name;
-
-                AppData.s_activeData = page.major;
-
-                CreateElements.ShowPreview();
+                AppData.s_previewPanel.Children.RemoveAt(1);
             }
+            AppData.s_major.UpdateLocal();
+            AppData.s_previewPanel.Children.Add(new MajorPreviewControl());
         }
-
     }
 }   

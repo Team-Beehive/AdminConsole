@@ -16,8 +16,8 @@ namespace AdminConsole
      */
     static class AppData
     {
-        public static string s_lastSelected = "n";
-        public static bool s_hasChanged = false;
+        //public static string s_lastSelected = "n";
+        //public static bool s_hasChanged = false;
 
         public static Majors s_major = new Majors();
         public static Professors s_professors = new Professors();
