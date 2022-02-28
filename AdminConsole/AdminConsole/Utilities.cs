@@ -10,10 +10,57 @@ using AdminDatabaseFramework;
 
 namespace AdminConsole
 {
-
-    static class Utilities
+    public class Utilities
     {
-        public static BuildingData NewBuilding()
+        private StackPanel m_preview, m_properties, m_list;
+        
+        public Utilities(StackPanel preview, StackPanel properties, StackPanel list)
+        {
+            m_preview = preview;
+            m_properties = properties;
+            m_list = list;
+        }
+
+        public void ClearPreview()
+        {
+            if (m_preview.Children.Count > 1)
+            {
+                m_preview.Children.RemoveAt(1);
+            }
+        }
+        public void SetPreview(UIElement element)
+        {
+            ClearPreview();
+            m_preview.Children.Add(element);
+        }
+
+        public void ClearProperties()
+        {
+            if (m_properties.Children.Count > 1)
+            {
+                m_preview.Children.RemoveAt(1);
+            }
+        }
+        public void SetProperties(UIElement element)
+        {
+            ClearProperties();
+            m_properties.Children.Add(element);
+        }
+
+        public void ClearList()
+        {
+            if (m_list.Children.Count > 1)
+            {
+                m_list.Children.RemoveAt(1);
+            }
+        }
+        public void SetList(UIElement element)
+        {
+            ClearList();
+            m_list.Children.Add(element);
+        }
+
+        public BuildingData NewBuilding()
         {
             BuildingData temp = new BuildingData();
             temp.BuildingName = "New Building";
@@ -25,7 +72,7 @@ namespace AdminConsole
 
             return temp;
         }
-        public static ProfessorData NewProf()
+        public ProfessorData NewProf()
         {
             ProfessorData temp = new ProfessorData();
             temp.professorName = "Professor Name";
@@ -37,7 +84,7 @@ namespace AdminConsole
             return temp;
         }
 
-        public static string cleanString(string str)
+        public string cleanString(string str)
         {
             HashSet<char> set = new HashSet<char>(" !@#$%^&*()_+-=,:;.<>/\\");
             StringBuilder sb = new StringBuilder(str.Length);
@@ -50,21 +97,7 @@ namespace AdminConsole
             return sb.ToString();
         }
 
-        /*public static void VolitileSave()
-        {
-            //if (AppData.s_hasChanged)
-            //{
-                //AppData.s_major.UpdateLocal();
-                if (!AppData.s_changedList.Contains(AppData.s_activeData))
-                {
-                    AppData.s_changedList.Add(AppData.s_activeData);
-                }
-
-                //AppData.s_hasChanged = false;
-            //}
-        }*/
-
-        public static void UploadData()
+        /*public void UploadData()
         {
             foreach (ProfessorData p in AppData.s_changedProf)
             {
@@ -78,9 +111,9 @@ namespace AdminConsole
             {
                 AppData.s_major.EditMajor(m);
             }
-        }
+        }*/
 
-        public static void GetData(ref bool connected)
+        /*public void GetData(ref bool connected)
         {
             if (connected)
             {
@@ -96,7 +129,7 @@ namespace AdminConsole
                 MessageBox.Show("Is not connected to server");
             }
 
-        }
+        }*/
         
     }
 }

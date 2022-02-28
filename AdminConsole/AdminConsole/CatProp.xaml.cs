@@ -18,9 +18,9 @@ namespace AdminConsole
     /// <summary>
     /// Interaction logic for NewCatProp.xaml
     /// </summary>
-    public partial class NewCatProp : UserControl
+    public partial class CatProp : UserControl
     {
-        public NewCatProp()
+        public CatProp()
         {
             InitializeComponent();
         }

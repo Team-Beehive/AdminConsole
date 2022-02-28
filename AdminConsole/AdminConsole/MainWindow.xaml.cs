@@ -33,16 +33,27 @@ namespace AdminConsole
     public partial class MainWindow : Window
     {
         private bool isConnected = false;
+        private Utilities util;
+        private AppData data;
+        private CreateElements elements;
+        private AppEvents events;
         public MainWindow()
         {
             InitializeComponent();
-            AppData.s_previewPanel = Preview;
-            AppData.s_propertiesPanel = Properties;
-            AppData.s_listPanel = PageSelect;
+            data = new AppData();
+            util = new Utilities(Preview, Properties, PageSelect);
+            elements = new CreateElements(util);
+            events = new AppEvents(data, util);
+            elements.SetEvents(events);
+            events.SetCreateElements(elements);
+            //AppData.s_previewPanel = Preview;
+            //AppData.s_propertiesPanel = Properties;
+            //AppData.s_listPanel = PageSelect;
             //Check if there a saved database key
             //remove this bool set once the check is implimented
             isConnected = true;
-            Utilities.GetData(ref isConnected);
+            //Utilities.GetData(ref isConnected);
+            GetData(isConnected);
             tb_status.Text = "";
 
         }
@@ -55,7 +66,8 @@ namespace AdminConsole
             {
                 Debug.WriteLine(openFile.FileName);
                 isConnected = true;
-                Utilities.GetData(ref isConnected);
+                //Utilities.GetData(ref isConnected);
+                GetData(isConnected);
             }
         }
 
@@ -64,7 +76,7 @@ namespace AdminConsole
             if (isConnected)
             { 
                 RemovePageSelect();
-                PageSelect.Children.Add(CreateElements.CreateMajorButtons(AppData.s_majorList));
+                PageSelect.Children.Add(elements.CreateMajorButtons(data.s_majorList));
             }
         }
 
@@ -72,7 +84,7 @@ namespace AdminConsole
         {
             if (isConnected)
             { 
-                CreateElements.AddCatButtons(AppData.s_catList);
+                elements.AddCatButtons(data.s_catList);
             }
         }
 
@@ -81,7 +93,7 @@ namespace AdminConsole
             if (isConnected)
             { 
                 RemovePageSelect();
-                PageSelect.Children.Add(CreateElements.CreateBuildingButtons());
+                PageSelect.Children.Add(elements.CreateBuildingButtons(data.s_buildingList));
             }
         }
 
@@ -90,7 +102,7 @@ namespace AdminConsole
             if (isConnected)
             { 
                 RemovePageSelect();
-                PageSelect.Children.Add(CreateElements.CreateProfButtons());
+                PageSelect.Children.Add(elements.CreateProfButtons(data.s_professorList));
             }
         }
 
@@ -113,8 +125,39 @@ namespace AdminConsole
             tb_status.Text = "";
 
             //Utilities.VolitileSave();
-            Utilities.UploadData();
+            //util.UploadData();
+
+            foreach (ProfessorData p in data.s_changedProf)
+            {
+                data.s_professors.UpdateProfessor(p);
+            }
+            foreach (BuildingData b in data.s_changedBuildingList)
+            {
+                data.s_building.UpdateBuilding(b);
+            }
+            foreach (MajorData m in data.s_changedList)
+            {
+                data.s_major.EditMajor(m);
+            }
+
             tb_status.Text = "Database Updated";
+        }
+
+        private void GetData(bool connected)
+        {
+            if (connected)
+            {
+                data.s_professorList = data.s_professors.GetProfessors();
+
+                data.s_buildingList = data.s_building.GetBuildings();
+
+                data.s_majorList = data.s_major.GetMajors();
+                data.s_catList = data.s_major.GetCategories();
+            }
+            else
+            {
+                MessageBox.Show("Is not connected to server");
+            }
         }
     }
 }

@@ -17,28 +17,39 @@ namespace AdminConsole
      * Purpose: This class is responsible for generating UI elements
      */
 
-    static class CreateElements
+    public class CreateElements
     {
-        public static Grid CreateProfButtons()
+        private Utilities m_util;
+        private AppEvents m_events;
+        
+        public CreateElements(Utilities util) 
+        {
+            m_util = util;
+        }
+        public void SetEvents(AppEvents events)
+        {
+            m_events = events;
+        }
+        public Grid CreateProfButtons(LinkedList<ProfessorData> professors)
         {
             Grid grid = new Grid();
 
             int btnPos = 0;
-            foreach (ProfessorData p in AppData.s_professorList)
+            foreach (ProfessorData p in professors)
             {
                 RowDefinition rd = new RowDefinition();
                 grid.RowDefinitions.Add(rd);
-                string cleanName = Utilities.cleanString(p.professorName);
+                string cleanName = m_util.cleanString(p.professorName);
 
                 ProfessorButton btn = new ProfessorButton();
                 btn.Content = p.professorName;
                 btn.Name = cleanName;
                 btn.data = p;
-                btn.Click += AppEvents.ButtonPressProf;
+                btn.Click += m_events.ButtonPressProf;
                 ContextMenu deleteMenu = new ContextMenu();
                 ProfMenuItem deleteItem = new ProfMenuItem();
                 deleteItem.data = p;
-                deleteItem.Click += AppEvents.ContextItemRemoveProf;
+                deleteItem.Click += m_events.ContextItemRemoveProf;
                 deleteItem.Header = "Delete";
                 deleteMenu.Items.Add(deleteItem);
                 btn.ContextMenu = deleteMenu;
@@ -53,35 +64,35 @@ namespace AdminConsole
             ProfessorButton add = new ProfessorButton();
             add.Content = "Add professor";
             add.Name = "Add";
-            add.data = Utilities.NewProf();
-            add.Click += AppEvents.ButtonPressAddProf;
+            add.data = m_util.NewProf();
+            add.Click += m_events.ButtonPressAddProf;
             Grid.SetRow(add, btnPos);
             grid.Children.Add(add);
             return grid;
   
         }
 
-        public static Grid CreateBuildingButtons()
+        public Grid CreateBuildingButtons(LinkedList<BuildingData> buildings)
         {
             Grid grid = new Grid();
 
             int btnPos = 0;
-            foreach (BuildingData building in AppData.s_buildingList)
+            foreach (BuildingData building in buildings)
             {
                 RowDefinition rd = new RowDefinition();
                 grid.RowDefinitions.Add(rd);
-                string cleanName = Utilities.cleanString(building.BuildingName);
+                string cleanName = m_util.cleanString(building.BuildingName);
 
                 BuildingButton btn = new BuildingButton();
                 btn.Content = building.BuildingName;
                 btn.Name = cleanName;
-                btn.Click += AppEvents.ButtonPressBuildingSelect;
+                btn.Click += m_events.ButtonPressBuildingSelect;
                 btn.data = building;
                 ContextMenu deleteMenu = new ContextMenu();
                 BuildingMenuItem deleteItem = new BuildingMenuItem();
                 deleteItem.data = building;
                 deleteItem.Header = "Delete";
-                deleteItem.Click += AppEvents.ContextItemRemoveBuilding;
+                deleteItem.Click += m_events.ContextItemRemoveBuilding;
                 deleteMenu.Items.Add(deleteItem);
                 btn.ContextMenu = deleteMenu;
 
@@ -94,20 +105,22 @@ namespace AdminConsole
             BuildingButton add = new BuildingButton();
             add.Content = "Add Building";
             add.Name = "add";
-            add.data = Utilities.NewBuilding();
-            add.Click += AppEvents.ButtonPressAddBuilding;
+            add.data = m_util.NewBuilding();
+            add.Click += m_events.ButtonPressAddBuilding;
             Grid.SetRow(add, btnPos);
             grid.Children.Add(add);
 
             return grid;
         }
 
-        public static void AddCatButtons(LinkedList<MajorCategories> catList)
+        public void AddCatButtons(LinkedList<MajorCategories> catList)
         {
-            if (AppData.s_listPanel.Children.Count > 1)
+            /*if (AppData.s_listPanel.Children.Count > 1)
             {
                 AppData.s_listPanel.Children.RemoveAt(1);
-            }
+            }*/
+
+            m_util.ClearList();
 
             Grid grid = new Grid();
 
@@ -117,14 +130,14 @@ namespace AdminConsole
             {
                 RowDefinition rd = new RowDefinition();
                 grid.RowDefinitions.Add(rd);
-                string cleanName = Utilities.cleanString(cat.categoryTitle);
+                string cleanName = m_util.cleanString(cat.categoryTitle);
 
                 //Button btn = new Button();
                 CatButton btn = new CatButton();
                 btn.category = cat;
                 btn.Content = cat.categoryTitle;
                 btn.Name = cleanName;
-                btn.Click += AppEvents.ButtonPressCatProp;
+                btn.Click += m_events.ButtonPressCatProp;
 
                 Grid.SetRow(btn, btnPos);
                 grid.Children.Add(btn);
@@ -136,21 +149,55 @@ namespace AdminConsole
             Button btnAdd = new Button();
             btnAdd.Content = "Add category";
             btnAdd.Name = "addCat";
-            btnAdd.Click += AppEvents.ButtonPressNewCat;
+            btnAdd.Click += m_events.ButtonPressNewCat;
             Grid.SetRow(btnAdd, btnPos);
             grid.Children.Add(btnAdd);
 
-            AppData.s_listPanel.Children.Add(grid);
+            //AppData.s_listPanel.Children.Add(grid);
+            m_util.SetList(grid);
         }
 
-        public static void AddCatProp()
+        public Grid CreateMajorButtons(LinkedList<MajorData> majors)
         {
-            if (AppData.s_propertiesPanel.Children.Count > 1)
+            /*if (AppData.s_listPanel.Children.Count > 1)
             {
-                AppData.s_propertiesPanel.Children.RemoveAt(1);
-            }
+                AppData.s_listPanel.Children.RemoveAt(1);
+            }*/
+
+            m_util.ClearList();
 
             Grid grid = new Grid();
+
+            int btnPos = 0;
+            foreach (MajorData major in majors)
+            {
+                RowDefinition rd = new RowDefinition();
+                grid.RowDefinitions.Add(rd);
+                string cleanName = m_util.cleanString(major.MajorName);
+
+                MajorButton btn = new MajorButton();
+                btn.major = major;
+                btn.Content = major.MajorName;
+                btn.Name = cleanName;
+                btn.Click += m_events.ButtonPressPage;
+                Grid.SetRow(btn, btnPos);
+                grid.Children.Add(btn);
+                btnPos++;
+            }
+
+            return grid;
+        }
+        
+        public void AddCatProp()
+        {
+            /*if (AppData.s_propertiesPanel.Children.Count > 1)
+            {
+                AppData.s_propertiesPanel.Children.RemoveAt(1);
+            }*/
+
+            m_util.SetProperties(new CatProp());
+
+            /*Grid grid = new Grid();
             RowDefinition rd0 = new RowDefinition();
             RowDefinition rd1 = new RowDefinition();
             grid.RowDefinitions.Add(rd0);
@@ -170,40 +217,8 @@ namespace AdminConsole
             grid.Children.Add(btn);
 
             //Properties.Children.Add(grid);
-            AppData.s_propertiesPanel.Children.Add(grid);
+            AppData.s_propertiesPanel.Children.Add(grid);*/
         }
 
-        //Create a list of buttons for every major available
-        //TODO: Add a way to generate the buttons for a major that is only under a certain category
-        //      Add a back button to get back to a "higher level" of the ui (Major list -> Major categories)
-        public static Grid CreateMajorButtons(LinkedList<MajorData> majors)
-        {
-            if (AppData.s_listPanel.Children.Count > 1)
-            {
-                AppData.s_listPanel.Children.RemoveAt(1);
-            }
-
-            Grid grid = new Grid();
-
-            int btnPos = 0;
-            foreach (MajorData major in majors)
-            {
-                RowDefinition rd = new RowDefinition();
-                grid.RowDefinitions.Add(rd);
-                string cleanName = Utilities.cleanString(major.MajorName);
-
-                MajorButton btn = new MajorButton();
-                btn.major = major;
-                btn.Content = major.MajorName;
-                btn.Name = cleanName;
-                btn.Click += AppEvents.ButtonPressPage;
-                Grid.SetRow(btn, btnPos);
-                grid.Children.Add(btn);
-                btnPos++;
-            }
-
-            return grid;
-        }
-        
     }
 }

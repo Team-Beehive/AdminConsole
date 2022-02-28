@@ -11,31 +11,62 @@ using AdminDatabaseFramework;
 namespace AdminConsole
 {
 
-    static class AppEvents
+    public class AppEvents
     {
-        public static void ContextItemRemoveBuilding(object sender, EventArgs e)
+        private AppData m_data;
+        private Utilities m_util;
+        private CreateElements m_elements;
+        public AppEvents(AppData data, Utilities util)
+        {
+            m_data = data;
+            m_util = util;
+        }
+
+        public void SetCreateElements(CreateElements elements)
+        {
+            m_elements = elements;
+        }
+
+        public void ContextItemRemoveBuilding(object sender, EventArgs e)
         {
             BuildingMenuItem temp = sender as BuildingMenuItem;
-            AppData.s_building.RemoveBuilding(temp.data);
+            m_data.s_building.RemoveBuilding(temp.data);
+            m_data.s_buildingList.Remove(temp.data);
+            m_util.ClearList();
+            m_util.ClearPreview();
+            m_util.SetList(m_elements.CreateBuildingButtons(m_data.s_buildingList));
+            /*AppData.s_building.RemoveBuilding(temp.data);
             AppData.s_buildingList.Remove(temp.data);
             AppData.s_listPanel.Children.RemoveAt(1);
             AppData.s_previewPanel.Children.RemoveAt(1);
-            AppData.s_listPanel.Children.Add(CreateElements.CreateBuildingButtons());
+            AppData.s_listPanel.Children.Add(CreateElements.CreateBuildingButtons());*/
         }
-        public static void ContextItemRemoveProf(object sender, EventArgs e)
+        public void ContextItemRemoveProf(object sender, EventArgs e)
         {
             ProfMenuItem temp = sender as ProfMenuItem;
-            AppData.s_professors.RemoveProfessor(temp.data);
+            m_data.s_professors.RemoveProfessor(temp.data);
+            m_data.s_professorList.Remove(temp.data);
+            m_util.ClearList();
+            m_util.ClearPreview();
+            m_util.SetList(m_elements.CreateProfButtons(m_data.s_professorList));
+            /*AppData.s_professors.RemoveProfessor(temp.data);
             AppData.s_professorList.Remove(temp.data);
             AppData.s_listPanel.Children.RemoveAt(1);
             AppData.s_previewPanel.Children.RemoveAt(1);
-            AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());
+            AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());*/
 
         }
-        public static void ButtonPressAddBuilding(object sender, EventArgs e)
+        public void ButtonPressAddBuilding(object sender, EventArgs e)
         {
             BuildingButton temp = sender as BuildingButton;
-            AppData.s_activeBuilding = temp.data;
+            m_data.s_activeBuilding = temp.data;
+            m_util.ClearPreview();
+            m_util.SetPreview(new BuildingPreviewControl());
+            m_data.s_buildingList.AddLast(temp.data);
+            m_util.ClearList();
+            m_util.SetList(m_elements.CreateBuildingButtons(m_data.s_buildingList));
+            m_data.s_building.CreateBuilding(temp.data);
+            /*AppData.s_activeBuilding = temp.data;
             if (AppData.s_previewPanel.Children.Count > 1)
             {
                 AppData.s_previewPanel.Children.RemoveAt(1);
@@ -44,12 +75,19 @@ namespace AdminConsole
             AppData.s_buildingList.AddLast(temp.data);
             AppData.s_listPanel.Children.RemoveAt(1);
             AppData.s_listPanel.Children.Add(CreateElements.CreateBuildingButtons());
-            AppData.s_building.CreateBuilding(temp.data);
+            AppData.s_building.CreateBuilding(temp.data);*/
         }
-        public static void ButtonPressAddProf(object sender, EventArgs e)
+        public void ButtonPressAddProf(object sender, EventArgs e)
         {
             ProfessorButton temp = sender as ProfessorButton;
-            AppData.s_activeProfessor = temp.data;
+            m_data.s_activeProfessor = temp.data;
+            m_util.ClearPreview();
+            m_util.SetPreview(new ProfessorsPreviewControl());
+            m_data.s_professorList.AddLast(temp.data);
+            m_util.ClearList();
+            m_util.SetList(m_elements.CreateProfButtons(m_data.s_professorList));
+            m_data.s_professors.CreateProfessor(temp.data);
+            /*AppData.s_activeProfessor = temp.data;
             if (AppData.s_previewPanel.Children.Count > 1)
             {
                 AppData.s_previewPanel.Children.RemoveAt(1);
@@ -58,65 +96,82 @@ namespace AdminConsole
             AppData.s_professorList.AddLast(temp.data);
             AppData.s_listPanel.Children.RemoveAt(1);
             AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());
-            AppData.s_professors.CreateProfessor(temp.data);
+            AppData.s_professors.CreateProfessor(temp.data);*/
         }
-        public static void ButtonPressNewCat(object sender, EventArgs e)
+        public void ButtonPressNewCat(object sender, EventArgs e)
         {
-            if (AppData.s_propertiesPanel.Children.Count > 1)
+            m_util.ClearProperties();
+            m_util.SetProperties(new CatProp());
+            /*if (AppData.s_propertiesPanel.Children.Count > 1)
             {
                 AppData.s_propertiesPanel.Children.RemoveAt(1);
             }
-            AppData.s_propertiesPanel.Children.Add(new NewCatProp());
+            AppData.s_propertiesPanel.Children.Add(new NewCatProp());*/
         }
-        public static void ButtonPressProf(object sender, EventArgs e)
+        public void ButtonPressProf(object sender, EventArgs e)
         {
             ProfessorButton temp = sender as ProfessorButton;
-            AppData.s_activeProfessor = temp.data;
+            m_data.s_activeProfessor = temp.data;
+            m_util.ClearProperties();
+            m_util.SetPreview(new ProfessorsPreviewControl());
+            /*AppData.s_activeProfessor = temp.data;
             if (AppData.s_previewPanel.Children.Count > 1)
             {
                 AppData.s_previewPanel.Children.RemoveAt(1);
             }
-            AppData.s_previewPanel.Children.Add(new ProfessorsPreviewControl());
+            AppData.s_previewPanel.Children.Add(new ProfessorsPreviewControl());*/
         }    
-        public static void ButtonPressBuildingSelect(object sender, EventArgs e)
+        public void ButtonPressBuildingSelect(object sender, EventArgs e)
         {
             BuildingButton temp = sender as BuildingButton;
-            AppData.s_activeBuilding = temp.data;
+            m_data.s_activeBuilding = temp.data;
+            m_util.ClearPreview();
+            m_data.s_building.updateLocalBuildings();
+            m_util.SetPreview(new BuildingPreviewControl());
+            /*AppData.s_activeBuilding = temp.data;
             if (AppData.s_previewPanel.Children.Count > 1)
             {
                 AppData.s_previewPanel.Children.RemoveAt(1);
             }
             AppData.s_building.updateLocalBuildings();
-            AppData.s_previewPanel.Children.Add(new BuildingPreviewControl());
+            AppData.s_previewPanel.Children.Add(new BuildingPreviewControl());*/
         }
-        public static void ButtonPressCatProp(object sender, EventArgs e)
+        public void ButtonPressCatProp(object sender, EventArgs e)
         {
             CatButton temp = sender as CatButton;
-            AppData.s_activeCat = temp.category;
+            m_data.s_activeCat = temp.category;
+            m_util.SetProperties(new CatProp());
+            /*AppData.s_activeCat = temp.category;
             CreateElements.AddCatProp();
-            AppData.s_properties.Text = temp.category.categoryTitle;
+            AppData.s_properties.Text = temp.category.categoryTitle;*/
         }
-        public static void ButtonPressUpdateCat(object sender, EventArgs e)
+        public void ButtonPressUpdateCat(object sender, EventArgs e)
         {
-            AppData.s_major.EditMajorCatagoryTitle(AppData.s_activeCat);
-            CreateElements.AddCatButtons(AppData.s_catList);
+            m_data.s_major.EditMajorCatagoryTitle(m_data.s_activeCat);
+            m_elements.AddCatButtons(m_data.s_catList);
+            /*AppData.s_major.EditMajorCatagoryTitle(AppData.s_activeCat);
+            CreateElements.AddCatButtons(AppData.s_catList);*/
         }
-        public static void TextBoxCatName(object sender, TextChangedEventArgs e)
+        public void TextBoxCatName(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
-            AppData.s_activeCat.categoryTitle = tb.Text;
+            m_data.s_activeCat.categoryTitle = tb.Text;
+            //AppData.s_activeCat.categoryTitle = tb.Text;
         }
-        public static void ButtonPressPage(object sender, EventArgs e)
+        public void ButtonPressPage(object sender, EventArgs e)
         {
             MajorButton page = sender as MajorButton;
+            m_util.ClearPreview();
+            m_data.s_major.UpdateLocal();
+            m_util.SetPreview(new MajorPreviewControl());
 
-            AppData.s_activeData = page.major;
+            /*AppData.s_activeData = page.major;
             if (AppData.s_previewPanel.Children.Count > 1)
             {
                 AppData.s_previewPanel.Children.RemoveAt(1);
             }
             AppData.s_major.UpdateLocal();
-            AppData.s_previewPanel.Children.Add(new MajorPreviewControl());
+            AppData.s_previewPanel.Children.Add(new MajorPreviewControl());*/
         }
     }
 }   
