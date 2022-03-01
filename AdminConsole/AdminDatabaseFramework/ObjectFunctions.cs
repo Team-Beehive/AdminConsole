@@ -10,14 +10,21 @@ namespace AdminDatabaseFramework
     {
         public static List<string> ObjToStr(List<object> objList)
         {
-            List<string> tempList = new List<string>(objList.Count);
-
-            foreach (object obj in objList)
+            if (objList != null)
             {
-                tempList.Add(obj.ToString());
-            }
+                List<string> tempList = new List<string>(objList.Count);
 
-            return tempList;
+                foreach (object obj in objList)
+                {
+                    tempList.Add(obj.ToString());
+                }
+
+                return tempList;
+            }
+            else
+            {
+                return new List<string>();
+            }
         }
     }
 }
