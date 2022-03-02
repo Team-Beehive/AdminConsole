@@ -13,7 +13,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="ErrorMessage" Grid.Row="0"/>
+        <TextBlock x:Name="ErrorMessage" TextWrapping="WrapWithOverflow" Grid.Row="0"/>
         <Button x:Name="AcceptButton" Content="Close" Click="AcceptButton_Click" Grid.Row="1"/>
     </Grid>
 </Window>

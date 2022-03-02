@@ -50,8 +50,8 @@ namespace AdminConsole
             openFile.Filter = "Firebase key (JSON)|*.json";
             if (openFile.ShowDialog() == true)
             {
-                Utilities.GetData(openFile.FileName);
-                isConnected = true;
+                isConnected = Utilities.SetDatabaseKey(openFile.FileName);
+                //isConnected = true;
             }
         }
 

@@ -22,7 +22,8 @@ namespace AdminConsole
         public ErrorWindow(Exception ex)
         {
             InitializeComponent();
-            ErrorMessage.Text = ex.Message;
+            //ErrorMessage.Text = ex.Message;
+            ErrorMessage.Text = ex.ToString();
         }
 
         private void AcceptButton_Click(object sender, RoutedEventArgs e)

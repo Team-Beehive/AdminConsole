@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -146,14 +147,36 @@ namespace AdminConsole
                 AppData.s_major.EditMajor(m);
             }
         }
-
         public static void GetConfig()
-        { 
+        {
+            //open and check file for existing file path
+            //SetDatabaseKey();
         }
 
-        public static void GetData(string keyPath)
+        public static bool SetDatabaseKey(string keyPath)
         {
-            AppData.s_database = new Database("oit-kiosk", keyPath);
+            bool success = false;
+            Debug.WriteLine(keyPath);
+            try
+            {
+                AppData.s_database = new Database("oit-kiosk", keyPath);
+                GetData();
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                ErrorWindow error = new ErrorWindow(ex);
+                error.Show();
+                AppData.s_database = null;
+                //Debug.WriteLine(ex);
+            }
+            return success;
+        }
+
+
+        public static void GetData()
+        {
             AppData.s_major = AppData.s_database.Majors;
             AppData.s_building = AppData.s_database.Buildings;
             AppData.s_professors = AppData.s_database.Professors;
