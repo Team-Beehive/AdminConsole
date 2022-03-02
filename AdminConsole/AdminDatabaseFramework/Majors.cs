@@ -20,8 +20,6 @@ namespace AdminDatabaseFramework
         Local Variables:
             -private LinkedList<DocumentSnapshot> m_dataBaseRefs
                 -Used to store the majors from the database
-            -public string project
-                -Stores the project id used to connect to firestore
             -private MajorDatabase majorDatabase
                 -An instance of MajorDatabase used to interact with the firestore database
             
