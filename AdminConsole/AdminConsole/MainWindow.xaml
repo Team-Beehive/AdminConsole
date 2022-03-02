@@ -145,11 +145,13 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource TopButtons}" Content="Category" HorizontalAlignment="Left" Click="ButtonPressCategory"/>
                         <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource TopButtons}" Content="Majors" HorizontalAlignment="Left" Click="ButtonPressMajors"/>
-                        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Building" HorizontalAlignment="Left" Click="ButtonPressBuilding"/>
+                        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Building" Click="ButtonPressBuilding" Margin="0.6,1,1.8,0.4" Width="Auto"/>
                         <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Professor" HorizontalAlignment="Left" Click="ButtonPressProf"/>
+                        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource TopButtons}" Content="Open Key" HorizontalAlignment="Left" Click="ButtonPressOpenKey"/>
                     </Grid>
                 </Grid>
             </Border>

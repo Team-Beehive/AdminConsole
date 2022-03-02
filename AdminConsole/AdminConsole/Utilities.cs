@@ -9,9 +9,9 @@ using AdminDatabaseFramework;
 
 namespace AdminConsole
 {
-
     static class Utilities
     {
+        private static bool m_hasFile = false;
         public static BuildingData NewBuilding()
         {
             BuildingData temp = new BuildingData();
@@ -147,16 +147,24 @@ namespace AdminConsole
             }
         }
 
-        public static void GetData()
-        {
+        public static void GetConfig()
+        { 
+        }
 
-            //AppData.s_majorList = AppData.s_major.GetMajors();
+        public static void GetData(string keyPath)
+        {
+            AppData.s_database = new Database("oit-kiosk", keyPath);
+            AppData.s_major = AppData.s_database.Majors;
+            AppData.s_building = AppData.s_database.Buildings;
+            AppData.s_professors = AppData.s_database.Professors;
+
+            AppData.s_majorList = AppData.s_major.GetMajors();
             AppData.s_professorList = AppData.s_professors.GetProfessors();
             
             //AppData.s_majorList = AppData.s_major.GetMajors();
             AppData.s_buildingList = AppData.s_building.GetBuildings();
-
-            AppData.s_majorList = AppData.s_major.GetMajors();
+            
+            //AppData.s_majorList = AppData.s_major.GetMajors();
             AppData.s_catList = AppData.s_major.GetCategories();
 
         }
