@@ -22,5 +22,15 @@ namespace AdminDatabaseFramework
             Buildings = new Buildings(db);
             Professors = new Professors(db);
         }
+
+        public void updateProject(string project)
+        {
+            db= FirestoreDb.Create(project);
+        }
+
+        public void updateCreds(string envPath)
+        {
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", envPath);
+        }
     }
 }
