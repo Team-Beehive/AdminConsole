@@ -61,7 +61,7 @@ namespace AdminConsole
             BuildingButton temp = sender as BuildingButton;
             m_data.s_activeBuilding = temp.data;
             m_util.ClearPreview();
-            m_util.SetPreview(new BuildingPreviewControl());
+            m_util.SetPreview(new BuildingPreviewControl(m_data, m_util));
             m_data.s_buildingList.AddLast(temp.data);
             m_util.ClearList();
             m_util.SetList(m_elements.CreateBuildingButtons(m_data.s_buildingList));
@@ -82,7 +82,7 @@ namespace AdminConsole
             ProfessorButton temp = sender as ProfessorButton;
             m_data.s_activeProfessor = temp.data;
             m_util.ClearPreview();
-            m_util.SetPreview(new ProfessorsPreviewControl());
+            m_util.SetPreview(new ProfessorsPreviewControl(m_data, m_util));
             m_data.s_professorList.AddLast(temp.data);
             m_util.ClearList();
             m_util.SetList(m_elements.CreateProfButtons(m_data.s_professorList));
@@ -113,7 +113,9 @@ namespace AdminConsole
             ProfessorButton temp = sender as ProfessorButton;
             m_data.s_activeProfessor = temp.data;
             m_util.ClearProperties();
-            m_util.SetPreview(new ProfessorsPreviewControl());
+            m_util.ClearPreview();
+            m_data.s_activeProfessor = temp.data;
+            m_util.SetPreview(new ProfessorsPreviewControl(m_data, m_util));
             /*AppData.s_activeProfessor = temp.data;
             if (AppData.s_previewPanel.Children.Count > 1)
             {
@@ -125,9 +127,11 @@ namespace AdminConsole
         {
             BuildingButton temp = sender as BuildingButton;
             m_data.s_activeBuilding = temp.data;
+            m_util.ClearProperties();
             m_util.ClearPreview();
             m_data.s_building.updateLocalBuildings();
-            m_util.SetPreview(new BuildingPreviewControl());
+            m_data.s_activeBuilding = temp.data;
+            m_util.SetPreview(new BuildingPreviewControl(m_data, m_util));
             /*AppData.s_activeBuilding = temp.data;
             if (AppData.s_previewPanel.Children.Count > 1)
             {
@@ -161,9 +165,11 @@ namespace AdminConsole
         public void ButtonPressPage(object sender, EventArgs e)
         {
             MajorButton page = sender as MajorButton;
+            m_util.ClearProperties();
             m_util.ClearPreview();
             m_data.s_major.UpdateLocal();
-            m_util.SetPreview(new MajorPreviewControl());
+            m_data.s_activeData = page.major;
+            m_util.SetPreview(new MajorPreviewControl(m_data, m_util));
 
             /*AppData.s_activeData = page.major;
             if (AppData.s_previewPanel.Children.Count > 1)

@@ -38,7 +38,7 @@ namespace AdminConsole
         {
             if (m_properties.Children.Count > 1)
             {
-                m_preview.Children.RemoveAt(1);
+                m_properties.Children.RemoveAt(1);
             }
         }
         public void SetProperties(UIElement element)

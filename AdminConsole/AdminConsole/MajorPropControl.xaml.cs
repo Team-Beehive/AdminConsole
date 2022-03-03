@@ -21,9 +21,11 @@ namespace AdminConsole
     public partial class MajorPropControl : UserControl
     {
         private string target;
+        private AppData m_data;
 
-        public MajorPropControl(string type)
+        public MajorPropControl(string type, AppData data)
         {
+            m_data = data;
             target = type;
             InitializeComponent();
             Binding();
@@ -56,15 +58,20 @@ namespace AdminConsole
             b_text.Mode = BindingMode.TwoWay;
             b_text.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             b_text.NotifyOnSourceUpdated = true;
-            b_text.Source = AppData.s_activeData;
+            b_text.Source = m_data.s_activeData;
+            //b_text.Source = AppData.s_activeData;
             BindingOperations.SetBinding(tb_prop, TextBox.TextProperty, b_text);
         }
 
         private void OnSourceUpdated(object sender, DataTransferEventArgs e)
         {
-            if (!AppData.s_changedList.Contains(AppData.s_activeData))
+            /*if (!AppData.s_changedList.Contains(AppData.s_activeData))
             {
                 AppData.s_changedList.Add(AppData.s_activeData);
+            }*/
+            if (!m_data.s_changedList.Contains(m_data.s_activeData))
+            {
+                m_data.s_changedList.Add(m_data.s_activeData);
             }
         }
     }

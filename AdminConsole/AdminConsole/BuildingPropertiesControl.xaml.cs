@@ -21,9 +21,11 @@ namespace AdminConsole
     public partial class BuildingPropertiesControl : UserControl
     {
         private string target;
-        public BuildingPropertiesControl(string type)
+        private AppData m_data;
+        public BuildingPropertiesControl(string type, AppData data)
         {
             target = type;
+            m_data = data;
             InitializeComponent();
             Binding();
         }
@@ -37,15 +39,20 @@ namespace AdminConsole
             b_text.Mode = BindingMode.TwoWay;
             b_text.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             b_text.NotifyOnSourceUpdated = true;
-            b_text.Source = AppData.s_activeBuilding;
+            b_text.Source = m_data.s_activeBuilding;
+            //b_text.Source = AppData.s_activeBuilding;
             tb_prop.SourceUpdated += OnSourceUpdated;
             BindingOperations.SetBinding(tb_prop, TextBox.TextProperty, b_text);
         }
         private void OnSourceUpdated(object sender, DataTransferEventArgs e)
         {
-            if (!AppData.s_changedBuildingList.Contains(AppData.s_activeBuilding))
+            /*if (!AppData.s_changedBuildingList.Contains(AppData.s_activeBuilding))
             {
                 AppData.s_changedBuildingList.Add(AppData.s_activeBuilding);
+            }*/
+            if (!m_data.s_changedBuildingList.Contains(m_data.s_activeBuilding))
+            {
+                m_data.s_changedBuildingList.Add(m_data.s_activeBuilding);
             }
         }
     }
