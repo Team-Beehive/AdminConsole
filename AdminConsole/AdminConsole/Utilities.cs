@@ -159,7 +159,14 @@ namespace AdminConsole
             Debug.WriteLine(keyPath);
             try
             {
-                AppData.s_database = new Database("oit-kiosk", keyPath);
+                if (AppData.s_database == null)
+                {
+                    AppData.s_database = new Database("oit-kiosk", keyPath);
+                }
+                else
+                { 
+                    AppData.s_database.updateCreds(keyPath);
+                }
                 GetData();
                 success = true;
             }
@@ -168,7 +175,7 @@ namespace AdminConsole
                 success = false;
                 ErrorWindow error = new ErrorWindow(ex);
                 error.Show();
-                AppData.s_database = null;
+                //AppData.s_database = null;
                 //Debug.WriteLine(ex);
             }
             return success;
