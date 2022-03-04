@@ -64,6 +64,11 @@ namespace AdminDatabaseFramework
             m_dataBaseRefs = majorDatabase.GetMajorData();
         }
 
+        public void updateDB(FirestoreDb m_db)
+        {
+            majorDatabase = new MajorDatabase(m_db);
+        }
+
         public void EditMajor(MajorData major)
         {
             majorDatabase.EditMajorData(major);

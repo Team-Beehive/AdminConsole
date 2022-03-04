@@ -38,6 +38,10 @@ namespace AdminDatabaseFramework
             db = m_db;
         }
 
+        public void updateDB(FirestoreDb m_db)
+        {
+            db = m_db;
+        }
         public LinkedList<ProfessorData> GetProfessors()
         {
             UpdateLocal();

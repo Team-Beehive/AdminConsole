@@ -51,7 +51,10 @@ namespace AdminDatabaseFramework
                 throw new DatabaseException("Unable to connect to Firestore");
             }
         }
-
+        public void updateDB(FirestoreDb m_db)
+        {
+            db = m_db;
+        }
         public void updateLocalBuildings()
         {
             BuildingList = Task<LinkedList<BuildingData>>.Run(() => db_GetBuildingListAsync()).Result;
