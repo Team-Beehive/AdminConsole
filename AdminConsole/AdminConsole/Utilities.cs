@@ -12,7 +12,7 @@ namespace AdminConsole
 {
     static class Utilities
     {
-        private static bool m_hasFile = false;
+        private static bool m_connAttempt = false;
         public static BuildingData NewBuilding()
         {
             BuildingData temp = new BuildingData();
@@ -156,17 +156,19 @@ namespace AdminConsole
         public static bool SetDatabaseKey(string keyPath)
         {
             bool success = false;
-            Debug.WriteLine(keyPath);
+            //Debug.WriteLine(keyPath);
             try
             {
-                if (AppData.s_database == null)
+                if (!m_connAttempt)
                 {
+                    m_connAttempt = true;
                     AppData.s_database = new Database("oit-kiosk", keyPath);
                 }
                 else
                 { 
                     AppData.s_database.updateCreds(keyPath);
                 }
+                
                 GetData();
                 success = true;
             }
