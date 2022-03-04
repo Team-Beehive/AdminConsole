@@ -29,7 +29,7 @@ namespace AdminConsole
         public static Majors s_major; //= new Majors();
         public static LinkedList<MajorData> s_majorList;
 
-        public static Database s_database;
+        public static Database s_database = null;
 
         public static List<MajorData> s_changedList = new List<MajorData>();
         public static Professors s_professors; //= new Professors();
