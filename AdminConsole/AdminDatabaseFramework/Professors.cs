@@ -31,15 +31,17 @@ namespace AdminDatabaseFramework
     public class Professors
     {
         private FirestoreDb db;
-        public string project = "oit-kiosk";
         public LinkedList<ProfessorData> LocalProfessors;
 
-        public Professors()
+        public Professors(FirestoreDb m_db)
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Dev\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
-            db = FirestoreDb.Create(project);
+            db = m_db;
         }
 
+        public void updateDB(FirestoreDb m_db)
+        {
+            db = m_db;
+        }
         public LinkedList<ProfessorData> GetProfessors()
         {
             UpdateLocal();
@@ -63,50 +65,78 @@ namespace AdminDatabaseFramework
 
         public async void UpdateProfessor(ProfessorData professor)
         {
-            if (professor.professorName != professor.oldTitle)
+            try
             {
-                DocumentReference documentReference = db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.oldTitle);
-                await documentReference.DeleteAsync();
-                Task.Run(() => db_CreateProfessor(professor)).Wait();
+                if (professor.professorName != professor.oldTitle)
+                {
+                    DocumentReference documentReference = db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.oldTitle);
+                    await documentReference.DeleteAsync();
+                    Task.Run(() => db_CreateProfessor(professor)).Wait();
+                }
+                else
+                {
+                    await db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.professorName).CreateAsync(professor.ToDictionary());
+                }
             }
-            else
+            catch
             {
-                await db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.professorName).CreateAsync(professor.ToDictionary());
+                throw new DatabaseException("Could not update professor");
             }
 
         }
 
         private async Task<LinkedList<ProfessorData>> db_GetProfessors()
         {
-            LinkedList<ProfessorData> professorDatas = new LinkedList<ProfessorData>();
-            CollectionReference reference = db.Collection("pages").Document("Professors").Collection("Professors");
-            QuerySnapshot documents = await reference.GetSnapshotAsync();
-            foreach(DocumentSnapshot document in documents)
+            try
             {
-                Dictionary<string, object> data = document.ToDictionary();
+                LinkedList<ProfessorData> professorDatas = new LinkedList<ProfessorData>();
+                CollectionReference reference = db.Collection("pages").Document("Professors").Collection("Professors");
+                QuerySnapshot documents = await reference.GetSnapshotAsync();
+                foreach (DocumentSnapshot document in documents)
+                {
+                    Dictionary<string, object> data = document.ToDictionary();
 
-                ProfessorData temp = new ProfessorData();
-                temp.professorDepartment = data["department"].ToString();
-                temp.professorEmail = data["email"].ToString();
-                temp.professorOffice = data["office"].ToString();
-                temp.professorPhoneNumber = data["phone_number"].ToString();
-                temp.professorName = document.Id.ToString();
-                temp.oldTitle = temp.professorName;
-                temp.DocumentReferenceSelf = document.Reference;
-                professorDatas.AddLast(temp);
+                    ProfessorData temp = new ProfessorData();
+                    temp.professorDepartment = data["department"].ToString();
+                    temp.professorEmail = data["email"].ToString();
+                    temp.professorOffice = data["office"].ToString();
+                    temp.professorPhoneNumber = data["phone_number"].ToString();
+                    temp.professorName = document.Id.ToString();
+                    temp.oldTitle = temp.professorName;
+                    temp.DocumentReferenceSelf = document.Reference;
+                    professorDatas.AddLast(temp);
+                }
+                return professorDatas;
             }
-            return professorDatas;
+            catch
+            {
+                throw new DatabaseException("Could not get professors");
+            }
         }
 
         private async Task db_RemoveProfessor(ProfessorData professor)
         {
-            await db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.professorName).DeleteAsync();
+            try
+            {
+                await db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.professorName).DeleteAsync();
+            }
+            catch
+            {
+                throw new DatabaseException("Could not remove professor");
+            }
         }
 
         private async Task db_CreateProfessor(ProfessorData professor)
         {
-            DocumentReference document = db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.professorName);
-            await document.SetAsync(professor.ToDictionary());
+            try
+            {
+                DocumentReference document = db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.professorName);
+                await document.SetAsync(professor.ToDictionary());
+            }
+            catch
+            {
+                throw new DatabaseException("Could not create professor");
+            }
         }
     }
 }

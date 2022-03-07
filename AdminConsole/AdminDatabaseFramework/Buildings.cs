@@ -14,17 +14,14 @@ namespace AdminDatabaseFramework
         Author: Tucker Nulty
 
         Ctors:
-            -()
-                -Sets Enviornmental Variable
-                -Creates a database reference
+            -(FirestoreDb)
+                -Saves passed in database to local variable
 
         Local Variables:
             -public LinkedList<BuildingData> BuildingList
                 -Used to store the buildings from the database
-            -public string project
-                -Stores the project id used to connect to firestore
-            -private FirestoreDb firestoreDb
-                -An instance of firestore used to interact with the database
+            -private FirestoreDb db
+                -Firestore connection created outside of Buildings
             
         
         Funtions:
@@ -42,14 +39,22 @@ namespace AdminDatabaseFramework
     public class Buildings
     {
         public LinkedList<BuildingData> BuildingList { get; set; }
-        private FirestoreDb firestoreDb { get; set; }
-        public string project = "oit-kiosk";
-        public Buildings()
+        private FirestoreDb db { get; set; }
+        public Buildings(FirestoreDb m_db)
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Dev\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
-            firestoreDb = FirestoreDb.Create(project);
+            try
+            {
+                db = m_db;
+            }
+            catch
+            {
+                throw new DatabaseException("Unable to connect to Firestore");
+            }
         }
-
+        public void updateDB(FirestoreDb m_db)
+        {
+            db = m_db;
+        }
         public void updateLocalBuildings()
         {
             BuildingList = Task<LinkedList<BuildingData>>.Run(() => db_GetBuildingListAsync()).Result;
@@ -77,30 +82,44 @@ namespace AdminDatabaseFramework
 
         private async Task<LinkedList<BuildingData>> db_GetBuildingListAsync()
         {
-            CollectionReference buildingRef = firestoreDb.Collection("pages").Document("Map").Collection("Buildings");
-            QuerySnapshot snapshot = await buildingRef.GetSnapshotAsync();
-            LinkedList<BuildingData> buildings = new LinkedList<BuildingData>();
-
-            foreach(DocumentSnapshot document in snapshot.Documents)
+            try
             {
-                BuildingData temp = new BuildingData();
-                Dictionary<string, object> properties = document.ToDictionary();
+                CollectionReference buildingRef = db.Collection("pages").Document("Map").Collection("Buildings");
+                QuerySnapshot snapshot = await buildingRef.GetSnapshotAsync();
+                LinkedList<BuildingData> buildings = new LinkedList<BuildingData>();
 
-                buildings.AddLast(temp.stringsToBuildingData(document.Id.ToString(), ObjectFunctions.ObjToStr(properties["majors"] as List<object>), properties["name_info"].ToString(),ObjectFunctions.ObjToStr(properties["professors"] as List<object>), ObjectFunctions.ObjToStr(properties["professors"] as List<object>), properties["year"].ToString(), document.Reference, document.Id.ToString()));
+                foreach (DocumentSnapshot document in snapshot.Documents)
+                {
+                    BuildingData temp = new BuildingData();
+                    Dictionary<string, object> properties = document.ToDictionary();
+
+                    buildings.AddLast(temp.stringsToBuildingData(document.Id.ToString(), ObjectFunctions.ObjToStr(properties["majors"] as List<object>), properties["name_info"].ToString(), ObjectFunctions.ObjToStr(properties["professors"] as List<object>), ObjectFunctions.ObjToStr(properties["professors"] as List<object>), properties["year"].ToString(), document.Reference, document.Id.ToString()));
+                }
+                return buildings;
             }
-            return buildings;
+            catch
+            {
+                throw new DatabaseException("Unable to get buildings");
+            }
         }
 
         private async Task db_CreateBuilding(BuildingData buildingData)
         {
-            if(buildingData.BuildingName != null)
+            try
             {
-                DocumentReference buildingRef = firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName);
-                await buildingRef.SetAsync(buildingData.ToDictionary());
+                if (buildingData.BuildingName != null)
+                {
+                    DocumentReference buildingRef = db.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName);
+                    await buildingRef.SetAsync(buildingData.ToDictionary());
+                }
+                else
+                {
+                    throw new Exception("BuildingName not set, cannot create document");
+                }
             }
-            else
+            catch
             {
-                throw new Exception("BuildingName not set, cannot create document");
+                throw new DatabaseException("Unable to create building");
             }
         }
 
@@ -108,7 +127,7 @@ namespace AdminDatabaseFramework
         {
             if(buildingData.BuildingName != null)
             {
-                await firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).DeleteAsync();
+                await db.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).DeleteAsync();
             }
             else
             {
@@ -118,16 +137,28 @@ namespace AdminDatabaseFramework
 
         private async Task db_UpdateBuilding(BuildingData buildingData)
         {
-            if (buildingData.BuildingName != buildingData.oldName)
+            try
             {
-                DocumentReference buildingRef = firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.oldName);
-                await buildingRef.DeleteAsync();
-                Task.Run(async () => await db_CreateBuilding(buildingData)).Wait();
+                if (buildingData.BuildingName != buildingData.oldName && buildingData.BuildingName != null)
+                {
+                    DocumentReference buildingRef = db.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.oldName);
+                    await buildingRef.DeleteAsync();
+                    Task.Run(async () => await db_CreateBuilding(buildingData)).Wait();
+                }
+                else if (buildingData.BuildingName == buildingData.oldName && buildingData.BuildingName != null)
+                {
+                    await db.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).UpdateAsync(buildingData.ToDictionary());
+                }
+                else
+                {
+                    throw new Exception("BuildingName not set, cannot delete document");
+                }
             }
-            else if (buildingData.BuildingName == buildingData.oldName)
+            catch
             {
-                await firestoreDb.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).UpdateAsync(buildingData.ToDictionary());
+                throw new DatabaseException("Unable to update building");
             }
+            
         }
        
     }

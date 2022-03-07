@@ -20,8 +20,6 @@ namespace AdminDatabaseFramework
         Local Variables:
             -private LinkedList<DocumentSnapshot> m_dataBaseRefs
                 -Used to store the majors from the database
-            -public string project
-                -Stores the project id used to connect to firestore
             -private MajorDatabase majorDatabase
                 -An instance of MajorDatabase used to interact with the firestore database
             
@@ -59,91 +57,105 @@ namespace AdminDatabaseFramework
     public class Majors
     {
         private LinkedList<DocumentSnapshot> m_dataBaseRefs = new LinkedList<DocumentSnapshot>();
-        public string project = "oit-kiosk";
-        private MajorDatabase majorDatabase = new MajorDatabase();
-        public Majors()
+        private MajorDatabase majorDatabase;
+        public Majors(FirestoreDb m_db)
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", "C:\\Dev\\Database\\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json");
-            m_dataBaseRefs = majorDatabase.GetMajorData(project);
+            majorDatabase = new MajorDatabase(m_db);
+            m_dataBaseRefs = majorDatabase.GetMajorData();
+        }
+
+        public void updateDB(FirestoreDb m_db)
+        {
+            majorDatabase = new MajorDatabase(m_db);
         }
 
         public void EditMajor(MajorData major)
         {
-            majorDatabase.EditMajorData(project, major);
+            majorDatabase.EditMajorData(major);
 
             if (major.MajorName != major.OldName)
             {
                 string temp = major.OldName;
                 major.OldName = major.MajorName;
-                majorDatabase.EditMajorName(project, major, temp);
+                majorDatabase.EditMajorName(major, temp);
             }
             else
             {
-                majorDatabase.EditMajorData(project, major);
+                majorDatabase.EditMajorData(major);
             }
         }
 
         public void EditMajor(MajorData major, string oldName)
         {
-            majorDatabase.EditMajorName(project, major, oldName);
+            majorDatabase.EditMajorName(major, oldName);
         }
 
         public void DeleteMajor(MajorData major)
         {
-            majorDatabase.DeleteMajorData(project, major);
+            majorDatabase.DeleteMajorData(major);
         }
 
         public void EditMajorCatagoryTitle(MajorCategories majorCategories)
         {
-            majorDatabase.EditCategoryTitle(project, majorCategories.oldTitle, majorCategories.categoryTitle);
+            majorDatabase.EditCategoryTitle(majorCategories.oldTitle, majorCategories.categoryTitle);
         }
 
         public void AddMajorToCat(MajorCategories majorCategories, MajorData major)
         {
-            majorDatabase.AddMajorToCat(project, majorCategories.oldTitle, major);
+            majorDatabase.AddMajorToCat(majorCategories.oldTitle, major);
         }
 
         public void RemoveMajorFromCat(MajorCategories majorCategories, MajorData major)
         {
-            majorDatabase.RemoveMajorFromCat(project, majorCategories, major);
+            majorDatabase.RemoveMajorFromCat(majorCategories, major);
         }
 
         public void CreateMajorCategory(string catTitle)
         {
-            majorDatabase.CreateMajorCategory(project, catTitle);
+            majorDatabase.CreateMajorCategory(catTitle);
         }
 
         public void DeleteMajorCategory(MajorCategories majorCategories)
         {
-            majorDatabase.DeleteMajorCategory(project, majorCategories);
+            majorDatabase.DeleteMajorCategory(majorCategories);
         }
         public void UpdateLocal()
         {
-            m_dataBaseRefs = majorDatabase.GetMajorData(project);
+            m_dataBaseRefs = majorDatabase.GetMajorData();
         }
 
         public LinkedList<MajorData> GetMajors()
         {
-            LinkedList<MajorData> datas = new LinkedList<MajorData>();
-            foreach(DocumentSnapshot document in m_dataBaseRefs)
-            {
-                Dictionary<string, object> documentDictionary = document.ToDictionary();
-                MajorData tempMajor = new MajorData();
-                tempMajor.MajorName = document.Id;
-                tempMajor.OldName = document.Id;
-                tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
-                tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
-                tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
 
-                tempMajor.DocumentReferenceSelf = document.Reference;
-                datas.AddLast(tempMajor);
+            try
+            {
+                LinkedList<MajorData> datas = new LinkedList<MajorData>();
+                foreach (DocumentSnapshot document in m_dataBaseRefs)
+                {
+                    Dictionary<string, object> documentDictionary = document.ToDictionary();
+                    MajorData tempMajor = new MajorData();
+                    tempMajor.MajorName = document.Id;
+                    tempMajor.OldName = document.Id;
+                    tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
+                    tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
+                    tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
+
+                    tempMajor.DocumentReferenceSelf = document.Reference;
+                    datas.AddLast(tempMajor);
+                }
+                return datas;
             }
-            return datas;
+            catch
+            {
+                throw new DatabaseException("Could not save data from database");
+            }
+            
         }
 
         public LinkedList<MajorCategories> GetCategories()
         {
-            DocumentSnapshot documentSnapshot = majorDatabase.StoreMajorCategories(project);
+            
+            DocumentSnapshot documentSnapshot = majorDatabase.StoreMajorCategories();
             LinkedList<MajorCategories> majorCategories = new LinkedList<MajorCategories>();
 
             List<Dictionary<string, object>> categoryList = documentSnapshot.GetValue<List<Dictionary<string, object>>>("Categories");
