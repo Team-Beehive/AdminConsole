@@ -16,9 +16,11 @@ namespace AdminConsole
      */
     public class AppData
     {
-        public Majors s_major = new Majors();
-        public Professors s_professors = new Professors();
-        public Buildings s_building = new Buildings();
+        public Database s_database;
+
+        public Majors s_major; //= new Majors();
+        public Professors s_professors; //= new Professors();
+        public Buildings s_building; //= new Buildings();
 
         public LinkedList<MajorData> s_majorList;
         public LinkedList<MajorCategories> s_catList;

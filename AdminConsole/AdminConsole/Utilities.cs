@@ -13,12 +13,14 @@ namespace AdminConsole
     public class Utilities
     {
         private StackPanel m_preview, m_properties, m_list;
+        private AppData m_data;
         
-        public Utilities(StackPanel preview, StackPanel properties, StackPanel list)
+        public Utilities(StackPanel preview, StackPanel properties, StackPanel list, AppData data)
         {
             m_preview = preview;
             m_properties = properties;
             m_list = list;
+            m_data = data;
         }
 
         public void ClearPreview()
@@ -97,39 +99,22 @@ namespace AdminConsole
             return sb.ToString();
         }
 
-        /*public void UploadData()
+        public bool SetDatabaseKey(string key)
         {
-            foreach (ProfessorData p in AppData.s_changedProf)
+            bool success = false;
+            try
             {
-                AppData.s_professors.UpdateProfessor(p);
+                m_data.s_database = new Database("oit-kiosk", key);
+                //GetData();
+                success = true;
             }
-            foreach (BuildingData b in AppData.s_changedBuildingList)
+            catch (Exception ex)
             {
-                AppData.s_building.UpdateBuilding(b);
+                success = false;
+                ErrorWindow error = new ErrorWindow(ex);
+                error.Show();
             }
-            foreach (MajorData m in AppData.s_changedList)
-            {
-                AppData.s_major.EditMajor(m);
-            }
-        }*/
-
-        /*public void GetData(ref bool connected)
-        {
-            if (connected)
-            {
-                AppData.s_professorList = AppData.s_professors.GetProfessors();
-
-                AppData.s_buildingList = AppData.s_building.GetBuildings();
-
-                AppData.s_majorList = AppData.s_major.GetMajors();
-                AppData.s_catList = AppData.s_major.GetCategories();
-            }
-            else
-            {
-                MessageBox.Show("Is not connected to server");
-            }
-
-        }*/
-        
+            return success;
+        }
     }
 }
