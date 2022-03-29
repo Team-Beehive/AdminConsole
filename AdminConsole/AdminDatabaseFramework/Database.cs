@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Google.Cloud.Firestore;
+using Google.Cloud.Storage.V1;
+using Firebase.Auth;
+using Firebase.Database;
+
 
 namespace AdminDatabaseFramework
 {
@@ -17,13 +21,23 @@ namespace AdminDatabaseFramework
 
         public Database(string Project, string envPath)
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", envPath);
-            db = FirestoreDb.Create(Project);
+            AttemptConnection(envPath);
+            //Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", envPath);
+            //db = FirestoreDb.Create(Project);
             Majors = new Majors(db);
             Buildings = new Buildings(db);
             Professors = new Professors(db);
             m_project = Project;
         }
+
+        public void AttemptConnection(string path)
+        {
+            Google.Apis.Auth.OAuth2.GoogleCredential cred = Google.Apis.Auth.OAuth2.GoogleCredential.FromFile(path);
+            FirestoreClient client = FirestoreClient.Create();
+            db = FirestoreDb.Create("oit-kiosk", client);
+        }
+            
+
 
         public void updateProject(string project)
         {
