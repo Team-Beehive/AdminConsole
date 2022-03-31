@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Google.Cloud.Firestore;
 using Google.Cloud.Firestore.V1;
+using Grpc.Auth;
 using Google.Cloud.Storage.V1;
 using Firebase.Auth;
 using Firebase.Database;
@@ -33,8 +34,10 @@ namespace AdminDatabaseFramework
 
         public void AttemptConnection(string path)
         {
-            FirestoreClient client = FirestoreClient.Create();
-            db = FirestoreDb.Create("oit-kiosk", client);
+            Google.Apis.Auth.OAuth2.GoogleCredential cred = Google.Apis.Auth.OAuth2.GoogleCredential.FromFile(path);
+            FirestoreClientBuilder clientBuilder = new FirestoreClientBuilder();
+            clientBuilder.ChannelCredentials = cred.ToChannelCredentials() ;
+            db = FirestoreDb.Create("oit-kiosk", clientBuilder.Build());
         }
             
 
