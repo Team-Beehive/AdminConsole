@@ -23,31 +23,47 @@ namespace AdminDatabaseFramework
 
         public Database(string Project, string envPath)
         {
+            m_project = Project;
             AttemptConnection(envPath);
-            //Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", envPath);
-            //db = FirestoreDb.Create(Project);
             Majors = new Majors(db);
             Buildings = new Buildings(db);
-            Professors = new Professors(db);
-            m_project = Project;
+            Professors = new Professors(db);    
         }
 
         public void AttemptConnection(string path)
         {
-            Google.Apis.Auth.OAuth2.GoogleCredential cred = Google.Apis.Auth.OAuth2.GoogleCredential.FromFile(path);
-            FirestoreClientBuilder clientBuilder = new FirestoreClientBuilder();
-            clientBuilder.ChannelCredentials = cred.ToChannelCredentials() ;
-            db = FirestoreDb.Create("oit-kiosk", clientBuilder.Build());
+            try
+            {
+                Google.Apis.Auth.OAuth2.GoogleCredential cred = Google.Apis.Auth.OAuth2.GoogleCredential.FromFile(path);
+                FirestoreClientBuilder clientBuilder = new FirestoreClientBuilder();
+                clientBuilder.ChannelCredentials = cred.ToChannelCredentials();
+                db = FirestoreDb.Create(m_project, clientBuilder.Build());
+            }
+            catch (Exception e)
+            {
+                throw new DatabaseException("Invalid Credentials", e);
+            }
         }
             
-
+        public void UpdateConenction(string path)
+        {
+            AttemptConnection(path);
+            updateProject(m_project);
+        }
 
         public void updateProject(string project)
         {
-            db = FirestoreDb.Create(project);
-            Majors.updateDB(db);
-            Buildings.updateDB(db);
-            Professors.updateDB(db);
+            try
+            {
+                db = FirestoreDb.Create(project);
+                Majors.updateDB(db);
+                Buildings.updateDB(db);
+                Professors.updateDB(db);
+            }
+            catch
+            {
+                throw new DatabaseException("Unable to connect to database with name " + project + "using provided credentials");
+            }
             m_project = project;
         }
 

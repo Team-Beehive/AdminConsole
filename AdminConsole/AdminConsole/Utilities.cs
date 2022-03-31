@@ -102,17 +102,34 @@ namespace AdminConsole
         public bool SetDatabaseKey(string key)
         {
             bool success = false;
-            try
+            if (m_data.s_database == null)
             {
-                m_data.s_database = new Database("oit-kiosk", key);
-                //GetData();
-                success = true;
+                try
+                {
+                    m_data.s_database = new Database("oit-kiosk", key);
+                    //GetData();
+                    success = true;
+                }
+                catch (DatabaseException ex)
+                {
+                    success = false;
+                    ErrorWindow error = new ErrorWindow(ex);
+                    error.Show();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                success = false;
-                ErrorWindow error = new ErrorWindow(ex);
-                error.Show();
+                try
+                {
+                    m_data.s_database.UpdateConenction(key);
+                    success = true;
+                }
+                catch (DatabaseException ex)
+                {
+                    success=false;
+                    ErrorWindow error = new ErrorWindow(ex);
+                    error.Show();
+                }
             }
             return success;
         }
