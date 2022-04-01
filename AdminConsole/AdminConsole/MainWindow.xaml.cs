@@ -48,6 +48,7 @@ namespace AdminConsole
             events.SetCreateElements(elements);
             isConnected = false;
             tb_status.Text = "";
+            
 
         }
 
@@ -59,6 +60,9 @@ namespace AdminConsole
             {
                 isConnected = util.SetDatabaseKey(openFile.FileName);
                 GetData(isConnected);
+                data.majorButtonList = elements.CreateMajorButtons(data.s_majorList);
+                data.profButtonList = elements.CreateProfButtons(data.s_professorList);
+                data.buildingButtonList = elements.CreateBuildingButtons(data.s_buildingList);
             }
         }
 
@@ -67,7 +71,8 @@ namespace AdminConsole
             if (isConnected)
             { 
                 RemovePageSelect();
-                PageSelect.Children.Add(elements.CreateMajorButtons(data.s_majorList));
+                //PageSelect.Children.Add(elements.CreateMajorButtons(data.s_majorList));
+                PageSelect.Children.Add(data.majorButtonList);
                 util.ClearProperties();
             }
         }
@@ -87,7 +92,8 @@ namespace AdminConsole
             if (isConnected)
             { 
                 RemovePageSelect();
-                PageSelect.Children.Add(elements.CreateBuildingButtons(data.s_buildingList));
+                //PageSelect.Children.Add(elements.CreateBuildingButtons(data.s_buildingList));
+                PageSelect.Children.Add(data.buildingButtonList);
                 util.ClearProperties();
             }
         }
@@ -97,7 +103,7 @@ namespace AdminConsole
             if (isConnected)
             { 
                 RemovePageSelect();
-                PageSelect.Children.Add(elements.CreateProfButtons(data.s_professorList));
+                PageSelect.Children.Add(data.profButtonList);
                 util.ClearProperties();
             }
         }

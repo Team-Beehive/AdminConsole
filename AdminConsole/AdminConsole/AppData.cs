@@ -36,6 +36,11 @@ namespace AdminConsole
         public BuildingData s_activeBuilding;
         public MajorCategories s_activeCat;
 
+        public Grid majorButtonList;
+        public Grid profButtonList;
+        public Grid catButtonList;
+        public Grid buildingButtonList;
+
         //public static StackPanel s_previewPanel;
         //public static StackPanel s_propertiesPanel;
         //public static StackPanel s_listPanel;

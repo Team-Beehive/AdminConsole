@@ -34,7 +34,8 @@ namespace AdminConsole
             m_data.s_buildingList.Remove(temp.data);
             m_util.ClearList();
             m_util.ClearPreview();
-            m_util.SetList(m_elements.CreateBuildingButtons(m_data.s_buildingList));
+            m_data.buildingButtonList = m_elements.CreateBuildingButtons(m_data.s_buildingList);
+            m_util.SetList(m_data.buildingButtonList);
             /*AppData.s_building.RemoveBuilding(temp.data);
             AppData.s_buildingList.Remove(temp.data);
             AppData.s_listPanel.Children.RemoveAt(1);
@@ -48,7 +49,8 @@ namespace AdminConsole
             m_data.s_professorList.Remove(temp.data);
             m_util.ClearList();
             m_util.ClearPreview();
-            m_util.SetList(m_elements.CreateProfButtons(m_data.s_professorList));
+            m_data.profButtonList = m_elements.CreateProfButtons(m_data.s_professorList);
+            m_util.SetList(m_data.profButtonList);
             /*AppData.s_professors.RemoveProfessor(temp.data);
             AppData.s_professorList.Remove(temp.data);
             AppData.s_listPanel.Children.RemoveAt(1);
@@ -64,7 +66,8 @@ namespace AdminConsole
             m_util.SetPreview(new BuildingPreviewControl(m_data, m_util));
             m_data.s_buildingList.AddLast(temp.data);
             m_util.ClearList();
-            m_util.SetList(m_elements.CreateBuildingButtons(m_data.s_buildingList));
+            m_data.buildingButtonList = m_elements.CreateBuildingButtons(m_data.s_buildingList);
+            m_util.SetList(m_data.buildingButtonList);
             m_data.s_building.CreateBuilding(temp.data);
             /*AppData.s_activeBuilding = temp.data;
             if (AppData.s_previewPanel.Children.Count > 1)
@@ -85,7 +88,8 @@ namespace AdminConsole
             m_util.SetPreview(new ProfessorsPreviewControl(m_data, m_util));
             m_data.s_professorList.AddLast(temp.data);
             m_util.ClearList();
-            m_util.SetList(m_elements.CreateProfButtons(m_data.s_professorList));
+            m_data.profButtonList = m_elements.CreateProfButtons(m_data.s_professorList);
+            m_util.SetList(m_data.profButtonList);
             m_data.s_professors.CreateProfessor(temp.data);
             /*AppData.s_activeProfessor = temp.data;
             if (AppData.s_previewPanel.Children.Count > 1)
