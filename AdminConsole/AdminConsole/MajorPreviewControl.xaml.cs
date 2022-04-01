@@ -39,18 +39,18 @@ namespace AdminConsole
             {
                 AppData.s_propertiesPanel.Children.RemoveAt(1);
             }*/
-            m_util.ClearProperties();
+            //m_util.ClearProperties();
             Label lElement = sender as Label;
             TextBlock tbElement = sender as TextBlock;
             if (lElement != null)
             {
                 //AppData.s_propertiesPanel.Children.Add(new MajorPropControl(lElement.Name));
-                m_util.SetProperties(new MajorPropControl(lElement.Name, m_data));
+                m_util.SetProperties(new MajorPropControl(lElement.Name, m_data), false);
             } 
             else if (tbElement != null)
             {
                 //AppData.s_propertiesPanel.Children.Add(new MajorPropControl(tbElement.Name));
-                m_util.SetProperties(new MajorPropControl(tbElement.Name, m_data));
+                m_util.SetProperties(new MajorPropControl(tbElement.Name, m_data), false);
             }
         }
 

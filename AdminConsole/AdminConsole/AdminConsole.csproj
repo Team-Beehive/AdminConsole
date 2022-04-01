@@ -134,6 +134,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BuildingMenuItem.cs" />
+    <Compile Include="CatDropdownItem.cs" />
+    <Compile Include="CategorySelect.xaml.cs">
+      <DependentUpon>CategorySelect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>
@@ -172,6 +176,10 @@
     <Compile Include="CatProp.xaml.cs">
       <DependentUpon>CatProp.xaml</DependentUpon>
     </Compile>
+    <Page Include="CategorySelect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ErrorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

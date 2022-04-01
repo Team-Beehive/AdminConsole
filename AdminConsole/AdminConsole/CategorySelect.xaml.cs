@@ -31,12 +31,33 @@ namespace AdminConsole
 
         private void PopulateDropdown()
         {
+            ComboBoxItem unselected = new ComboBoxItem();
+            unselected.Content = "Select category";
+            CategoryDropdown.Items.Add(unselected);
+            CategoryDropdown.SelectedItem = unselected;
             foreach (MajorCategories cat in m_data.s_catList)
             {
-                ComboBoxItem catItem = new ComboBoxItem();
+                CatDropdownItem catItem = new CatDropdownItem();
                 catItem.Content = cat.categoryTitle;
+                catItem.cat = cat;
+
                 CategoryDropdown.Items.Add(catItem);
             }
+        }
+
+        private void AddRelatedDegree(object sender, EventArgs e)
+        {
+            CatDropdownItem selected = sender as CatDropdownItem;
+            selected.cat.relatedDegrees.Add(m_data.s_activeData);
+        }
+
+        private bool HasRelatedCategory()
+        {
+            foreach (MajorCategories cat in m_data.s_catList)
+            {
+
+            }
+            return false;
         }
     }
 }

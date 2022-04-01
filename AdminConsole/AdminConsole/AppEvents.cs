@@ -132,6 +132,7 @@ namespace AdminConsole
             m_data.s_building.updateLocalBuildings();
             m_data.s_activeBuilding = temp.data;
             m_util.SetPreview(new BuildingPreviewControl(m_data, m_util));
+
             /*AppData.s_activeBuilding = temp.data;
             if (AppData.s_previewPanel.Children.Count > 1)
             {
@@ -170,6 +171,7 @@ namespace AdminConsole
             m_data.s_major.UpdateLocal();
             m_data.s_activeData = page.major;
             m_util.SetPreview(new MajorPreviewControl(m_data, m_util));
+            m_util.SetProperties(new CategorySelect(m_data));
 
             /*AppData.s_activeData = page.major;
             if (AppData.s_previewPanel.Children.Count > 1)

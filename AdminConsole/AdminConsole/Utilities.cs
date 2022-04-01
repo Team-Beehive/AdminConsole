@@ -40,14 +40,21 @@ namespace AdminConsole
         {
             if (m_properties.Children.Count > 1)
             {
-                m_properties.Children.RemoveAt(1);
+                for (int i = 1; i < m_properties.Children.Count; i++)
+                {
+                    m_properties.Children.RemoveAt(i);
+                }
             }
         }
-        public void SetProperties(UIElement element)
+        public void SetProperties(UIElement element, bool clear = true)
         {
-            ClearProperties();
+            if (clear)
+            { 
+                ClearProperties();
+            }
             m_properties.Children.Add(element);
         }
+
 
         public void ClearList()
         {

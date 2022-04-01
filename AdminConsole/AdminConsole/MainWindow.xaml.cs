@@ -68,6 +68,7 @@ namespace AdminConsole
             { 
                 RemovePageSelect();
                 PageSelect.Children.Add(elements.CreateMajorButtons(data.s_majorList));
+                util.ClearProperties();
             }
         }
 
@@ -76,6 +77,8 @@ namespace AdminConsole
             if (isConnected)
             { 
                 elements.AddCatButtons(data.s_catList);
+                util.ClearProperties();
+
             }
         }
 
@@ -85,6 +88,7 @@ namespace AdminConsole
             { 
                 RemovePageSelect();
                 PageSelect.Children.Add(elements.CreateBuildingButtons(data.s_buildingList));
+                util.ClearProperties();
             }
         }
 
@@ -94,6 +98,7 @@ namespace AdminConsole
             { 
                 RemovePageSelect();
                 PageSelect.Children.Add(elements.CreateProfButtons(data.s_professorList));
+                util.ClearProperties();
             }
         }
 
