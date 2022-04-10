@@ -22,7 +22,8 @@ namespace AdminConsole
         public Professors s_professors; //= new Professors();
         public Buildings s_building; //= new Buildings();
 
-        public LinkedList<MajorData> s_majorList;
+        //public LinkedList<MajorData> s_majorList;
+        public Dictionary<string, MajorData> s_majorList;
         public LinkedList<MajorCategories> s_catList;
         public LinkedList<BuildingData> s_buildingList;
         public LinkedList<ProfessorData> s_professorList = new LinkedList<ProfessorData>();

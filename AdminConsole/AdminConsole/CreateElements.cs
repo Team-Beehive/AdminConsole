@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using AdminDatabaseFramework;
-
-
+using Google.Cloud.Firestore;
 
 namespace AdminConsole
 {
@@ -21,6 +20,7 @@ namespace AdminConsole
     {
         private Utilities m_util;
         private AppEvents m_events;
+        private AppData m_data;
         
         public CreateElements(Utilities util) 
         {
@@ -220,7 +220,102 @@ namespace AdminConsole
             AppData.s_propertiesPanel.Children.Add(grid);*/
         }
 
+        public Grid CreateMajorButtonsByCat(Dictionary<string, MajorData> majors, LinkedList<MajorCategories> cats)
+        {
+            //copy major list
+            //for each category
+            //add cat button for calapsing
+            //for each major
+            //make button
+            //remove major from copied list
+            //for each remainging major in copied list
+            //TODO: add unassigned button
 
-        
+            m_util.ClearList();
+            Grid grid = new Grid();
+            int btnPos = 0;
+            Dictionary<string, MajorData> unassignedMajors = new Dictionary<string, MajorData>(majors);
+
+            foreach (MajorCategories cat in cats)
+            {
+                List<Object> related = cat.relatedDegrees;
+                foreach (DocumentReference doc in related)
+                {
+                    MajorData major = null;
+                    //DocumentSnapshot snapDoc = await doc.GetSnapshotAsync();
+                    foreach (MajorData majorData in majors.Values)
+                    {
+                        //if (majorData.DocumentReferenceSelf.Id == doc)
+                        /*if (doc.Equals(majorData.DocumentReferenceSelf))
+                        {
+                            major = majorData;
+                            break;
+                        }*/
+
+                    }
+                    //foreach (MajorData major in degrees.Values)
+                    //{
+                        RowDefinition rd = new RowDefinition();
+                        grid.RowDefinitions.Add(rd);
+                        string cleanName = m_util.cleanString(major.MajorName);
+
+                        MajorButton btn = new MajorButton();
+                        btn.major = major;
+                        btn.Content = major.MajorName;
+                        btn.Name = cleanName;
+                        btn.Click += m_events.ButtonPressPage;
+                        Grid.SetRow(btn, btnPos);
+                        grid.Children.Add(btn);
+                        btnPos++;
+
+                        unassignedMajors.Remove(major.MajorName);
+                    //}
+                }
+            }
+
+
+            /*foreach (DocumentSnapshot doc in cats)
+            {
+                Dictionary<string, object> cat = doc.ToDictionary();
+                //TODO: add cat button for calapsing
+                
+                foreach (MajorData major in cat.Values)
+                {
+                    RowDefinition rd = new RowDefinition();
+                    grid.RowDefinitions.Add(rd);
+                    string cleanName = m_util.cleanString(major.MajorName);
+
+                    MajorButton btn = new MajorButton();
+                    btn.major = major;
+                    btn.Content = major.MajorName;
+                    btn.Name = cleanName;
+                    btn.Click += m_events.ButtonPressPage;
+                    Grid.SetRow(btn, btnPos);
+                    grid.Children.Add(btn);
+                    btnPos++;
+
+                    unassignedMajors.Remove(major.MajorName);
+                }
+            }*/
+
+            //needs to be var because idk why
+            foreach (var major in unassignedMajors)
+            {
+                RowDefinition rd = new RowDefinition();
+                grid.RowDefinitions.Add(rd);
+                string cleanName = m_util.cleanString(major.Key);
+
+                MajorButton btn = new MajorButton();
+                btn.major = major.Value;
+                btn.Content = major.Key;
+                btn.Name = cleanName;
+                btn.Click += m_events.ButtonPressPage;
+                Grid.SetRow(btn, btnPos);
+                grid.Children.Add(btn);
+                btnPos++;
+            }
+
+            return grid;
+        }
     }
 }

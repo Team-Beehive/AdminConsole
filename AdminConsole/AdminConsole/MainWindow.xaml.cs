@@ -46,7 +46,7 @@ namespace AdminConsole
             events = new AppEvents(data, util);
             elements.SetEvents(events);
             events.SetCreateElements(elements);
-            isConnected = false;
+            //isConnected = false;
             tb_status.Text = "";
             
 
@@ -60,9 +60,14 @@ namespace AdminConsole
             {
                 isConnected = util.SetDatabaseKey(openFile.FileName);
                 GetData(isConnected);
-                data.majorButtonList = elements.CreateMajorButtons(data.s_majorList);
-                data.profButtonList = elements.CreateProfButtons(data.s_professorList);
-                data.buildingButtonList = elements.CreateBuildingButtons(data.s_buildingList);
+                //data.majorButtonList = elements.CreateMajorButtons(data.s_majorList);
+                if(isConnected)
+                { 
+                    data.majorButtonList = elements.CreateMajorButtonsByCat(data.s_majorList, data.s_catList);
+                    data.profButtonList = elements.CreateProfButtons(data.s_professorList);
+                    data.buildingButtonList = elements.CreateBuildingButtons(data.s_buildingList);
+                }
+                
             }
         }
 
@@ -155,8 +160,14 @@ namespace AdminConsole
 
                 data.s_professorList = data.s_professors.GetProfessors();
                 data.s_buildingList = data.s_building.GetBuildings();
-                data.s_majorList = data.s_major.GetMajors();
                 data.s_catList = data.s_major.GetCategories();
+
+                data.s_majorList = new Dictionary<string, MajorData>();
+                foreach (MajorData major in data.s_major.GetMajors())
+                {
+                    data.s_majorList.Add(major.MajorName, major);
+                }
+                //data.s_majorList = data.s_major.GetMajors();
             }
         }
     }
