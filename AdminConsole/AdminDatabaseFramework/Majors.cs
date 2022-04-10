@@ -170,8 +170,25 @@ namespace AdminDatabaseFramework
             return majorCategories;
         }
 
-        
+        public static MajorData toMajorData(DocumentReference doc)
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+            data = Task<DocumentSnapshot>.Run(() => toSnapShot(doc)).Result.ToDictionary();
+            MajorData mdata = new MajorData();
+            mdata.MajorName = doc.Id;
+            mdata.OldName = doc.Id;
+            mdata.about = ObjectFunctions.ObjToStr(data["about"] as List<object>);
+            mdata.campuses = ObjectFunctions.ObjToStr(data["campuses"] as List<object>);
+            mdata.type = ObjectFunctions.ObjToStr(data["type"] as List<object>);
 
+            mdata.DocumentReferenceSelf = doc;
+            return mdata;
+        }
+
+        public async static Task<DocumentSnapshot> toSnapShot(DocumentReference doc)
+        {
+            return await doc.GetSnapshotAsync();
+        }
         public void printMajors()
         {
             foreach(DocumentSnapshot document in m_dataBaseRefs)
