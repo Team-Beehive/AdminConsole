@@ -151,7 +151,15 @@
                         <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource TopButtons}" Content="Majors" HorizontalAlignment="Center" Click="ButtonPressMajors"/>
                         <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Building" HorizontalAlignment="Center" Click="ButtonPressBuilding"/>
                         <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Professor" HorizontalAlignment="Center" Click="ButtonPressProf"/>
-                        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource TopButtons}" Content="Open File" HorizontalAlignment="Center" Click="ButtonPressOpen"/>
+                        <Grid Grid.Row="0" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" x:Name="rec_ConnectionIndicator" HorizontalAlignment="Right" Width="25px" Height="25px" Fill="Red" ToolTipService.ToolTip="Not Connected"/>
+                            <Button Grid.Column="1" Style="{StaticResource TopButtons}" Content="Open File" HorizontalAlignment="Center" Click="ButtonPressOpen"
+                                ToolTipService.ToolTip="Choose credientals file"/>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Border>

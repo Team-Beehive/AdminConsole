@@ -60,6 +60,16 @@ namespace AdminConsole
                 isConnected = util.SetDatabaseKey(openFile.FileName);
                 GetData(isConnected);
             }
+            if(isConnected)
+            {
+                rec_ConnectionIndicator.Fill= new SolidColorBrush(Color.FromRgb(90, 245, 66));
+                rec_ConnectionIndicator.ToolTip = "Connected";
+            }    
+            else
+            {
+                rec_ConnectionIndicator.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                rec_ConnectionIndicator.ToolTip = "Not Connected";
+            }
         }
 
         private void ButtonPressMajors(object sender, EventArgs e)
