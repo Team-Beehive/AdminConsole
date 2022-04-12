@@ -20,7 +20,7 @@ namespace AdminConsole
     {
         private Utilities m_util;
         private AppEvents m_events;
-        private AppData m_data;
+        //private AppData m_data;
         
         public CreateElements(Utilities util) 
         {
@@ -241,18 +241,19 @@ namespace AdminConsole
                 List<Object> related = cat.relatedDegrees;
                 foreach (DocumentReference doc in related)
                 {
-                    MajorData major = null;
+                    MajorData major = Majors.toMajorData(doc);
+                    /*MajorData major = null;
                     //DocumentSnapshot snapDoc = await doc.GetSnapshotAsync();
                     foreach (MajorData majorData in majors.Values)
                     {
                         //if (majorData.DocumentReferenceSelf.Id == doc)
-                        /*if (doc.Equals(majorData.DocumentReferenceSelf))
+                        *//*if (doc.Equals(majorData.DocumentReferenceSelf))
                         {
                             major = majorData;
                             break;
-                        }*/
+                        }*//*
 
-                    }
+                    }*/
                     //foreach (MajorData major in degrees.Values)
                     //{
                         RowDefinition rd = new RowDefinition();

@@ -163,7 +163,8 @@ namespace AdminConsole
                 data.s_catList = data.s_major.GetCategories();
 
                 data.s_majorList = new Dictionary<string, MajorData>();
-                foreach (MajorData major in data.s_major.GetMajors())
+                LinkedList<MajorData> tempList = data.s_major.GetMajors();
+                foreach (MajorData major in tempList)
                 {
                     data.s_majorList.Add(major.MajorName, major);
                 }
