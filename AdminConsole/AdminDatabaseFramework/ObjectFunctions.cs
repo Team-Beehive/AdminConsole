@@ -8,13 +8,14 @@ namespace AdminDatabaseFramework
 {
     internal static class ObjectFunctions
     {
-        public static List<string> ObjToStr(List<object> objList)
+        public static List<string> ObjToStr(object objList)
         {
+
             if (objList != null)
             {
-                List<string> tempList = new List<string>(objList.Count);
+                List<string> tempList = new List<string>((objList as List<object>).Count);
 
-                foreach (object obj in objList)
+                foreach (object obj in (objList as List<object>))
                 {
                     tempList.Add(obj.ToString());
                 }
