@@ -55,14 +55,14 @@ namespace AdminDatabaseFramework
         {
             try
             {
-                db = FirestoreDb.Create(project);
+                //Add in a call to Attempt connection that has a variable for the project.
                 Majors.updateDB(db);
                 Buildings.updateDB(db);
                 Professors.updateDB(db);
             }
             catch
             {
-                throw new DatabaseException("Unable to connect to database with name " + project + "using provided credentials");
+                throw new DatabaseException("Unable to connect to database with name " + project + " using provided credentials");
             }
             m_project = project;
         }
