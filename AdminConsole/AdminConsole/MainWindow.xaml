@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminConsole"
+        xmlns:custom="clr-namespace:AdminConsole.Misc"
         mc:Ignorable="d"
         WindowState="Maximized"
         Title="MainWindow" Height="450" Width="800">
@@ -154,11 +155,13 @@
                         <Grid Grid.Row="0" Grid.Column="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
+                                <ColumnDefinition Width=".2*"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0" x:Name="rec_ConnectionIndicator" HorizontalAlignment="Right" Width="25px" Height="25px" Fill="Red" ToolTipService.ToolTip="Not Connected"/>
-                            <Button Grid.Column="1" Style="{StaticResource TopButtons}" Content="Open File" HorizontalAlignment="Center" Click="ButtonPressOpen"
+                            <Ellipse Grid.Column="1" x:Name="ell_ConnectionIndicator" HorizontalAlignment="Right" Width="20px" Height="20px" Fill="Red" Stroke="Gray" StrokeThickness="3px" ToolTipService.ToolTip="Not Connected"/>
+                            <Button Grid.Column="2" Style="{StaticResource TopButtons}" Content="Open File" HorizontalAlignment="Center" Click="ButtonPressOpen"
                                 ToolTipService.ToolTip="Choose credientals file"/>
+                            <custom:LoadingBar Grid.Column="0" x:Name="ldb_fileBar"/>
                         </Grid>
                     </Grid>
                 </Grid>

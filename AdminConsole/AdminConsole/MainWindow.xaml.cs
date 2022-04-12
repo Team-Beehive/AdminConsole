@@ -57,18 +57,20 @@ namespace AdminConsole
             openFile.Filter = "Firebase credentials (JSON)|*.json";
             if (openFile.ShowDialog() == true)
             {
+                ldb_fileBar.Show();
                 isConnected = util.SetDatabaseKey(openFile.FileName);
                 GetData(isConnected);
+                
             }
             if(isConnected)
             {
-                rec_ConnectionIndicator.Fill= new SolidColorBrush(Color.FromRgb(90, 245, 66));
-                rec_ConnectionIndicator.ToolTip = "Connected";
+                ell_ConnectionIndicator.Fill= new SolidColorBrush(Color.FromRgb(90, 245, 66));
+                ell_ConnectionIndicator.ToolTip = "Connected";
             }    
             else
             {
-                rec_ConnectionIndicator.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-                rec_ConnectionIndicator.ToolTip = "Not Connected";
+                ell_ConnectionIndicator.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                ell_ConnectionIndicator.ToolTip = "Not Connected";
             }
         }
 
