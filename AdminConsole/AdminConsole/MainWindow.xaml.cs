@@ -63,7 +63,7 @@ namespace AdminConsole
                 //data.majorButtonList = elements.CreateMajorButtons(data.s_majorList);
                 if(isConnected)
                 { 
-                    data.majorButtonList = elements.CreateMajorButtonsByCat(data.s_majorList, data.s_catList);
+                    data.majorButtonList = elements.CreateMajorButtonsByCat(data.s_majorList, data.s_catList, data.s_major);
                     data.profButtonList = elements.CreateProfButtons(data.s_professorList);
                     data.buildingButtonList = elements.CreateBuildingButtons(data.s_buildingList);
                 }

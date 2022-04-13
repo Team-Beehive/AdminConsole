@@ -220,7 +220,7 @@ namespace AdminConsole
             AppData.s_propertiesPanel.Children.Add(grid);*/
         }
 
-        public Grid CreateMajorButtonsByCat(Dictionary<string, MajorData> majors, LinkedList<MajorCategories> cats)
+        public Grid CreateMajorButtonsByCat(Dictionary<string, MajorData> majors, LinkedList<MajorCategories> cats, Majors majorFunc)
         {
             //copy major list
             //for each category
@@ -233,45 +233,58 @@ namespace AdminConsole
 
             m_util.ClearList();
             Grid grid = new Grid();
-            int btnPos = 0;
+            int expPos = 0;
             Dictionary<string, MajorData> unassignedMajors = new Dictionary<string, MajorData>(majors);
 
             foreach (MajorCategories cat in cats)
             {
                 List<Object> related = cat.relatedDegrees;
+                /*RowDefinition rd0 = new RowDefinition();
+                grid.RowDefinitions.Add(rd0);
+                TextBlock catTitle = new TextBlock();
+                catTitle.Text = cat.categoryTitle;
+                Grid.SetRow(catTitle, btnPos);
+                grid.Children.Add(catTitle);
+                btnPos++;*/
+
+                RowDefinition rde = new RowDefinition();
+                grid.RowDefinitions.Add(rde);
+                Expander categoryExp = new Expander();
+                categoryExp.Header = cat.categoryTitle;
+                Grid.SetRow(categoryExp, expPos);
+                grid.Children.Add(categoryExp);
+                expPos++;
+
+                //categoryExp.Content = new Grid();
+
+                Grid catGrid = new Grid();
+                int btnPos = 0;
+
                 foreach (DocumentReference doc in related)
                 {
-                    MajorData major = Majors.toMajorData(doc);
-                    /*MajorData major = null;
-                    //DocumentSnapshot snapDoc = await doc.GetSnapshotAsync();
-                    foreach (MajorData majorData in majors.Values)
-                    {
-                        //if (majorData.DocumentReferenceSelf.Id == doc)
-                        *//*if (doc.Equals(majorData.DocumentReferenceSelf))
-                        {
-                            major = majorData;
-                            break;
-                        }*//*
+                    MajorData major = majorFunc.toMajorData(doc);
 
-                    }*/
                     //foreach (MajorData major in degrees.Values)
                     //{
-                        RowDefinition rd = new RowDefinition();
-                        grid.RowDefinitions.Add(rd);
-                        string cleanName = m_util.cleanString(major.MajorName);
+                    RowDefinition rd = new RowDefinition();
+                    //grid.RowDefinitions.Add(rd);
+                    catGrid.RowDefinitions.Add(rd);
+                    string cleanName = m_util.cleanString(major.MajorName);
 
-                        MajorButton btn = new MajorButton();
-                        btn.major = major;
-                        btn.Content = major.MajorName;
-                        btn.Name = cleanName;
-                        btn.Click += m_events.ButtonPressPage;
-                        Grid.SetRow(btn, btnPos);
-                        grid.Children.Add(btn);
-                        btnPos++;
+                    MajorButton btn = new MajorButton();
+                    btn.major = major;
+                    btn.Content = major.MajorName;
+                    btn.Name = cleanName;
+                    btn.Click += m_events.ButtonPressPage;
+                    Grid.SetRow(btn, btnPos);
+                    catGrid.Children.Add(btn);
+                    btnPos++;
 
-                        unassignedMajors.Remove(major.MajorName);
+                    unassignedMajors.Remove(major.MajorName);
                     //}
                 }
+                categoryExp.Content = catGrid;
+
             }
 
 
@@ -300,7 +313,7 @@ namespace AdminConsole
             }*/
 
             //needs to be var because idk why
-            foreach (var major in unassignedMajors)
+            /*foreach (var major in unassignedMajors)
             {
                 RowDefinition rd = new RowDefinition();
                 grid.RowDefinitions.Add(rd);
@@ -314,7 +327,7 @@ namespace AdminConsole
                 Grid.SetRow(btn, btnPos);
                 grid.Children.Add(btn);
                 btnPos++;
-            }
+            }*/
 
             return grid;
         }
