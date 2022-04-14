@@ -16,6 +16,7 @@ using System.Diagnostics;
 using AdminDatabaseFramework;
 using System.Xaml;
 using Microsoft.Win32;
+using System.Resources;
 
 namespace AdminConsole
 {
@@ -48,12 +49,10 @@ namespace AdminConsole
             events.SetCreateElements(elements);
             isConnected = false;
             tb_status.Text = "";
-
         }
 
         private void ButtonPressOpen(object sender, EventArgs e)
         {
-            
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Filter = "Firebase credentials (JSON)|*.json";
             LoadingIndicator.Show();
@@ -61,13 +60,13 @@ namespace AdminConsole
             {
                 isConnected = util.SetDatabaseKey(openFile.FileName);
                 GetData(isConnected);
-                
             }
             if(isConnected)
             {
                 ell_ConnectionIndicator.Fill= new SolidColorBrush(Color.FromRgb(90, 245, 66));
                 ell_ConnectionIndicator.ToolTip = "Connected";
                 LoadingIndicator.Hide();
+                
             }    
             else
             {

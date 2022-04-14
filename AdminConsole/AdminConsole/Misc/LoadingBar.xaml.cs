@@ -21,12 +21,18 @@ namespace AdminConsole.Misc
     /// </summary>
     public partial class LoadingBar : UserControl
     {
+        /* Loading indicator
+         * 
+         * Show() | show indicator and begin animation
+         * Hide() } hide indicator
+         * 
+         */
         public LoadingBar()
         {
             InitializeComponent();
             Opacity = 0;
-            this.Height = 32;
-            this.Width = 32;
+            this.Height = 25;
+            this.Width = 25;
         }
         private void startAnimation()
         {

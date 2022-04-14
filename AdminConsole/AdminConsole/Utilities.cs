@@ -106,7 +106,7 @@ namespace AdminConsole
             {
                 try
                 {
-                    m_data.s_database = new Database("oit-kiosk", key);
+                    m_data.s_database = new Database(key);
                     //GetData();
                     success = true;
                 }

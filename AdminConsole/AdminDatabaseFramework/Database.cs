@@ -9,6 +9,9 @@ using Grpc.Auth;
 using Google.Cloud.Storage.V1;
 using Firebase.Auth;
 using Firebase.Database;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.IO;
 
 
 namespace AdminDatabaseFramework
@@ -27,9 +30,17 @@ namespace AdminDatabaseFramework
             AttemptConnection(envPath);
             Majors = new Majors(db);
             Buildings = new Buildings(db);
-            Professors = new Professors(db);    
+            Professors = new Professors(db);
         }
 
+        public Database(string envPath)
+        {
+            m_project = projectFromJson (envPath);
+            AttemptConnection(envPath);
+            Majors = new Majors (db);
+            Buildings = new Buildings(db);
+            Professors = new Professors(db);
+        }
         public void AttemptConnection(string path)
         {
             try
@@ -44,7 +55,7 @@ namespace AdminDatabaseFramework
                 throw new DatabaseException("Invalid Credentials", e);
             }
         }
-            
+
         public void UpdateConenction(string path)
         {
             AttemptConnection(path);
@@ -72,5 +83,23 @@ namespace AdminDatabaseFramework
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", envPath);
             updateProject(m_project);
         }
+
+        public string projectFromJson(string path)
+        {
+            string Json = File.ReadAllText(path);
+            JsonNode document = JsonNode.Parse(Json);
+            JsonNode root = document.Root;
+            try
+            {
+                return root["project_id"].AsValue().ToString();
+            }
+            catch(Exception e)
+            {
+                return "No Name";
+            }
+
+        }
+
     }
 }
+
