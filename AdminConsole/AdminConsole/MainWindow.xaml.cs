@@ -53,11 +53,12 @@ namespace AdminConsole
 
         private void ButtonPressOpen(object sender, EventArgs e)
         {
+            
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Filter = "Firebase credentials (JSON)|*.json";
+            LoadingIndicator.Show();
             if (openFile.ShowDialog() == true)
             {
-                ldb_fileBar.Show();
                 isConnected = util.SetDatabaseKey(openFile.FileName);
                 GetData(isConnected);
                 
@@ -66,11 +67,13 @@ namespace AdminConsole
             {
                 ell_ConnectionIndicator.Fill= new SolidColorBrush(Color.FromRgb(90, 245, 66));
                 ell_ConnectionIndicator.ToolTip = "Connected";
+                LoadingIndicator.Hide();
             }    
             else
             {
                 ell_ConnectionIndicator.Fill = new SolidColorBrush(Color.FromRgb(255, 0, 0));
                 ell_ConnectionIndicator.ToolTip = "Not Connected";
+                LoadingIndicator.Hide();
             }
         }
 

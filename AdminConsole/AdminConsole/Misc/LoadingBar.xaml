@@ -7,10 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Ellipse Fill="Red">
-            <Ellipse.Clip>
-                <RectangleGeometry  RadiusX="18.5" RadiusY="18.5" Rect="0,0,40,40" />
-            </Ellipse.Clip>
-        </Ellipse>
+        <Image Source="/Resources/LoadingSymbol.png" x:Name="LoadingBall"/>
     </Grid>
 </UserControl>

@@ -161,7 +161,7 @@
                             <Ellipse Grid.Column="1" x:Name="ell_ConnectionIndicator" HorizontalAlignment="Right" Width="20px" Height="20px" Fill="Red" Stroke="Gray" StrokeThickness="3px" ToolTipService.ToolTip="Not Connected"/>
                             <Button Grid.Column="2" Style="{StaticResource TopButtons}" Content="Open File" HorizontalAlignment="Center" Click="ButtonPressOpen"
                                 ToolTipService.ToolTip="Choose credientals file"/>
-                            <custom:LoadingBar Grid.Column="0" x:Name="ldb_fileBar"/>
+                            <custom:LoadingBar HorizontalAlignment="Right" x:Name="LoadingIndicator"/>
                         </Grid>
                     </Grid>
                 </Grid>

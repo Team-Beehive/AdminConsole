@@ -21,30 +21,34 @@ namespace AdminConsole.Misc
     /// </summary>
     public partial class LoadingBar : UserControl
     {
-        private Storyboard loadingBar;
-
         public LoadingBar()
         {
             InitializeComponent();
+            Opacity = 0;
+            this.Height = 32;
+            this.Width = 32;
         }
         private void startAnimation()
         {
             var Dot1 = new DoubleAnimation();
-            Dot1.From = 1.0;
-            Dot1.To = 0.0;
+            Dot1.From = 0;
+            Dot1.To = 360;
             Dot1.Duration = new Duration(TimeSpan.FromSeconds(1));
             Dot1.AutoReverse = true;
             Dot1.RepeatBehavior = RepeatBehavior.Forever;
-
-            loadingBar = new Storyboard();
-            loadingBar.Children.Add(Dot1);
-            Storyboard.SetTargetName(Dot1, ell_loadDot1.Name);
-            Storyboard.SetTargetProperty(Dot1, new PropertyPath(Ellipse.OpacityProperty));
-            ell_loadDot1.BeginAnimation(Ellipse.OpacityProperty, Dot1);
+            RotateTransform rt = new RotateTransform();
+            LoadingBall.RenderTransform = rt;
+            LoadingBall.RenderTransformOrigin = new Point(.5, .5);
+            rt.BeginAnimation(RotateTransform.AngleProperty, Dot1);
         }
         public void Show()
         {
+            Opacity = 1;
             startAnimation();
+        }
+        public void Hide()
+        {
+            Opacity = 0;
         }
 
     }
