@@ -56,8 +56,23 @@ namespace AdminConsole
 
         private void LoadDbFromSavedString()
         {
-            ResXResourceReader rsxr = new ResXResourceReader("Resources.resx");
-            IDictionaryEnumerator dict= rsxr.GetEnumerator();
+            ResXResourceReader rsxr;
+            IDictionaryEnumerator dict;
+            try
+            {
+                rsxr = new ResXResourceReader("Resources.resx");
+                dict = rsxr.GetEnumerator();
+            }
+            catch
+            {
+                using (ResXResourceWriter resx = new ResXResourceWriter(@".\Resources.resx"))
+                {
+                    resx.Generate();
+                    resx.Close();
+                }
+                rsxr = new ResXResourceReader("Resources.resx");
+                dict = rsxr.GetEnumerator();
+            }
             while (dict.MoveNext())
             {
                 if (dict.Key.ToString() == "EnvPath" && dict.Value != null)
@@ -114,6 +129,8 @@ namespace AdminConsole
                 using (ResXResourceWriter resx = new ResXResourceWriter(@".\Resources.resx"))
                 {
                     resx.AddResource("EnvPath", openFile.FileName);
+                    resx.Generate();
+                    resx.Close();
                 }
             }    
             else
