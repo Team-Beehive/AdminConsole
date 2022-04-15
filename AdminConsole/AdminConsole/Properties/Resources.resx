@@ -118,7 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EnvPath" xml:space="preserve">
-    <value />
-    <comment>user stored enviornemnt path, must have created connection</comment>
+    <value>F:\CSTCode\JP\Database\oit-kiosk-firebase-adminsdk-u24sq-8f7958c50f.json</value>
   </data>
 </root>
