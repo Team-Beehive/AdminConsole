@@ -16,6 +16,15 @@ namespace AdminConsole
      */
     public class AppData
     {
+        public struct changeMajorCat
+        {
+            public MajorCategories oldCat;
+            public MajorCategories newCat;
+            public MajorData major;
+        }
+
+        public List<changeMajorCat> catsToUpdate = new List<changeMajorCat>();
+
         public Database s_database;
 
         public Majors s_major; //= new Majors();

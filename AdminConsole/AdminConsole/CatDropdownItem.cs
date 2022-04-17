@@ -11,5 +11,6 @@ namespace AdminConsole
     class CatDropdownItem : ComboBoxItem
     {
         public MajorCategories cat { get; set; }
+        public int listIndedx { get; set; }
     }
 }

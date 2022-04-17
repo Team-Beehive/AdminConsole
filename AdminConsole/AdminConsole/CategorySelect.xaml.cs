@@ -40,13 +40,14 @@ namespace AdminConsole
                 ComboBox catBox = new ComboBox();
                 ComboBoxItem unselected = new ComboBoxItem();
                 unselected.Content = "Select category";
-                catBox.Items.Add(unselected);
-                catBox.SelectedItem = unselected;
+                //catBox.Items.Add(unselected);
+                //catBox.SelectedItem = unselected;
                 foreach (MajorCategories cat in m_data.s_catList)
                 {
                     CatDropdownItem catItem = new CatDropdownItem();
                     catItem.Content = cat.categoryTitle;
                     catItem.cat = cat;
+                    catItem.listIndedx = pos;
 
                     catBox.Items.Add(catItem);
                     if (cat.categoryTitle == catSet.categoryTitle)
@@ -54,6 +55,7 @@ namespace AdminConsole
                         catBox.SelectedItem = catItem;
                     }
                 }
+                catBox.SelectionChanged += SelectionChanged;
                 RowDefinition rd = new RowDefinition();
                 CatGrid.RowDefinitions.Add(rd);
                 Grid.SetRow(catBox, pos);
@@ -66,6 +68,20 @@ namespace AdminConsole
         {
             CatDropdownItem selected = sender as CatDropdownItem;
             selected.cat.relatedDegrees.Add(m_data.s_activeData);
+        }
+
+        private void SelectionChanged(object sender, EventArgs e)
+        {
+            AppData.changeMajorCat change = new AppData.changeMajorCat();
+            change.major = m_major;
+            ComboBox box = sender as ComboBox;
+            List<MajorCategories> catList = m_data.s_relatedCategories[m_major.MajorName];
+            CatDropdownItem selected = box.SelectedItem as CatDropdownItem;
+            change.oldCat = catList[selected.listIndedx];
+            catList.RemoveAt(selected.listIndedx);
+            catList.Insert(selected.listIndedx, selected.cat);
+            change.newCat = selected.cat;
+            m_data.catsToUpdate.Add(change);
         }
 
         private bool HasRelatedCategory()
