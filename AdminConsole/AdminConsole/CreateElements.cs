@@ -220,7 +220,8 @@ namespace AdminConsole
             AppData.s_propertiesPanel.Children.Add(grid);*/
         }
 
-        public Grid CreateMajorButtonsByCat(Dictionary<string, MajorData> majors, LinkedList<MajorCategories> cats, Majors majorFunc)
+        public Grid CreateMajorButtonsByCat(Dictionary<string, MajorData> majors, LinkedList<MajorCategories> cats, 
+            Majors majorFunc, Dictionary<string, List<MajorCategories>> relatedCat)
         {
             //copy major list
             //for each category
@@ -239,13 +240,7 @@ namespace AdminConsole
             foreach (MajorCategories cat in cats)
             {
                 List<Object> related = cat.relatedDegrees;
-                /*RowDefinition rd0 = new RowDefinition();
-                grid.RowDefinitions.Add(rd0);
-                TextBlock catTitle = new TextBlock();
-                catTitle.Text = cat.categoryTitle;
-                Grid.SetRow(catTitle, btnPos);
-                grid.Children.Add(catTitle);
-                btnPos++;*/
+                
 
                 RowDefinition rde = new RowDefinition();
                 grid.RowDefinitions.Add(rde);
@@ -264,8 +259,12 @@ namespace AdminConsole
                 {
                     MajorData major = majorFunc.toMajorData(doc);
 
-                    //foreach (MajorData major in degrees.Values)
-                    //{
+                    if (!relatedCat.ContainsKey(major.MajorName))
+                    {
+                        relatedCat.Add(major.MajorName, new List<MajorCategories>());
+                    }
+                    relatedCat[major.MajorName].Add(cat);
+                    
                     RowDefinition rd = new RowDefinition();
                     //grid.RowDefinitions.Add(rd);
                     catGrid.RowDefinitions.Add(rd);
@@ -281,36 +280,11 @@ namespace AdminConsole
                     btnPos++;
 
                     unassignedMajors.Remove(major.MajorName);
-                    //}
+                    
                 }
                 categoryExp.Content = catGrid;
 
             }
-
-
-            /*foreach (DocumentSnapshot doc in cats)
-            {
-                Dictionary<string, object> cat = doc.ToDictionary();
-                //TODO: add cat button for calapsing
-                
-                foreach (MajorData major in cat.Values)
-                {
-                    RowDefinition rd = new RowDefinition();
-                    grid.RowDefinitions.Add(rd);
-                    string cleanName = m_util.cleanString(major.MajorName);
-
-                    MajorButton btn = new MajorButton();
-                    btn.major = major;
-                    btn.Content = major.MajorName;
-                    btn.Name = cleanName;
-                    btn.Click += m_events.ButtonPressPage;
-                    Grid.SetRow(btn, btnPos);
-                    grid.Children.Add(btn);
-                    btnPos++;
-
-                    unassignedMajors.Remove(major.MajorName);
-                }
-            }*/
 
             //needs to be var because idk why
             /*foreach (var major in unassignedMajors)

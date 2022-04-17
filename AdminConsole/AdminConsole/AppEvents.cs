@@ -175,7 +175,7 @@ namespace AdminConsole
             m_data.s_major.UpdateLocal();
             m_data.s_activeData = page.major;
             m_util.SetPreview(new MajorPreviewControl(m_data, m_util));
-            m_util.SetProperties(new CategorySelect(m_data));
+            m_util.SetProperties(new CategorySelect(m_data, page.major));
 
             /*AppData.s_activeData = page.major;
             if (AppData.s_previewPanel.Children.Count > 1)

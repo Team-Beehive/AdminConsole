@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AdminConsole"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <ComboBox x:Name="CategoryDropdown"/>
+    <Grid x:Name="CatGrid">
+        <!--<ComboBox x:Name="CategoryDropdown"/>-->
     </Grid>
 </UserControl>
