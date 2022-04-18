@@ -102,7 +102,7 @@ namespace AdminDatabaseFramework
 
         public void AddMajorToCat(MajorCategories majorCategories, MajorData major)
         {
-            majorDatabase.AddMajorToCat(majorCategories.oldTitle, major);
+            majorDatabase.AddMajorToCat(majorCategories, major);
         }
 
         public void RemoveMajorFromCat(MajorCategories majorCategories, MajorData major)
