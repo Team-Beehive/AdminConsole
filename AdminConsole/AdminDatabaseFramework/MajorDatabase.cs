@@ -153,27 +153,15 @@ namespace AdminDatabaseFramework
             }
         }
 
-        private async Task db_AddMajorToCat(string catName, MajorData majorData)
+        private async Task db_AddMajorToCat(MajorCategories majorCat, MajorData majorData)
         {
             try
             {
                 DocumentReference docRef = db.Collection("pages").Document("Majors");
-                DocumentSnapshot document = await docRef.GetSnapshotAsync();
 
-                List<Dictionary<string, object>> categoryList = document.GetValue<List<Dictionary<string, object>>>("Categories");
-                foreach (Dictionary<string, object> category in categoryList)
-                {
-                    if (category["categoryTitle"].ToString() == catName)
-                    {
-                        (category["relatedDegrees"] as List<object>).Add(majorData.DocumentReferenceSelf);
-                    }
-                }
+                majorCat.relatedDegrees.Add(majorData.DocumentReferenceSelf);
 
-                Dictionary<string, object> categories = new Dictionary<string, object>()
-            {
-                {"Catagories", categoryList}
-            };
-                await docRef.UpdateAsync(categories);
+                await docRef.UpdateAsync(majorCat.ToDictionary);
             }
             catch
             {
@@ -296,9 +284,9 @@ namespace AdminDatabaseFramework
         {
             Task.Run(() => db_EditMajorCatagoryTitle(oldTitle, newTitle)).Wait();
         }
-        public void AddMajorToCat(string CatName, MajorData major)
+        public void AddMajorToCat(MajorCategories majorCategories, MajorData major)
         {
-            Task.Run(() => db_AddMajorToCat(CatName, major)).Wait();
+            Task.Run(() => db_AddMajorToCat(majorCategories, major)).Wait();
         }
 
         public void RemoveMajorFromCat(MajorCategories majorCategories, MajorData major)
