@@ -4,6 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Google.Cloud.Firestore;
+using Google.Cloud.Firestore.V1;
+using Grpc.Auth;
+using Google.Cloud.Storage.V1;
+using Firebase.Auth;
+using Firebase.Database;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.IO;
+
 
 namespace AdminDatabaseFramework
 {
@@ -17,20 +26,55 @@ namespace AdminDatabaseFramework
 
         public Database(string Project, string envPath)
         {
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", envPath);
-            db = FirestoreDb.Create(Project);
+            m_project = Project;
+            AttemptConnection(envPath);
             Majors = new Majors(db);
             Buildings = new Buildings(db);
             Professors = new Professors(db);
-            m_project = Project;
+        }
+
+        public Database(string envPath)
+        {
+            m_project = projectFromJson (envPath);
+            AttemptConnection(envPath);
+            Majors = new Majors (db);
+            Buildings = new Buildings(db);
+            Professors = new Professors(db);
+        }
+        public void AttemptConnection(string path)
+        {
+            try
+            {
+                Google.Apis.Auth.OAuth2.GoogleCredential cred = Google.Apis.Auth.OAuth2.GoogleCredential.FromFile(path);
+                FirestoreClientBuilder clientBuilder = new FirestoreClientBuilder();
+                clientBuilder.ChannelCredentials = cred.ToChannelCredentials();
+                db = FirestoreDb.Create(m_project, clientBuilder.Build());
+            }
+            catch (Exception e)
+            {
+                throw new DatabaseException("Invalid Credentials", e);
+            }
+        }
+
+        public void UpdateConenction(string path)
+        {
+            AttemptConnection(path);
+            updateProject(m_project);
         }
 
         public void updateProject(string project)
         {
-            db = FirestoreDb.Create(project);
-            Majors.updateDB(db);
-            Buildings.updateDB(db);
-            Professors.updateDB(db);
+            try
+            {
+                //Add in a call to Attempt connection that has a variable for the project.
+                Majors.updateDB(db);
+                Buildings.updateDB(db);
+                Professors.updateDB(db);
+            }
+            catch
+            {
+                throw new DatabaseException("Unable to connect to database with name " + project + " using provided credentials");
+            }
             m_project = project;
         }
 
@@ -39,5 +83,23 @@ namespace AdminDatabaseFramework
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", envPath);
             updateProject(m_project);
         }
+
+        public string projectFromJson(string path)
+        {
+            string Json = File.ReadAllText(path);
+            JsonNode document = JsonNode.Parse(Json);
+            JsonNode root = document.Root;
+            try
+            {
+                return root["project_id"].AsValue().ToString();
+            }
+            catch(Exception e)
+            {
+                return "No Name";
+            }
+
+        }
+
     }
 }
+

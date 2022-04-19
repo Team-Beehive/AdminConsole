@@ -23,7 +23,7 @@ namespace AdminConsole
         {
             InitializeComponent();
             //ErrorMessage.Text = ex.Message;
-            ErrorMessage.Text = ex.ToString();
+            ErrorMessage.Text = ex.Message;
         }
 
         private void AcceptButton_Click(object sender, RoutedEventArgs e)

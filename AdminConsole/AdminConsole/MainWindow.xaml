@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminConsole"
+        xmlns:custom="clr-namespace:AdminConsole.Misc"
         mc:Ignorable="d"
         WindowState="Maximized"
         Title="MainWindow" Height="450" Width="800">
@@ -151,7 +152,17 @@
                         <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource TopButtons}" Content="Majors" HorizontalAlignment="Center" Click="ButtonPressMajors"/>
                         <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Building" HorizontalAlignment="Center" Click="ButtonPressBuilding"/>
                         <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource TopButtons}" Content="Professor" HorizontalAlignment="Center" Click="ButtonPressProf"/>
-                        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource TopButtons}" Content="Open File" HorizontalAlignment="Center" Click="ButtonPressOpen"/>
+                        <Grid Grid.Row="0" Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width=".2*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Grid.Column="1" x:Name="ell_ConnectionIndicator" HorizontalAlignment="Right" Width="20px" Height="20px" Fill="Red" Stroke="Gray" StrokeThickness="3px" ToolTipService.ToolTip="Not Connected"/>
+                            <Button Grid.Column="2" Style="{StaticResource TopButtons}" Content="Open File" HorizontalAlignment="Center" Click="ButtonPressOpen"
+                                ToolTipService.ToolTip="Choose credientals file"/>
+                            <custom:LoadingBar HorizontalAlignment="Right" x:Name="LoadingIndicator"/>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Border>

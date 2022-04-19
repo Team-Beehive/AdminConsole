@@ -58,6 +58,7 @@ namespace AdminDatabaseFramework
     {
         private LinkedList<DocumentSnapshot> m_dataBaseRefs = new LinkedList<DocumentSnapshot>();
         private MajorDatabase majorDatabase;
+        private LinkedList<MajorData> m_localMajors = new LinkedList<MajorData>();
         public Majors(FirestoreDb m_db)
         {
             majorDatabase = new MajorDatabase(m_db);
@@ -143,6 +144,7 @@ namespace AdminDatabaseFramework
                     tempMajor.DocumentReferenceSelf = document.Reference;
                     datas.AddLast(tempMajor);
                 }
+                m_localMajors = datas;
                 return datas;
             }
             catch
