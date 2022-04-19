@@ -149,7 +149,7 @@ namespace AdminConsole
             foreach (AppData.changeMajorCat c in data.catsToUpdate)
             {
                 //data.s_major.RemoveMajorFromCat(c.oldCat, c.major);
-                data.s_major.AddMajorToCat(c.newCat, c.major);
+                //data.s_major.AddMajorToCat(c.newCat, c.major);
             }
 
             tb_status.Text = "Database Updated";
