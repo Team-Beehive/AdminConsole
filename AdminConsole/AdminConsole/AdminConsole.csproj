@@ -134,8 +134,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BuildingMenuItem.cs" />
-    <Compile Include="CatDropdownItem.cs" />
+    <Compile Include="Elements\BuildingMenuItem.cs" />
+    <Compile Include="Elements\CatDropdownItem.cs" />
     <Compile Include="CategorySelect.xaml.cs">
       <DependentUpon>CategorySelect.xaml</DependentUpon>
     </Compile>
@@ -148,15 +148,15 @@
     <Compile Include="Misc\LoadingBar.xaml.cs">
       <DependentUpon>LoadingBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProfessorButton.cs" />
+    <Compile Include="Elements\ProfessorButton.cs" />
     <Compile Include="ProfessorsPreviewControl.xaml.cs">
       <DependentUpon>ProfessorsPreviewControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProfMenuItem.cs" />
+    <Compile Include="Elements\ProfMenuItem.cs" />
     <Compile Include="ProfPropControl.xaml.cs">
       <DependentUpon>ProfPropControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BuildingButton.cs" />
+    <Compile Include="Elements\BuildingButton.cs" />
     <Compile Include="BuildingPreviewControl.xaml.cs">
       <DependentUpon>BuildingPreviewControl.xaml</DependentUpon>
     </Compile>
@@ -172,8 +172,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Compile Include="CatButton.cs" />
-    <Compile Include="MajorButton.cs" />
+    <Compile Include="Elements\CatButton.cs" />
+    <Compile Include="Elements\MajorButton.cs" />
     <Compile Include="MajorPreviewControl.xaml.cs">
       <DependentUpon>MajorPreviewControl.xaml</DependentUpon>
     </Compile>
@@ -277,6 +277,7 @@
   <ItemGroup>
     <Resource Include="Resources\LoadingSymbol.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Grpc.Core.2.42.0\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.2.42.0\build\net45\Grpc.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
