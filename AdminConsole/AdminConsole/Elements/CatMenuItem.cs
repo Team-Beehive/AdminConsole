@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using AdminDatabaseFramework;
 
-namespace AdminConsole.Elements
+namespace AdminConsole
 {
     class CatMenuItem : MenuItem
     {

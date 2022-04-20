@@ -58,6 +58,16 @@ namespace AdminConsole
             AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());*/
 
         }
+
+        public void ContextItemRemoveCat(object sender, EventArgs e)
+        {
+            CatMenuItem temp = sender as CatMenuItem;
+            m_data.s_major.DeleteMajorCategory(temp.data);
+            m_data.s_catList.Remove(temp.data);
+            m_util.ClearList();
+            m_elements.AddCatButtons(m_data.s_catList);
+        }
+
         public void ButtonPressAddBuilding(object sender, EventArgs e)
         {
             BuildingButton temp = sender as BuildingButton;

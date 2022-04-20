@@ -140,6 +140,15 @@ namespace AdminConsole
                 btn.Name = cleanName;
                 btn.Click += m_events.ButtonPressCatProp;
 
+                ContextMenu deleteMenu = new ContextMenu();
+                CatMenuItem deleteItem = new CatMenuItem();
+                deleteItem.data = cat;
+                //deleteItem.Click +=;
+                deleteItem.Header = "Delete";
+                deleteMenu.Items.Add(deleteItem);
+
+                btn.ContextMenu = deleteMenu;
+
                 Grid.SetRow(btn, btnPos);
                 grid.Children.Add(btn);
                 btnPos++;
