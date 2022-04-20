@@ -20,11 +20,12 @@ namespace AdminConsole
     {
         private Utilities m_util;
         private AppEvents m_events;
-        //private AppData m_data;
+        private AppData m_data;
         
-        public CreateElements(Utilities util) 
+        public CreateElements(Utilities util, AppData data) 
         {
             m_util = util;
+            m_data = data;
         }
         public void SetEvents(AppEvents events)
         {
@@ -195,7 +196,7 @@ namespace AdminConsole
                 AppData.s_propertiesPanel.Children.RemoveAt(1);
             }*/
 
-            m_util.SetProperties(new CatProp());
+            m_util.SetProperties(new CatProp(m_util, m_data));
 
             /*Grid grid = new Grid();
             RowDefinition rd0 = new RowDefinition();

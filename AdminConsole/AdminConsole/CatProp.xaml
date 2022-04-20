@@ -15,8 +15,8 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.ColumnSpan="2" Width="100"/>
+        <TextBox x:Name="CatName" Grid.ColumnSpan="2" Width="100"/>
         <Button Content="Submit" Grid.Row="1" Grid.Column="0"/>
-        <Button Content="Cancel" Grid.Row="1" Grid.Column="1"/>
+        <Button Content="Cancel" Click="Cancel" Grid.Row="1" Grid.Column="1"/>
     </Grid>
 </UserControl>

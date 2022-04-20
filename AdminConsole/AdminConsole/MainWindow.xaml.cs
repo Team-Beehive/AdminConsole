@@ -45,7 +45,7 @@ namespace AdminConsole
             InitializeComponent();
             data = new AppData();
             util = new Utilities(Preview, Properties, PageSelect, data);
-            elements = new CreateElements(util);
+            elements = new CreateElements(util, data);
             events = new AppEvents(data, util);
             elements.SetEvents(events);
             events.SetCreateElements(elements);

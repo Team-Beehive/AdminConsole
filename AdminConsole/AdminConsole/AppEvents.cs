@@ -105,7 +105,7 @@ namespace AdminConsole
         public void ButtonPressNewCat(object sender, EventArgs e)
         {
             m_util.ClearProperties();
-            m_util.SetProperties(new CatProp());
+            m_util.SetProperties(new CatProp(m_util, m_data));
             /*if (AppData.s_propertiesPanel.Children.Count > 1)
             {
                 AppData.s_propertiesPanel.Children.RemoveAt(1);
@@ -149,7 +149,7 @@ namespace AdminConsole
         {
             CatButton temp = sender as CatButton;
             m_data.s_activeCat = temp.category;
-            m_util.SetProperties(new CatProp());
+            m_util.SetProperties(new CatProp(m_util, m_data));
             /*AppData.s_activeCat = temp.category;
             CreateElements.AddCatProp();
             AppData.s_properties.Text = temp.category.categoryTitle;*/

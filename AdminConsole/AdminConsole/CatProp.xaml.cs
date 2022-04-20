@@ -20,9 +20,27 @@ namespace AdminConsole
     /// </summary>
     public partial class CatProp : UserControl
     {
-        public CatProp()
+        Utilities m_util;
+        AppData m_data;
+        public CatProp(Utilities util, AppData data)
         {
+            m_util = util;
+            m_data = data;
             InitializeComponent();
+        }
+
+        private void Submit(object sender, EventArgs e)
+        {
+            string name = CatName.Text;
+            if (name != "")
+            {
+                m_data.s_major.CreateMajorCategory(name);
+            }
+        }
+
+        private void Cancel(object sender, EventArgs e)
+        {
+            m_util.ClearProperties();
         }
     }
 }
