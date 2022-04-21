@@ -265,32 +265,35 @@ namespace AdminConsole
                 Grid catGrid = new Grid();
                 int btnPos = 0;
 
-                foreach (DocumentReference doc in related)
-                {
-                    MajorData major = majorFunc.toMajorData(doc);
-
-                    if (!relatedCat.ContainsKey(major.MajorName))
+                if (related != null)
+                { 
+                    foreach (DocumentReference doc in related)
                     {
-                        relatedCat.Add(major.MajorName, new List<MajorCategories>());
+                        MajorData major = majorFunc.toMajorData(doc);
+
+                        if (!relatedCat.ContainsKey(major.MajorName))
+                        {
+                            relatedCat.Add(major.MajorName, new List<MajorCategories>());
+                        }
+                        relatedCat[major.MajorName].Add(cat);
+                        
+                        RowDefinition rd = new RowDefinition();
+                        //grid.RowDefinitions.Add(rd);
+                        catGrid.RowDefinitions.Add(rd);
+                        string cleanName = m_util.cleanString(major.MajorName);
+
+                        MajorButton btn = new MajorButton();
+                        btn.major = major;
+                        btn.Content = major.MajorName;
+                        btn.Name = cleanName;
+                        btn.Click += m_events.ButtonPressPage;
+                        Grid.SetRow(btn, btnPos);
+                        catGrid.Children.Add(btn);
+                        btnPos++;
+
+                        unassignedMajors.Remove(major.MajorName);
+                        
                     }
-                    relatedCat[major.MajorName].Add(cat);
-                    
-                    RowDefinition rd = new RowDefinition();
-                    //grid.RowDefinitions.Add(rd);
-                    catGrid.RowDefinitions.Add(rd);
-                    string cleanName = m_util.cleanString(major.MajorName);
-
-                    MajorButton btn = new MajorButton();
-                    btn.major = major;
-                    btn.Content = major.MajorName;
-                    btn.Name = cleanName;
-                    btn.Click += m_events.ButtonPressPage;
-                    Grid.SetRow(btn, btnPos);
-                    catGrid.Children.Add(btn);
-                    btnPos++;
-
-                    unassignedMajors.Remove(major.MajorName);
-                    
                 }
                 categoryExp.Content = catGrid;
 

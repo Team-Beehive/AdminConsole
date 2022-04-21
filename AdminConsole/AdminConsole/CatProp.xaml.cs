@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AdminDatabaseFramework;
 
 namespace AdminConsole
 {
@@ -35,6 +36,16 @@ namespace AdminConsole
             if (name != "")
             {
                 m_data.s_major.CreateMajorCategory(name);
+                
+                //Find newley added cat and init list
+                LinkedList<MajorCategories> travel = m_data.s_major.GetCategories();
+                foreach (MajorCategories cat in travel)
+                {
+                    if (cat.categoryTitle == name)
+                    {
+                        cat.relatedDegrees = new List<object>();
+                    }
+                }
             }
         }
 
