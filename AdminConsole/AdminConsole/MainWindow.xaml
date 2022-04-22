@@ -43,6 +43,8 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="25,0,0,0"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="true">
                     <Setter Property="Foreground" Value="Black"/>
@@ -55,6 +57,8 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="50,0,0,0"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="true">
                     <Setter Property="Foreground" Value="Black"/>
@@ -67,6 +71,8 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="25,0,0,0"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="true">
                     <Setter Property="Foreground" Value="Black"/>
@@ -79,6 +85,8 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="25,0,0,0"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="true">
                     <Setter Property="Foreground" Value="Black"/>
@@ -88,6 +96,11 @@
         <Style TargetType="Border" x:Key="PanelStyle">
             <Setter Property="Background" Value="Gray"/>
             <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+        <Style TargetType="Expander">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Tahoma"/>
         </Style>
     </Window.Resources>
     <!--Grid is 2 rows and 3 collums | Row 1: tool bar, Row 2: Stuff | Col 1: Page select, Col 2: preview, Col 3: properties-->

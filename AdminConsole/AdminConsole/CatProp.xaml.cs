@@ -44,6 +44,7 @@ namespace AdminConsole
                     if (cat.categoryTitle == name)
                     {
                         cat.relatedDegrees = new List<object>();
+                        //TODO: run update on category
                     }
                 }
             }
