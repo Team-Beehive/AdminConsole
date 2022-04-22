@@ -78,7 +78,8 @@ namespace AdminConsole
             m_util.ClearList();
             m_data.buildingButtonList = m_elements.CreateBuildingButtons(m_data.s_buildingList);
             m_util.SetList(m_data.buildingButtonList);
-            m_data.s_building.CreateBuilding(temp.data);
+            m_data.s_addedBuildingList.Add(temp.data);
+            //m_data.s_building.CreateBuilding(temp.data);
             /*AppData.s_activeBuilding = temp.data;
             if (AppData.s_previewPanel.Children.Count > 1)
             {

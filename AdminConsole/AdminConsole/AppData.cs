@@ -43,6 +43,8 @@ namespace AdminConsole
         public List<ProfessorData> s_changedProf = new List<ProfessorData>();
         public List<BuildingData> s_changedBuildingList = new List<BuildingData>();
 
+        public List<BuildingData> s_addedBuildingList = new List<BuildingData>();
+
         public MajorData s_activeData;
         public ProfessorData s_activeProfessor;
         public BuildingData s_activeBuilding;

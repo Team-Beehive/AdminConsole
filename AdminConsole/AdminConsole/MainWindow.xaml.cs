@@ -203,14 +203,20 @@ namespace AdminConsole
 
             //Utilities.VolitileSave();
             //util.UploadData();
-
+            foreach (BuildingData b in data.s_addedBuildingList)
+            {
+                data.s_building.CreateBuilding(b);
+            }
             foreach (ProfessorData p in data.s_changedProf)
             {
                 data.s_professors.UpdateProfessor(p);
             }
             foreach (BuildingData b in data.s_changedBuildingList)
             {
-                data.s_building.UpdateBuilding(b);
+                if (!data.s_addedBuildingList.Contains(b))
+                { 
+                    data.s_building.UpdateBuilding(b);
+                }
             }
             foreach (MajorData m in data.s_changedList)
             {
