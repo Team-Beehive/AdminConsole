@@ -144,6 +144,7 @@ namespace AdminDatabaseFramework
                     DocumentReference buildingRef = db.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.oldName);
                     await buildingRef.DeleteAsync();
                     Task.Run(async () => await db_CreateBuilding(buildingData)).Wait();
+                    buildingData.oldName = buildingData.BuildingName;
                 }
                 else if (buildingData.BuildingName == buildingData.oldName && buildingData.BuildingName != null)
                 {

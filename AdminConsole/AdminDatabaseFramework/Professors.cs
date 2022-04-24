@@ -72,6 +72,7 @@ namespace AdminDatabaseFramework
                     DocumentReference documentReference = db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.oldTitle);
                     await documentReference.DeleteAsync();
                     Task.Run(() => db_CreateProfessor(professor)).Wait();
+                    professor.oldTitle = professor.professorName;
                 }
                 else
                 {
