@@ -158,10 +158,21 @@ namespace AdminDatabaseFramework
             try
             {
                 DocumentReference docRef = db.Collection("pages").Document("Majors");
+                DocumentSnapshot doc = await docRef.GetSnapshotAsync();
+                
+                List<Dictionary<string, object>> categoryList = doc.GetValue<List<Dictionary<string, object>>>("Categories");
+                foreach (Dictionary<string, object> category in categoryList)
+                {
+                    if (category["categoryTitle"].ToString() == majorCat.categoryTitle)
+                    {
+                        if (!IsRefInList((category["relatedDegrees"] as List<object>), majorData))
+                        {
+                            (category["relatedDegrees"] as List<object>).Add(majorData.DocumentReferenceSelf);
+                        }
+                    }
+                }
 
-                majorCat.relatedDegrees.Add(majorData.DocumentReferenceSelf);
-
-                await docRef.UpdateAsync(majorCat.ToDictionary);
+                await docRef.UpdateAsync(dictListToDict(categoryList, "Categories"));
             }
             catch
             {
@@ -339,6 +350,16 @@ namespace AdminDatabaseFramework
                 {listName, list}
             };
             return categories;
+        }
+
+        private static bool IsRefInList(List<object> objList, MajorData data)
+        {
+            List<string> list = new List<string>();
+            foreach (object obj in objList)
+            {
+                list.Add((obj as DocumentReference).Id);
+            }
+            return list.Contains(data.DocumentReferenceSelf.Id);
         }
 
     }

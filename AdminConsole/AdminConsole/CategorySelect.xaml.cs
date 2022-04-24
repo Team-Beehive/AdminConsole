@@ -77,6 +77,7 @@ namespace AdminConsole
             ComboBox box = sender as ComboBox;
             List<MajorCategories> catList = m_data.s_relatedCategories[m_major.MajorName];
             CatDropdownItem selected = box.SelectedItem as CatDropdownItem;
+            m_data.s_database.Majors.AddMajorToCat(selected.cat, m_major);
             change.oldCat = catList[selected.listIndedx];
             catList.RemoveAt(selected.listIndedx);
             catList.Insert(selected.listIndedx, selected.cat);
