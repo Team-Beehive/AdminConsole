@@ -199,28 +199,66 @@ namespace AdminConsole
         //Upload the updated information to the database
         private void ButtonPressExport(object sender, EventArgs e)
         {
-            tb_status.Text = "";
+            tb_status.Text = " ";
+
+            string errorMsg = "";
+            string title = "Upload Error";
+            MessageBoxButton button = MessageBoxButton.OK;
+            MessageBoxImage icon = MessageBoxImage.Error;
+            MessageBoxResult result;
 
             //Utilities.VolitileSave();
             //util.UploadData();
             foreach (BuildingData b in data.s_addedBuildingList)
             {
-                data.s_building.CreateBuilding(b);
+                try
+                {
+                    data.s_building.CreateBuilding(b);
+                }
+                catch (Exception ex)
+                {
+                    errorMsg = "There was an issue updating building data";
+                    result = MessageBox.Show(errorMsg, title, button, icon);
+                }
             }
             foreach (ProfessorData p in data.s_changedProf)
             {
-                data.s_professors.UpdateProfessor(p);
+                try
+                {
+                    data.s_professors.UpdateProfessor(p);
+                }
+                catch (Exception ex)
+                {
+                    errorMsg = "There was an issue updating professor data";
+                    result = MessageBox.Show(errorMsg, title, button, icon);
+                }
             }
             foreach (BuildingData b in data.s_changedBuildingList)
             {
                 if (!data.s_addedBuildingList.Contains(b))
-                { 
-                    data.s_building.UpdateBuilding(b);
+                {
+                    try
+                    {
+                        data.s_building.UpdateBuilding(b);
+                    }
+                    catch (Exception ex)
+                    {
+                        errorMsg = "There was an issue adding building data";
+                        result = MessageBox.Show(errorMsg, title, button, icon);
+                    }
                 }
             }
             foreach (MajorData m in data.s_changedList)
             {
-                data.s_major.EditMajor(m);
+                try
+                {
+                    data.s_major.EditMajor(m);
+                }
+                catch (Exception ex)
+                {
+                    errorMsg = "There was an issue updating major data";
+                    result = MessageBox.Show(errorMsg, title, button, icon);
+                }
             }
             foreach (AppData.changeMajorCat c in data.catsToUpdate)
             {

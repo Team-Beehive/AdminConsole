@@ -49,7 +49,7 @@ namespace AdminConsole
             Binding b_name = new Binding("professorName");
             b_name.Source = m_data.s_activeProfessor;
             //b_name.Source = AppData.s_activeProfessor;
-            //BindingOperations.SetBinding(professorName, TextBlock.TextProperty, b_name);
+            BindingOperations.SetBinding(professorName, Label.ContentProperty, b_name);
 
             Binding b_dep = new Binding("professorDepartment");
             b_dep.Source = m_data.s_activeProfessor;
