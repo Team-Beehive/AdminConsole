@@ -63,7 +63,12 @@ namespace AdminDatabaseFramework
             Task.Run(() => db_RemoveProfessor(professor)).Wait();
         }
 
-        public async void UpdateProfessor(ProfessorData professor)
+        public void UpdateProfessor(ProfessorData professor)
+        {
+            Task.Run(() => db_UpdateProfessor(professor)).Wait();
+        }
+
+        private async Task db_UpdateProfessor(ProfessorData professor)
         {
             try
             {
@@ -74,6 +79,10 @@ namespace AdminDatabaseFramework
                     Task.Run(() => db_CreateProfessor(professor)).Wait();
                     professor.oldTitle = professor.professorName;
                 }
+                else if (professor.professorName == professor.oldTitle)
+                {
+                    await db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.professorName).UpdateAsync(professor.ToDictionary());
+                }
                 else
                 {
                     await db.Collection("pages").Document("Professors").Collection("Professors").Document(professor.professorName).CreateAsync(professor.ToDictionary());
@@ -83,9 +92,7 @@ namespace AdminDatabaseFramework
             {
                 throw new DatabaseException("Could not update professor");
             }
-
         }
-
         private async Task<LinkedList<ProfessorData>> db_GetProfessors()
         {
             try

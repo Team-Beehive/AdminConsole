@@ -78,6 +78,30 @@ namespace AdminDatabaseFramework
         {
             try
             {
+
+                if (major.MajorName != major.OldName)
+                {
+                    DocumentReference documentReference = db.Collection("pages").Document("Majors").Collection("Degrees").Document(major.OldName);
+                    await documentReference.DeleteAsync();
+                    Task.Run(() => db_CreateMajor(major)).Wait();
+                    major.MajorName = major.OldName;
+                }
+                else if (major.MajorName == major.OldName)
+                {
+                    await db.Collection("pages").Document("Majors").Collection("Degrees").Document(major.MajorName).UpdateAsync(major.ToDictionary);
+                }
+                else
+                {
+                    await db.Collection("pages").Document("Majors").Collection("Degrees").Document(major.MajorName).SetAsync(major.ToDictionary);
+                }
+            }
+            catch
+            {
+                throw new DatabaseException("Could not update major");
+            }
+
+            /*try
+            {
                 DocumentReference docRef = db.Collection("pages").Document("Majors").Collection("Degrees").Document(major.MajorName);
                 Dictionary<string, object> majorDict = new Dictionary<string, object>
             {
@@ -90,6 +114,19 @@ namespace AdminDatabaseFramework
             catch
             {
                 throw new DatabaseException("Major Data Edit could not complete");
+            }*/
+        }
+
+        private async Task db_CreateMajor(MajorData major)
+        {
+            try
+            {
+                DocumentReference document = db.Collection("pages").Document("Majors").Collection("Degrees").Document(major.MajorName);
+                await document.SetAsync(major.ToDictionary);
+            }
+            catch
+            {
+                throw new DatabaseException("Could not create major");
             }
         }
 

@@ -73,17 +73,6 @@ namespace AdminDatabaseFramework
         public void EditMajor(MajorData major)
         {
             majorDatabase.EditMajorData(major);
-
-            if (major.MajorName != major.OldName)
-            {
-                string temp = major.OldName;
-                major.OldName = major.MajorName;
-                majorDatabase.EditMajorName(major, temp);
-            }
-            else
-            {
-                majorDatabase.EditMajorData(major);
-            }
         }
 
         public void EditMajor(MajorData major, string oldName)
