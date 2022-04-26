@@ -228,13 +228,13 @@ namespace AdminConsole
                     result = MessageBox.Show(errorMsg, title, button, icon);
                 }
             }
-            foreach (MajorData m in data.s_addedMajorList)
+            /*foreach (MajorData m in data.s_addedMajorList)
             {
-                /*try
+                *//*try
                 {
                     
-                }*/
-            }
+                }*//*
+            }*/
             foreach (ProfessorData p in data.s_changedProf)
             {
                 try

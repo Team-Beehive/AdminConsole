@@ -324,6 +324,7 @@ namespace AdminConsole
                     btnPos++;
                 }
                 unassigned.Content = unGrid;
+                grid.Children.Add(unassigned);
             }
 
             grid.RowDefinitions.Add(new RowDefinition());
