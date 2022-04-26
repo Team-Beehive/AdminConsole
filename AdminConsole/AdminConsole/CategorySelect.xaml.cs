@@ -50,9 +50,12 @@ namespace AdminConsole
                     catItem.listIndedx = pos;
 
                     catBox.Items.Add(catItem);
-                    if (cat.categoryTitle == catSet.categoryTitle)
-                    {
-                        catBox.SelectedItem = catItem;
+                    if (cat.categoryTitle != null)
+                    { 
+                        if (cat.categoryTitle == catSet.categoryTitle)
+                        {
+                            catBox.SelectedItem = catItem;
+                        }
                     }
                 }
                 catBox.SelectionChanged += SelectionChanged;

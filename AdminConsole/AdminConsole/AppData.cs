@@ -44,6 +44,7 @@ namespace AdminConsole
         public List<BuildingData> s_changedBuildingList = new List<BuildingData>();
 
         public List<BuildingData> s_addedBuildingList = new List<BuildingData>();
+        public List<MajorData> s_addedMajorList = new List<MajorData>();
 
         public MajorData s_activeData;
         public ProfessorData s_activeProfessor;

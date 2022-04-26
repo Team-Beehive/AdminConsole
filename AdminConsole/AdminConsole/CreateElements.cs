@@ -299,6 +299,44 @@ namespace AdminConsole
 
             }
 
+            if (unassignedMajors.Count != 0)
+            {
+                grid.RowDefinitions.Add(new RowDefinition());
+                Expander unassigned = new Expander();
+                unassigned.Header = "Unassigned";
+                Grid.SetRow(unassigned, expPos);
+                expPos++;
+
+                Grid unGrid = new Grid();
+                int btnPos = 0;
+                foreach (MajorData major in unassignedMajors.Values)
+                {
+                    unGrid.RowDefinitions.Add(new RowDefinition());
+                    string cleanName = m_util.cleanString(major.MajorName);
+
+                    MajorButton btn = new MajorButton();
+                    btn.major = major;
+                    btn.Content = major.MajorName;
+                    btn.Name = cleanName;
+                    btn.Click += m_events.ButtonPressPage;
+                    Grid.SetRow(btn, btnPos);
+                    unGrid.Children.Add(btn);
+                    btnPos++;
+                }
+                unassigned.Content = unGrid;
+            }
+
+            grid.RowDefinitions.Add(new RowDefinition());
+            MajorButton add = new MajorButton();
+            add.Content = "Add Major";
+            add.Name = "add";
+            add.major = m_util.NewMajor();
+            add.Click += m_events.ButtonPressAddMajor;
+            Grid.SetRow(add, expPos);
+            grid.Children.Add(add);
+
+
+
             //needs to be var because idk why
             /*foreach (var major in unassignedMajors)
             {

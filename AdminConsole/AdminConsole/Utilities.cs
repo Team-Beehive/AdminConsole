@@ -81,6 +81,25 @@ namespace AdminConsole
 
             return temp;
         }
+        
+        public MajorData NewMajor()
+        {
+            MajorData temp = new MajorData();
+            temp.MajorName = "New Major";
+            temp.type = new List<string>();
+            temp.type.Add("Set Type");
+            temp.Classes = new List<string>();
+            temp.Classes.Add("Set Class");
+            temp.Professors = new List<string>();
+            temp.Professors.Add("Set Professors");
+            temp.campuses = new List<string>();
+            temp.campuses.Add("Set Campuses");
+            temp.about = new List<string>();
+            temp.about.Add("Set About");
+
+            return temp;
+        }
+
         public ProfessorData NewProf()
         {
             ProfessorData temp = new ProfessorData();

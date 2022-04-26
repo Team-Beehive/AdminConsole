@@ -68,6 +68,19 @@ namespace AdminConsole
             m_elements.AddCatButtons(m_data.s_catList);
         }
 
+        public void ButtonPressAddMajor(object sender, EventArgs e)
+        {
+            MajorButton temp = sender as MajorButton;
+            m_data.s_activeData = temp.major;
+            m_util.ClearPreview();
+            m_util.SetPreview(new MajorPreviewControl(m_data, m_util));
+            m_data.s_majorList.Add(temp.major.MajorName, temp.major);
+            m_util.ClearList();
+            m_data.majorButtonList = m_elements.CreateMajorButtonsByCat(m_data.s_majorList, m_data.s_catList, m_data.s_major, m_data.s_relatedCategories);
+            m_util.SetList(m_data.majorButtonList);
+            m_data.s_addedMajorList.Add(temp.major);
+        }
+
         public void ButtonPressAddBuilding(object sender, EventArgs e)
         {
             BuildingButton temp = sender as BuildingButton;

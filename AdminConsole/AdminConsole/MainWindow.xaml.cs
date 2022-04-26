@@ -91,8 +91,15 @@ namespace AdminConsole
                             resx.Generate();
                             resx.Close();
                         }
-                        ErrorWindow error = new ErrorWindow(new DatabaseException("Saved credentials did failed, please upload new credentials"));
-                        error.Show();
+                        //ErrorWindow error = new ErrorWindow(new DatabaseException("Saved credentials did failed, please upload new credentials"));
+                        //error.Show();
+                        string errorMsg = "Saved credentials did failed, please upload new credentials";
+                        string title = "Credentials Error";
+                        MessageBoxButton button = MessageBoxButton.OK;
+                        MessageBoxImage icon = MessageBoxImage.Error;
+                        MessageBoxResult result;
+                        result = MessageBox.Show(errorMsg, title, button, icon);
+
                     }
 
                     if (isConnected)
@@ -221,6 +228,13 @@ namespace AdminConsole
                     result = MessageBox.Show(errorMsg, title, button, icon);
                 }
             }
+            foreach (MajorData m in data.s_addedMajorList)
+            {
+                /*try
+                {
+                    
+                }*/
+            }
             foreach (ProfessorData p in data.s_changedProf)
             {
                 try
@@ -243,21 +257,25 @@ namespace AdminConsole
                     }
                     catch (Exception ex)
                     {
-                        errorMsg = "There was an issue adding building data";
+                        
+                        errorMsg = "There was an issue adding building data\n" + ex.Message;
                         result = MessageBox.Show(errorMsg, title, button, icon);
                     }
                 }
             }
             foreach (MajorData m in data.s_changedList)
             {
-                try
-                {
-                    data.s_major.EditMajor(m);
-                }
-                catch (Exception ex)
-                {
-                    errorMsg = "There was an issue updating major data";
-                    result = MessageBox.Show(errorMsg, title, button, icon);
+                if (!data.s_addedMajorList.Contains(m))
+                { 
+                    try
+                    {
+                        data.s_major.EditMajor(m);
+                    }
+                    catch (Exception ex)
+                    {
+                        errorMsg = "There was an issue updating major data";
+                        result = MessageBox.Show(errorMsg, title, button, icon);
+                    }
                 }
             }
             foreach (AppData.changeMajorCat c in data.catsToUpdate)
