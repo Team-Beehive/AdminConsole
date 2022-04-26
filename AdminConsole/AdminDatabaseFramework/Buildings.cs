@@ -152,12 +152,12 @@ namespace AdminDatabaseFramework
                 }
                 else
                 {
-                    throw new Exception("BuildingName not set, cannot delete document");
+                    await db.Collection("pages").Document("Map").Collection("Buildings").Document(buildingData.BuildingName).SetAsync(buildingData.ToDictionary());
                 }
             }
             catch
             {
-                throw new DatabaseException("Unable to update building");
+                throw new  DatabaseException("Unable to update building");
             }
             
         }

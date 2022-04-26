@@ -17,6 +17,19 @@ namespace AdminDatabaseFramework
 
         public DocumentReference DocumentReferenceSelf { get; set; }
 
+        public Dictionary<string, object> ToDictionary
+        {
+            get
+            {
+                return new Dictionary<string, object>()
+                {
+                    {"about", about },
+                    {"campuses", campuses },
+                    {"type", type }
+                };
+            }
+        }
+
     }
 
     public class MajorCategories
