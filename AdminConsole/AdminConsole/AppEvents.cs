@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Diagnostics;
 using AdminDatabaseFramework;
+using AdminConsole.Elements;
 
 namespace AdminConsole
 {
@@ -56,7 +57,17 @@ namespace AdminConsole
             AppData.s_listPanel.Children.RemoveAt(1);
             AppData.s_previewPanel.Children.RemoveAt(1);
             AppData.s_listPanel.Children.Add(CreateElements.CreateProfButtons());*/
+        }
 
+        public void ContextItemRemoveMajor(object sender, EventArgs e)
+        {
+            MajorMenuItem temp = sender as MajorMenuItem;
+            m_data.s_major.DeleteMajor(temp.major);
+            m_data.s_majorList.Remove(temp.major.MajorName);
+            m_util.ClearList();
+            m_util.ClearPreview();
+            m_data.majorButtonList = m_elements.CreateMajorButtonsByCat(m_data.s_majorList, m_data.s_catList, m_data.s_major, m_data.s_relatedCategories);
+            m_util.SetList(m_data.majorButtonList);
         }
 
         public void ContextItemRemoveCat(object sender, EventArgs e)

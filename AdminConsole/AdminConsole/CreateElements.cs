@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using AdminConsole.Elements;
 using AdminDatabaseFramework;
 using Google.Cloud.Firestore;
 
@@ -287,6 +288,15 @@ namespace AdminConsole
                         btn.Content = major.MajorName;
                         btn.Name = cleanName;
                         btn.Click += m_events.ButtonPressPage;
+
+                        ContextMenu deleteMenu = new ContextMenu();
+                        MajorMenuItem deleteItem = new MajorMenuItem();
+                        deleteItem.major = major;
+                        deleteItem.Click += m_events.ContextItemRemoveMajor;
+                        deleteItem.Header = "Delete";
+                        deleteMenu.Items.Add(deleteItem);
+                        btn.ContextMenu = deleteMenu;
+
                         Grid.SetRow(btn, btnPos);
                         catGrid.Children.Add(btn);
                         btnPos++;
@@ -319,6 +329,15 @@ namespace AdminConsole
                     btn.Content = major.MajorName;
                     btn.Name = cleanName;
                     btn.Click += m_events.ButtonPressPage;
+
+                    ContextMenu deleteMenu = new ContextMenu();
+                    MajorMenuItem deleteItem = new MajorMenuItem();
+                    deleteItem.major = major;
+                    deleteItem.Click += m_events.ContextItemRemoveMajor;
+                    deleteItem.Header = "Delete";
+                    deleteMenu.Items.Add(deleteItem);
+                    btn.ContextMenu = deleteMenu;
+
                     Grid.SetRow(btn, btnPos);
                     unGrid.Children.Add(btn);
                     btnPos++;
