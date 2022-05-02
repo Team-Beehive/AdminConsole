@@ -40,6 +40,7 @@ namespace AdminConsole
                 AppData.s_propertiesPanel.Children.RemoveAt(1);
             }*/
             //m_util.ClearProperties();
+            m_util.ClearPropertiesKeepCat();
             Label lElement = sender as Label;
             TextBlock tbElement = sender as TextBlock;
             if (lElement != null)

@@ -46,6 +46,16 @@ namespace AdminConsole
                 }
             }
         }
+        public void ClearPropertiesKeepCat()
+        {
+            if (m_properties.Children.Count > 2)
+            {
+                for (int i = 2; i < m_properties.Children.Count; i++)
+                {
+                    m_properties.Children.RemoveAt(i);
+                }
+            }
+        }
         public void SetProperties(UIElement element, bool clear = true)
         {
             if (clear)
