@@ -46,12 +46,24 @@ namespace AdminConsole
             if (lElement != null)
             {
                 //AppData.s_propertiesPanel.Children.Add(new MajorPropControl(lElement.Name));
-                m_util.SetProperties(new MajorPropControl(lElement.Name, m_data), false);
+                string target = lElement.Name;
+                if (target == "Classes" || target == "campuses")
+                {
+                    //target += "[0]";
+                }
+                //m_util.SetProperties(new MajorPropControl(lElement.Name, m_data), false);
+                m_util.SetProperties(new MajorPropControl(target, m_data), false);
             } 
             else if (tbElement != null)
             {
                 //AppData.s_propertiesPanel.Children.Add(new MajorPropControl(tbElement.Name));
-                m_util.SetProperties(new MajorPropControl(tbElement.Name, m_data), false);
+                string target = tbElement.Name;
+                if (target == "Classes" || target == "campuses")
+                {
+                    //target += "[0]";
+                }
+                //m_util.SetProperties(new MajorPropControl(tbElement.Name, m_data), false);
+                m_util.SetProperties(new MajorPropControl(target, m_data), false);
             }
         }
 
@@ -61,18 +73,39 @@ namespace AdminConsole
             Binding b_title = new Binding("MajorName");
             b_title.Source = m_data.s_activeData;
             //b_title.Source = AppData.s_activeData;
+            if (m_data.s_activeData.MajorName == null)
+            {
+                m_data.s_activeData.MajorName = "No Name";
+            }
             BindingOperations.SetBinding(MajorName, Label.ContentProperty, b_title);
 
             Binding b_classes = new Binding("Classes[0]");
             b_classes.Source = m_data.s_activeData;
+            if (m_data.s_activeData.Classes == null)
+            {
+                m_data.s_activeData.Classes = new List<string>();
+                m_data.s_activeData.Classes.Add("No Classes");
+            }
             //b_classes.Source = AppData.s_activeData;
+            BindingOperations.SetBinding(Classes, TextBlock.TextProperty, b_classes);
 
             Binding b_camp = new Binding("campuses[0]");
             b_camp.Source = m_data.s_activeData;
+            if (m_data.s_activeData.campuses == null)
+            {
+                m_data.s_activeData.campuses = new List<string>();
+                m_data.s_activeData.campuses.Add("No campuses");
+            }
             //b_camp.Source = AppData.s_activeData;
+            BindingOperations.SetBinding(campuses, TextBlock.TextProperty, b_camp);
 
             Binding b_type = new Binding("type[0]");
             b_type.Source = m_data.s_activeData;
+            if (m_data.s_activeData.type == null)
+            {
+                m_data.s_activeData.type = new List<string>();
+                m_data.s_activeData.type.Add("No Type");
+            }
             //b_type.Source = AppData.s_activeData;
             BindingOperations.SetBinding(type, Label.ContentProperty, b_type);
 

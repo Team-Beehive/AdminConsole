@@ -27,10 +27,16 @@
                 <Style TargetType="Label">
                     <Setter Property="Foreground" Value="White"/>
                 </Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="White"/>
+                </Style>
             </StackPanel.Resources>
             <Label>
                 Quick Facts
             </Label>
+            <TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="Classes"/>
+            <TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="campuses"/>
+            <!--<TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="type"/>-->
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1">
             <TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="about"/>
