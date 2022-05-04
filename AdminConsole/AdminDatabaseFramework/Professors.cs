@@ -105,10 +105,10 @@ namespace AdminDatabaseFramework
                     Dictionary<string, object> data = document.ToDictionary();
 
                     ProfessorData temp = new ProfessorData();
-                    temp.professorDepartment = data["department"].ToString();
-                    temp.professorEmail = data["email"].ToString();
-                    temp.professorOffice = data["office"].ToString();
-                    temp.professorPhoneNumber = data["phone_number"].ToString();
+                    temp.professorDepartment = data.ContainsKey("department") ? data["department"].ToString() : null;
+                    temp.professorEmail = data.ContainsKey("email") ? data["email"].ToString() : null;
+                    temp.professorOffice = data.ContainsKey("office") ? data["office"].ToString() : null;
+                    temp.professorPhoneNumber = data.ContainsKey("phone_number") ? data["phone_number"].ToString() : null;
                     temp.professorName = document.Id.ToString();
                     temp.oldTitle = temp.professorName;
                     temp.DocumentReferenceSelf = document.Reference;

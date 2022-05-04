@@ -126,10 +126,14 @@ namespace AdminDatabaseFramework
                     MajorData tempMajor = new MajorData();
                     tempMajor.MajorName = document.Id;
                     tempMajor.OldName = document.Id;
-                    tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
-                    tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
-                    tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
-                    tempMajor.Classes = ObjectFunctions.ObjToStr(documentDictionary["classes"] as List<object>);
+                    if (documentDictionary.ContainsKey("about"))
+                        tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
+                    if (documentDictionary.ContainsKey("campuses"))
+                        tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
+                    if (documentDictionary.ContainsKey("type"))
+                        tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
+                    if (documentDictionary.ContainsKey("classes"))
+                        tempMajor.Classes = ObjectFunctions.ObjToStr(documentDictionary["classes"] as List<object>);
 
                     tempMajor.DocumentReferenceSelf = document.Reference;
                     datas.AddLast(tempMajor);
@@ -154,8 +158,8 @@ namespace AdminDatabaseFramework
             foreach (Dictionary<string, object> category in categoryList)
             {
                 MajorCategories majorCat = new MajorCategories();
-                majorCat.categoryTitle = category["categoryTitle"].ToString();
-                majorCat.relatedDegrees = category["relatedDegrees"] as List<object>;
+                majorCat.categoryTitle =  category.ContainsKey("categoryTitle") ? category["categoryTitle"].ToString() : null;
+                majorCat.relatedDegrees = category.ContainsKey("relatedDegrees") ? category["relatedDegrees"] as List<object> : null;
                 majorCat.oldTitle = majorCat.categoryTitle;
                 majorCategories.AddLast(majorCat);
             }

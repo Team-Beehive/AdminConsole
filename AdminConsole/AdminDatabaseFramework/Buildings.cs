@@ -93,7 +93,14 @@ namespace AdminDatabaseFramework
                     BuildingData temp = new BuildingData();
                     Dictionary<string, object> properties = document.ToDictionary();
 
-                    buildings.AddLast(temp.stringsToBuildingData(document.Id.ToString(), ObjectFunctions.ObjToStr(properties["majors"] as List<object>), properties["name_info"].ToString(), ObjectFunctions.ObjToStr(properties["professors"] as List<object>), ObjectFunctions.ObjToStr(properties["professors"] as List<object>), properties["year"].ToString(), document.Reference, document.Id.ToString()));
+                    buildings.AddLast(temp.stringsToBuildingData(document.Id.ToString(),
+                        properties.ContainsKey("majors") ? ObjectFunctions.ObjToStr(properties["majors"] as List<object>) : null,
+                        properties.ContainsKey("name_info") ? properties["name_info"].ToString() :null,
+                        properties.ContainsKey("professors") ? ObjectFunctions.ObjToStr(properties["professors"] as List<object>) : null,
+                        properties.ContainsKey("room_types") ? ObjectFunctions.ObjToStr(properties["room_types"] as List<object>) : null,
+                        properties.ContainsKey("year") ? properties["year"].ToString() : null,
+                        document.Reference,
+                        document.Id.ToString()));
                 }
                 return buildings;
             }
