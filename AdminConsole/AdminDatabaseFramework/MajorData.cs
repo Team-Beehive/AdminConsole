@@ -25,7 +25,8 @@ namespace AdminDatabaseFramework
                 {
                     {"about", about },
                     {"campuses", campuses },
-                    {"type", type }
+                    {"type", type },
+                    {"classes", Classes }
                 };
             }
         }

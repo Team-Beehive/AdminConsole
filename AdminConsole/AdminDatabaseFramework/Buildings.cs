@@ -114,7 +114,7 @@ namespace AdminDatabaseFramework
                 }
                 else
                 {
-                    throw new Exception("BuildingName not set, cannot create document");
+                    throw new DatabaseException("BuildingName not set, cannot create document");
                 }
             }
             catch
@@ -131,7 +131,7 @@ namespace AdminDatabaseFramework
             }
             else
             {
-                throw new Exception("BuildingName not set, cannot delete document");
+                throw new DatabaseException("BuildingName not set, cannot delete document");
             }
         }
 

@@ -21,7 +21,7 @@ namespace AdminDatabaseFramework
         public Majors Majors { get; set; }
         public Buildings Buildings { get; set; }
         public Professors Professors { get; set; }
-        public FirestoreDb db;
+        public FirestoreDb db { get; private set; }
         private string m_project;
 
         public Database(string Project, string envPath)
@@ -93,7 +93,7 @@ namespace AdminDatabaseFramework
             {
                 return root["project_id"].AsValue().ToString();
             }
-            catch(Exception e)
+            catch
             {
                 return "No Name";
             }

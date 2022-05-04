@@ -129,6 +129,7 @@ namespace AdminDatabaseFramework
                     tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
                     tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
                     tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
+                    tempMajor.Classes = ObjectFunctions.ObjToStr(documentDictionary["classes"] as List<object>);
 
                     tempMajor.DocumentReferenceSelf = document.Reference;
                     datas.AddLast(tempMajor);

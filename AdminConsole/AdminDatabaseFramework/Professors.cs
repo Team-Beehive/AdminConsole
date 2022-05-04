@@ -31,7 +31,7 @@ namespace AdminDatabaseFramework
     public class Professors
     {
         private FirestoreDb db;
-        public LinkedList<ProfessorData> LocalProfessors;
+        public LinkedList<ProfessorData> LocalProfessors { get; set; }
 
         public Professors(FirestoreDb m_db)
         {

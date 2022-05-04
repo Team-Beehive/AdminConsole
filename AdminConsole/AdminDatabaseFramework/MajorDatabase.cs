@@ -3,6 +3,7 @@ using Google.Cloud.Firestore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Text;
 
 namespace AdminDatabaseFramework
 {
@@ -47,7 +48,7 @@ namespace AdminDatabaseFramework
 
 
         */
-        private FirestoreDb db;
+        private readonly FirestoreDb db;
         public MajorDatabase(FirestoreDb m_db)
         {
             try
@@ -170,7 +171,7 @@ namespace AdminDatabaseFramework
             }
             catch (Exception ex)
             {
-                throw new DatabaseException("Edit Major Category Title could not complete");
+                throw new DatabaseException("Edit Major Category Title could not complete", ex);
             }
         }
 
@@ -184,12 +185,9 @@ namespace AdminDatabaseFramework
                 List<Dictionary<string, object>> categoryList = doc.GetValue<List<Dictionary<string, object>>>("Categories");
                 foreach (Dictionary<string, object> category in categoryList)
                 {
-                    if (category["categoryTitle"].ToString() == majorCat.categoryTitle)
+                    if (category["categoryTitle"].ToString() == majorCat.categoryTitle && !IsRefInList((category["relatedDegrees"] as List<object>), majorData))
                     {
-                        if (!IsRefInList((category["relatedDegrees"] as List<object>), majorData))
-                        {
-                            (category["relatedDegrees"] as List<object>).Add(majorData.DocumentReferenceSelf);
-                        }
+                        (category["relatedDegrees"] as List<object>).Add(majorData.DocumentReferenceSelf);
                     }
                 }
 
@@ -337,19 +335,14 @@ namespace AdminDatabaseFramework
         }
         static string EmployersToCSV(List<object> list)
         {
-            string employers = null;
+            StringBuilder employers = new StringBuilder();
             foreach (object obj in list)
             {
-                if (employers == null)
-                {
-                    employers = obj.ToString();
-                }
-                else
-                {
-                    employers += ", " + obj.ToString();
-                }
+
+                employers.Append(obj.ToString() + ", ");
+                
             }
-            return employers;
+            return employers.ToString();
         }
 
         public void PrintDocumentSnap(DocumentSnapshot documentSnapshot)
@@ -360,7 +353,7 @@ namespace AdminDatabaseFramework
 
 
             Console.WriteLine("Campus: {0}", EmployersToCSV(documentDictionary["campuses"] as List<object>));
-            //Console.WriteLine("Classes: {0}", EmployersToCSV(documentDictionary["Classes"] as List<object>));
+            Console.WriteLine("Classes: {0}", EmployersToCSV(documentDictionary["Classes"] as List<object>));
             Console.WriteLine("about: {0}", EmployersToCSV(documentDictionary["about"] as List<object>));
         }
 

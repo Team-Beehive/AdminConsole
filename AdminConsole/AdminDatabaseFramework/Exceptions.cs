@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdminDatabaseFramework
 {
+    [Serializable]
     public class DatabaseException : Exception
     {
         public DatabaseException() : base() { }
