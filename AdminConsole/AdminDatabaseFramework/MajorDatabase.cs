@@ -99,22 +99,6 @@ namespace AdminDatabaseFramework
             {
                 throw new DatabaseException("Could not update major");
             }
-
-            /*try
-            {
-                DocumentReference docRef = db.Collection("pages").Document("Majors").Collection("Degrees").Document(major.MajorName);
-                Dictionary<string, object> majorDict = new Dictionary<string, object>
-            {
-                {"about", major.about },
-                {"campuses", major.campuses },
-                {"type", major.type }
-            };
-                await docRef.SetAsync(majorDict);
-            }
-            catch
-            {
-                throw new DatabaseException("Major Data Edit could not complete");
-            }*/
         }
 
         private async Task db_CreateMajor(MajorData major)
@@ -298,7 +282,7 @@ namespace AdminDatabaseFramework
             }
             catch
             {
-                throw new Exception("Store Major Categories could not complete");
+                throw new DatabaseException("Store Major Categories could not complete");
             }
         }
 

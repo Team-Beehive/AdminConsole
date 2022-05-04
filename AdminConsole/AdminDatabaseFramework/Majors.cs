@@ -56,7 +56,7 @@ namespace AdminDatabaseFramework
         */
     public class Majors
     {
-        private LinkedList<DocumentSnapshot> m_dataBaseRefs = new LinkedList<DocumentSnapshot>();
+        private LinkedList<DocumentSnapshot> m_dataBaseRefs;
         private MajorDatabase majorDatabase;
         private LinkedList<MajorData> m_localMajors = new LinkedList<MajorData>();
         public Majors(FirestoreDb m_db)
