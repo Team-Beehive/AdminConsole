@@ -184,12 +184,20 @@
 
         </StackPanel>
         <Border Grid.Row="1" Grid.Column="0" CornerRadius="0, 10, 0, 0" Style="{StaticResource PanelStyle}">
-            <StackPanel x:Name="PageSelect" Grid.Row="1" Grid.Column="0">
-                <TextBlock Text=""/>
-                <!--<Button Click="ButtonPressPage">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height=".1*"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel x:Name="PageSelect" Grid.Row="1" Grid.Column="0">
+                        <TextBlock Text=""/>
+                        <!--<Button Click="ButtonPressPage">
                 <TextBlock Text="Major Page"/>
             </Button>-->
-            </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
         </Border>
         <StackPanel x:Name="Preview" Grid.Row="1" Grid.Column="1">
             <TextBlock Text=""/>
