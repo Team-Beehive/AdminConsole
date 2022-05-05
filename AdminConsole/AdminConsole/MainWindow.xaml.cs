@@ -265,8 +265,8 @@ namespace AdminConsole
             }
             foreach (MajorData m in data.s_changedList)
             {
-                if (!data.s_addedMajorList.Contains(m))
-                { 
+                //if (!data.s_addedMajorList.Contains(m))
+                //{ 
                     try
                     {
                         data.s_major.EditMajor(m);
@@ -276,7 +276,7 @@ namespace AdminConsole
                         errorMsg = "There was an issue updating major data";
                         result = MessageBox.Show(errorMsg, title, button, icon);
                     }
-                }
+                //}
             }
             foreach (AppData.changeMajorCat c in data.catsToUpdate)
             {
