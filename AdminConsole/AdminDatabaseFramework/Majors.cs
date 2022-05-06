@@ -126,14 +126,19 @@ namespace AdminDatabaseFramework
                     MajorData tempMajor = new MajorData();
                     tempMajor.MajorName = document.Id;
                     tempMajor.OldName = document.Id;
-                    if (documentDictionary.ContainsKey("about"))
+                    if (documentDictionary.ContainsKey("about")
+                        )
                         tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
+
                     if (documentDictionary.ContainsKey("campuses"))
                         tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
+
                     if (documentDictionary.ContainsKey("type"))
                         tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
+
                     if (documentDictionary.ContainsKey("classes"))
                         tempMajor.Classes = ObjectFunctions.ObjToStr(documentDictionary["classes"] as List<object>);
+
 
                     tempMajor.DocumentReferenceSelf = document.Reference;
                     datas.AddLast(tempMajor);
@@ -182,6 +187,8 @@ namespace AdminDatabaseFramework
                         mdata.campuses = ObjectFunctions.ObjToStr(data["campuses"]);
                     if (data.ContainsKey("type"))
                         mdata.type = ObjectFunctions.ObjToStr(data["type"]);
+                    if (data.ContainsKey("classes"))
+                        mdata.Classes = ObjectFunctions.ObjToStr(data["classes"]);
 
                     mdata.DocumentReferenceSelf = doc;
                     return mdata;
