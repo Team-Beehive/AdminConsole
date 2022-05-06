@@ -79,7 +79,7 @@ namespace AdminConsole
             }
             BindingOperations.SetBinding(MajorName, Label.ContentProperty, b_title);
 
-            Binding b_classes = new Binding("classes[0]");
+            Binding b_classes = new Binding("Classes[0]");
             b_classes.Source = m_data.s_activeData;
             if (m_data.s_activeData.Classes == null)
             {

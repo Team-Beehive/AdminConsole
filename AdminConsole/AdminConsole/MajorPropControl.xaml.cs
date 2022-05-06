@@ -40,7 +40,7 @@ namespace AdminConsole
         {
             switch (target)
             {
-                case "classes":
+                case "Classes":
                     target += "[0]";
                     break;
                 case "campuses":
