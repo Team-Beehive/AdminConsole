@@ -95,6 +95,7 @@ namespace AdminConsole
         public MajorData NewMajor()
         {
             MajorData temp = new MajorData();
+            temp.OldName = "New Major";
             temp.MajorName = "New Major";
             temp.type = new List<string>();
             temp.type.Add("Set Type");
