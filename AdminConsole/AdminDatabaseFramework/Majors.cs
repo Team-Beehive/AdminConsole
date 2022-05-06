@@ -127,16 +127,19 @@ namespace AdminDatabaseFramework
                     tempMajor.MajorName = document.Id;
                     tempMajor.OldName = document.Id;
                     if (documentDictionary.ContainsKey("about")
-                        )
+                        && documentDictionary["about"] != null)
                         tempMajor.about = ObjectFunctions.ObjToStr(documentDictionary["about"] as List<object>);
 
-                    if (documentDictionary.ContainsKey("campuses"))
+                    if (documentDictionary.ContainsKey("campuses")
+                        && documentDictionary["campuses"] != null)
                         tempMajor.campuses = ObjectFunctions.ObjToStr(documentDictionary["campuses"] as List<object>);
 
-                    if (documentDictionary.ContainsKey("type"))
+                    if (documentDictionary.ContainsKey("type")
+                        && documentDictionary["type"] != null)
                         tempMajor.type = ObjectFunctions.ObjToStr(documentDictionary["type"] as List<object>);
 
-                    if (documentDictionary.ContainsKey("classes"))
+                    if (documentDictionary.ContainsKey("classes")
+                        && documentDictionary["classes"] != null)
                         tempMajor.Classes = ObjectFunctions.ObjToStr(documentDictionary["classes"] as List<object>);
 
 
