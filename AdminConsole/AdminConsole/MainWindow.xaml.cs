@@ -32,6 +32,12 @@ namespace AdminConsole
      * Purpose: This is the logic for the UI of the admin program
      */
 
+    /*
+     * Eidts by Tucker Nulty
+     * Loading Indicator
+     * Connection Indicator
+     * File Path storing
+     */
 
     public partial class MainWindow : Window
     {
