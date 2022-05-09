@@ -25,7 +25,8 @@
         <Image Grid.Row="1" Source="Resources/placeholder-image.png" Height="75"/>
         <Image Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Source="Resources/placeholder-image.png" Height="75" Stretch="Fill" />
         <Image Grid.Row="1" Grid.Column="4" Source="Resources/placeholder-image.png" Height="75"/>
-        <Label x:Name="BuildingName" MouseDown="ElementSelect" FontSize="48" HorizontalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="5"/>
+        <Label x:Name="BuildingName" MouseDown="ElementSelect" FontSize="48" HorizontalContentAlignment="Center" Grid.Row="2" Grid.ColumnSpan="5"
+               BorderThickness="2px" BorderBrush="Gray"/>
 
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Background="#003767" Height="300">
             <StackPanel.Resources>
@@ -39,10 +40,10 @@
             <Label FontSize="16">
                 Built
             </Label>
-            <Label x:Name="BuildingConstructionYear" MouseDown="ElementSelect" FontSize="12"/>
+            <Label x:Name="BuildingConstructionYear" MouseDown="ElementSelect" FontSize="12" BorderBrush="White" BorderThickness="1px"/>
         </StackPanel>
-        <StackPanel Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3">
-            <TextBlock Foreground="Black" x:Name="BuildingName_Info" MouseDown="ElementSelect" TextWrapping="WrapWithOverflow"/>
+        <StackPanel Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" >
+            <TextBlock Foreground="Black" x:Name="BuildingName_Info" MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Background="Gray"/>
         </StackPanel>
 
 
