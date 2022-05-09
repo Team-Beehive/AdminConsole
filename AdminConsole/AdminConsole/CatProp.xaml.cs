@@ -48,6 +48,8 @@ namespace AdminConsole
                     }
                 }
             }
+            m_util.ClearList();
+            m_util.SetList(m_data.catButtonList);
         }
 
         private void Cancel(object sender, EventArgs e)

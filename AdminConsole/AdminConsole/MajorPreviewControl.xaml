@@ -34,8 +34,12 @@
             <Label>
                 Quick Facts
             </Label>
-            <TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="Classes"/>
-            <TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="campuses"/>
+            <Border BorderBrush="Black" BorderThickness="2">
+                <TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="Classes"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="2">
+                <TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="campuses"/>
+            </Border>
             <!--<TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="type"/>-->
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1">
