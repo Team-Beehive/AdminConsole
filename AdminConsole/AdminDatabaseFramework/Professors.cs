@@ -50,7 +50,7 @@ namespace AdminDatabaseFramework
 
         public void UpdateLocal()
         {
-            LocalProfessors = Task<LinkedList<ProfessorData>>.Run(() => db_GetProfessors()).Result;
+            LocalProfessors = ObjectFunctions.SortByLastName(Task<LinkedList<ProfessorData>>.Run(() => db_GetProfessors()).Result);
         }
 
         public void CreateProfessor(ProfessorData professor)
