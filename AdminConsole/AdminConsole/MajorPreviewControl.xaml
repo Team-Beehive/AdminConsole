@@ -43,7 +43,9 @@
             <!--<TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="type"/>-->
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="about"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Height="314" Margin="0,0,-0.4,0">
+                <TextBlock MouseDown="ElementSelect" TextWrapping="WrapWithOverflow" Name="about"/>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </UserControl>

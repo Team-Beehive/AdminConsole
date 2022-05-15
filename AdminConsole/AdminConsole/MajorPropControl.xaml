@@ -14,6 +14,8 @@
         <Label Grid.Row="0" FontSize="15" FontFamily="Tahoma">
             Edit Text
         </Label>
-        <TextBox Grid.Row="1" FontSize="15" x:Name="tb_prop" TextWrapping="WrapWithOverflow" SourceUpdated="OnSourceUpdated"/>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Height="250" Margin="0,0.2,0,-0.4">
+            <TextBox FontSize="15" x:Name="tb_prop" TextWrapping="WrapWithOverflow" SourceUpdated="OnSourceUpdated"/>
+        </ScrollViewer>
     </Grid>
 </UserControl>
