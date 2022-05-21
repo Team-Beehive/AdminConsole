@@ -79,7 +79,6 @@ namespace AdminDatabaseFramework
         {
             try
             {
-
                 if (major.MajorName != major.OldName)
                 {
                     DocumentReference documentReference = db.Collection("pages").Document("Majors").Collection("Degrees").Document(major.OldName);

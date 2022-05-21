@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminDatabaseFramework", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfessorSortingTest", "ProfessorSortingTest\ProfessorSortingTest.csproj", "{9FBA3141-6B35-4E03-9A20-BE0B504835BA}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "KioskInstaller", "KioskInstaller\KioskInstaller.vdproj", "{2847E992-7A96-4F86-9AAB-8A4BA33569EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,8 @@ Global
 		{9FBA3141-6B35-4E03-9A20-BE0B504835BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FBA3141-6B35-4E03-9A20-BE0B504835BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FBA3141-6B35-4E03-9A20-BE0B504835BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2847E992-7A96-4F86-9AAB-8A4BA33569EE}.Debug|Any CPU.ActiveCfg = Debug
+		{2847E992-7A96-4F86-9AAB-8A4BA33569EE}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

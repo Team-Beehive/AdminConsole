@@ -158,7 +158,6 @@ namespace AdminDatabaseFramework
 
         public LinkedList<MajorCategories> GetCategories()
         {
-            
             DocumentSnapshot documentSnapshot = majorDatabase.StoreMajorCategories();
             LinkedList<MajorCategories> majorCategories = new LinkedList<MajorCategories>();
 

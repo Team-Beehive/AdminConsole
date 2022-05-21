@@ -86,20 +86,22 @@ namespace AdminDatabaseFramework
 
         public string projectFromJson(string path)
         {
-            string Json = File.ReadAllText(path);
-            JsonNode document = JsonNode.Parse(Json);
-            JsonNode root = document.Root;
-            try
+            if (path != "" && path != null)
             {
-                return root["project_id"].AsValue().ToString();
+                string Json = File.ReadAllText(path);
+                JsonNode document = JsonNode.Parse(Json);
+                JsonNode root = document.Root;
+                try
+                {
+                    return root["project_id"].AsValue().ToString();
+                }
+                catch
+                {
+                    return "No Name";
+                }
             }
-            catch
-            {
-                return "No Name";
-            }
-
+            return "No Path";
         }
-
     }
 }
 

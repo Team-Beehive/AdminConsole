@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -64,48 +65,20 @@ namespace AdminConsole
         {
             ResXResourceReader rsxr;
             IDictionaryEnumerator dict;
-            try
-            {
-                rsxr = new ResXResourceReader("Resources.resx");
-                dict = rsxr.GetEnumerator();
-            }
-            catch
-            {
-                using (ResXResourceWriter resx = new ResXResourceWriter(@".\Resources.resx"))
-                {
-                    resx.Generate();
-                    resx.Close();
-                }
-                rsxr = new ResXResourceReader("Resources.resx");
-                dict = rsxr.GetEnumerator();
-            }
-            while (dict.MoveNext())
-            {
-                if (dict.Key.ToString() == "EnvPath" && dict.Value != null)
-                {
-                    LoadingIndicator.Show();
-                    try
-                    {
-                    isConnected = util.SetDatabaseKey(dict.Value.ToString());
-                    GetData(isConnected);
-                    }
-                    catch
-                    {
-                        using (ResXResourceWriter resx = new ResXResourceWriter(@".\Resources.resx"))
-                        {
-                            resx.AddResource("EnvPath", dict.Value.ToString());
-                            resx.Generate();
-                            resx.Close();
-                        }
-                        //ErrorWindow error = new ErrorWindow(new DatabaseException("Saved credentials did failed, please upload new credentials"));
-                        //error.Show();
-                        string errorMsg = "Saved credentials did failed, please upload new credentials";
-                        string title = "Credentials Error";
-                        MessageBoxButton button = MessageBoxButton.OK;
-                        MessageBoxImage icon = MessageBoxImage.Error;
-                        MessageBoxResult result;
-                        result = MessageBox.Show(errorMsg, title, button, icon);
 
+            if (File.Exists("Resources.resx"))
+            {
+                rsxr = new ResXResourceReader("Resources.resx");
+                dict = rsxr.GetEnumerator();
+
+                while (dict.MoveNext())
+                {
+                    if (dict.Key.ToString() == "EnvPath" && dict.Value != null)
+                    {
+                        LoadingIndicator.Show();
+
+                        isConnected = util.SetDatabaseKey(dict.Value.ToString());
+                        GetData(isConnected);
                     }
 
                     if (isConnected)
@@ -123,7 +96,22 @@ namespace AdminConsole
                     }
                 }
             }
+            else
+
+            {
+                using (ResXResourceWriter resx = new ResXResourceWriter(@".\Resources.resx"))
+                {
+                    resx.AddResource("EnvPath", "");
+                    resx.Generate();
+                    resx.Close();
+                }
+            }
         }
+
+
+        
+    
+
         private void ButtonPressOpen(object sender, EventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
