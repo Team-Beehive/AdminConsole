@@ -86,7 +86,7 @@ namespace AdminDatabaseFramework
 
         public string projectFromJson(string path)
         {
-            if (path != "" && path != null)
+            if (File.Exists(path))
             {
                 string Json = File.ReadAllText(path);
                 JsonNode document = JsonNode.Parse(Json);
