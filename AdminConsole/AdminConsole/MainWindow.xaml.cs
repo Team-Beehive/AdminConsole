@@ -65,10 +65,19 @@ namespace AdminConsole
         {
             ResXResourceReader rsxr;
             IDictionaryEnumerator dict;
-
-            if (File.Exists("Resources.resx"))
+            
+            if (Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/TheBeehive"))
             {
-                rsxr = new ResXResourceReader("Resources.resx");
+                if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/TheBeehive/Resources.resx"))
+                {
+                    using (ResXResourceWriter resx = new ResXResourceWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/TheBeehive/Resources.resx"))
+                    {
+                        resx.AddResource("EnvPath", "");
+                        resx.Generate();
+                        resx.Close();
+                    }
+                }
+                rsxr = new ResXResourceReader(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/TheBeehive/Resources.resx");
                 dict = rsxr.GetEnumerator();
 
                 while (dict.MoveNext())
@@ -99,7 +108,8 @@ namespace AdminConsole
             else
 
             {
-                using (ResXResourceWriter resx = new ResXResourceWriter(@".\Resources.resx"))
+                System.IO.Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/TheBeehive");
+                using (ResXResourceWriter resx = new ResXResourceWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/TheBeehive/Resources.resx"))
                 {
                     resx.AddResource("EnvPath", "");
                     resx.Generate();
@@ -127,7 +137,7 @@ namespace AdminConsole
                 ell_ConnectionIndicator.Fill= new SolidColorBrush(Color.FromRgb(90, 245, 66));
                 ell_ConnectionIndicator.ToolTip = "Connected";
                 LoadingIndicator.Hide();
-                using (ResXResourceWriter resx = new ResXResourceWriter(@".\Resources.resx"))
+                using (ResXResourceWriter resx = new ResXResourceWriter(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/TheBeehive/Resources.resx"))
                 {
                     resx.AddResource("EnvPath", openFile.FileName);
                     resx.Generate();

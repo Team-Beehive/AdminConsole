@@ -52,7 +52,7 @@ namespace AdminDatabaseFramework
             }
             catch (Exception e)
             {
-                throw new DatabaseException("Invalid Credentials", e);
+                throw new DatabaseException(e.Message, e);
             }
         }
 
